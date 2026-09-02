@@ -16,6 +16,7 @@ interface CloudflareEnv {
 	CF_API_KEY?: string;
 	CF_EMAIL?: string;
 	CF_AID?: string;
+	BREVO_API_KEY?: string;
 	D1_DATABASE_ID?: string;
 	D1_BACKUP_TOKEN?: string;
 	TURNSTILE_SECRET_KEY?: string;

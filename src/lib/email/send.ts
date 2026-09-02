@@ -8,6 +8,7 @@ import { upsertContactFromAddress } from "@/lib/contacts/service";
 import { getAuthorizedSenderAddress } from "@/lib/email/sender";
 import { createAuditLog } from "@/lib/mailboxes/audit";
 import { storeMessageAttachments, validateAttachments } from "@/lib/email/attachments";
+import { sendEmailWithBrevo } from "@/lib/email/brevo";
 import type { AttachmentContent } from "@/lib/email/attachment-types";
 
 export type SendEmailInput = {
@@ -70,30 +71,40 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 	});
 
 	try {
-		const response = await env.EMAIL.send({
-			from: sender.fromAddr,
-			to: input.to,
-			subject: input.subject,
-			headers: input.headers,
-			html: input.html,
-			text: input.text,
-			attachments: attachments.map((attachment) =>
-				attachment.disposition === "inline" && attachment.contentId
-					? {
-							filename: attachment.filename,
-							type: attachment.type,
-							content: attachment.content,
-							disposition: "inline" as const,
-							contentId: attachment.contentId,
-						}
-					: {
-							filename: attachment.filename,
-							type: attachment.type,
-							content: attachment.content,
-							disposition: "attachment" as const,
-						},
-			),
-		});
+		const response = env.BREVO_API_KEY
+			? await sendEmailWithBrevo(env.BREVO_API_KEY, {
+					from: sender.fromAddr,
+					to: input.to,
+					subject: input.subject,
+					headers: input.headers,
+					html: input.html,
+					text: input.text,
+					attachments,
+				})
+			: await env.EMAIL.send({
+					from: sender.fromAddr,
+					to: input.to,
+					subject: input.subject,
+					headers: input.headers,
+					html: input.html,
+					text: input.text,
+					attachments: attachments.map((attachment) =>
+						attachment.disposition === "inline" && attachment.contentId
+							? {
+									filename: attachment.filename,
+									type: attachment.type,
+									content: attachment.content,
+									disposition: "inline" as const,
+									contentId: attachment.contentId,
+								}
+							: {
+									filename: attachment.filename,
+									type: attachment.type,
+									content: attachment.content,
+									disposition: "attachment" as const,
+								},
+					),
+				});
 
 		await db
 			.update(messages)

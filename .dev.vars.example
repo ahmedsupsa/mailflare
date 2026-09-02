@@ -5,6 +5,10 @@ CF_TOKEN=your_api_token_with_zone_email_permissions
 # CF_AID=your_account_id
 # CF_EMAIL_WORKER_NAME=mailflare
 
+# Optional: send outbound email through Brevo instead of Cloudflare Email Sending.
+# Create it in Brevo > SMTP & API > API keys, then store it as a Worker secret.
+# BREVO_API_KEY=xkeysib-your_brevo_api_key
+
 # Optional: lets the admin dashboard trigger the GitHub update workflow.
 # GITHUB_UPDATE_TOKEN=github_pat_with_actions_write
 # GITHUB_UPDATE_REPO=owner/repo
