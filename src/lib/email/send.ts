@@ -127,7 +127,7 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 
 		return { messageId };
 	} catch (err) {
-		const error = err instanceof Error ? err.message : "Send failed";
+		const error = err instanceof Error ? err.message : "فشل الإرسال";
 		await db.update(messages).set({ status: "failed" }).where(eq(messages.id, messageId));
 		await db
 			.update(outboundJobs)

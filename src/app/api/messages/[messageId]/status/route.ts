@@ -13,17 +13,17 @@ export async function POST(
 	const env = getEnv();
 	const user = await getCurrentUser(env, request);
 	if (!user) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 401 });
 	}
 
 	const payload = (await request.json()) as MessageStatusPayload;
 	if (!isAllowedMessageStatus(payload.status)) {
-		return NextResponse.json({ error: "Invalid message status" }, { status: 400 });
+		return NextResponse.json({ error: "حالة الرسالة غير صالحة" }, { status: 400 });
 	}
 
 	const success = await updateMessageStatusForUser(env, user, messageId, payload.status);
 	if (!success) {
-		return NextResponse.json({ error: "Message not found" }, { status: 404 });
+		return NextResponse.json({ error: "الرسالة غير موجودة" }, { status: 404 });
 	}
 
 	return NextResponse.json({ success: true });

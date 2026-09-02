@@ -32,7 +32,7 @@ export default function WebhooksPage() {
 				}),
 			});
 			const json = (await res.json()) as { secret?: string };
-			if (!res.ok) throw new Error("Failed");
+			if (!res.ok) throw new Error("فشلت العملية");
 			setSecret(json.secret ?? null);
 			setUrl("");
 		},
@@ -41,32 +41,32 @@ export default function WebhooksPage() {
 
 	return (
 		<div className="space-y-6 max-w-2xl">
-			<h1 className="text-2xl font-semibold">Webhooks</h1>
+			<h1 className="text-2xl font-semibold">الويب هوك</h1>
 			{secret && (
 				<Card>
 					<CardContent className="pt-6 text-sm">
-						<p>Signing secret:</p>
+						<p>سر التوقيع:</p>
 						<code className="block mt-1 text-xs break-all">{secret}</code>
 					</CardContent>
 				</Card>
 			)}
 			<Card>
 				<CardHeader>
-					<CardTitle>Add webhook</CardTitle>
+					<CardTitle>إضافة ويب هوك</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
 					<div className="space-y-2">
-						<Label>URL</Label>
+						<Label>الرابط</Label>
 						<Input value={url} onChange={(e) => setUrl(e.target.value)} />
 					</div>
 					<Button onClick={() => create.mutate()} disabled={!url || create.isPending}>
-						Add
+						إضافة
 					</Button>
 				</CardContent>
 			</Card>
 			<Card>
 				<CardHeader>
-					<CardTitle>Endpoints</CardTitle>
+					<CardTitle>نقاط النهاية</CardTitle>
 				</CardHeader>
 				<CardContent className="text-sm no-font-mono space-y-1">
 					{(data?.webhooks ?? []).map((w) => (

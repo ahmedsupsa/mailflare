@@ -80,7 +80,7 @@ export async function getMessageContactNames(
 
 export async function blockContact(env: CloudflareEnv, input: BlockContactInput) {
 	const email = normalizeEmailAddress(input.address);
-	if (!email) throw new Error("Contact email is required");
+	if (!email) throw new Error("بريد جهة الاتصال مطلوب");
 
 	const db = getDb(env);
 	const contactId = getContactId(input.userId, email);

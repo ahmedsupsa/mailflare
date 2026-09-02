@@ -31,16 +31,16 @@ export function MailboxSignatureForm() {
 			setSignature(saved);
 			setSavedSignature(saved);
 			setSelectedMailbox({ ...selectedMailbox, signature: saved });
-			setStatus("Saved");
+			setStatus("تم الحفظ");
 		} catch (error) {
-			setStatus(error instanceof Error ? error.message : "Failed to update signature");
+			setStatus(error instanceof Error ? error.message : "تعذّر تحديث التوقيع");
 		} finally {
 			setSaving(false);
 		}
 	}
 
-	if (isLoading) return <p className="text-sm text-neutral-500">Loading inbox…</p>;
-	if (!selectedMailbox) return <p className="text-sm text-neutral-500">Select an inbox to configure its signature.</p>;
+	if (isLoading) return <p className="text-sm text-neutral-500">جارٍ تحميل صندوق البريد…</p>;
+	if (!selectedMailbox) return <p className="text-sm text-neutral-500">اختر صندوق بريد لتكوين توقيعه.</p>;
 
 	const address = `${selectedMailbox.localPart}@${selectedMailbox.hostname}`;
 	const canManage = selectedMailbox.permission === "full_access";
@@ -48,24 +48,24 @@ export function MailboxSignatureForm() {
 	return (
 		<form onSubmit={onSubmit} className="space-y-4">
 			<div className="space-y-2">
-				<Label htmlFor="mailboxSignature">Signature for {address}</Label>
+				<Label htmlFor="mailboxSignature">التوقيع لـ {address}</Label>
 				<Textarea
 					id="mailboxSignature"
 					value={signature}
 					onChange={(event) => setSignature(event.target.value)}
-					placeholder={"Your name\nRole or company\nContact details"}
+					placeholder={"اسمك\nالدور أو الشركة\nبيانات التواصل"}
 					rows={6}
 					disabled={!canManage || saving}
 				/>
 				<p className="text-xs leading-5 text-neutral-500">
-					This signature is added when composing from the selected inbox.
+					تتم إضافة هذا التوقيع عند الإنشاء من صندوق البريد المحدد.
 				</p>
 			</div>
 			<div className="flex items-center gap-3">
 				<Button type="submit" disabled={!canManage || saving || signature.trim() === savedSignature}>
-					{saving ? "Saving..." : "Save signature"}
+					{saving ? "جارٍ الحفظ..." : "حفظ التوقيع"}
 				</Button>
-				{!canManage && <p className="text-sm text-neutral-500">Full access is required to edit this signature.</p>}
+				{!canManage && <p className="text-sm text-neutral-500">الوصول الكامل مطلوب لتعديل هذا التوقيع.</p>}
 				{status && <p className="text-sm text-neutral-500">{status}</p>}
 			</div>
 		</form>

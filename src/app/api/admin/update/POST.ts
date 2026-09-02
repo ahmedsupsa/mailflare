@@ -16,8 +16,8 @@ export async function POST(request: Request) {
 
 		return NextResponse.json({ ok: true, ...dispatch }, { status: 202 });
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Could not trigger the update workflow";
-		const status = message.includes("must be configured") ? 503 : 502;
+		const message = error instanceof Error ? error.message : "تعذر بدء عملية التحديث";
+		const status = message.includes("يجب ضبط") ? 503 : 502;
 		return NextResponse.json({ error: message }, { status });
 	}
 }

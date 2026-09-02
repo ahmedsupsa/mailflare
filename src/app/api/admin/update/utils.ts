@@ -26,7 +26,7 @@ export async function authorizeAdminRequest(request: Request) {
     user = await requireUser(env, request);
   } catch {
     return {
-      error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+      error: NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 401 }),
     };
   }
 
@@ -34,7 +34,7 @@ export async function authorizeAdminRequest(request: Request) {
     assertAdmin(user);
   } catch {
     return {
-      error: NextResponse.json({ error: "Forbidden" }, { status: 403 }),
+      error: NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 }),
     };
   }
 
@@ -47,12 +47,12 @@ function getDispatchConfig(env: CloudflareEnv): UpdateDispatchConfig {
   const ref = env.GITHUB_UPDATE_REF?.trim();
 
   if (!token) {
-    throw new Error("GITHUB_UPDATE_TOKEN must be configured");
+    throw new Error("يجب ضبط GITHUB_UPDATE_TOKEN");
   }
 
   if (!repository) {
     throw new Error(
-      "GITHUB_UPDATE_REPO must be configured as owner/repository",
+      "يجب ضبط GITHUB_UPDATE_REPO بصيغة owner/repository",
     );
   }
 
@@ -101,7 +101,7 @@ async function getDispatchRef(config: UpdateDispatchConfig): Promise<string> {
   );
   if (!response.ok || !data?.default_branch) {
     throw new Error(
-      data?.message ?? "Could not determine the repository default branch",
+      data?.message ?? "تعذر تحديد الفرع الافتراضي للمستودع",
     );
   }
 
@@ -117,7 +117,7 @@ function parseVersion(version: string): number[] {
     parts.length > 3 ||
     parts.some((part) => !/^\d+$/.test(part))
   ) {
-    throw new Error(`Invalid application version: ${version}`);
+    throw new Error(`إصدار التطبيق غير صالح: ${version}`);
   }
 
   return [0, 1, 2].map((index) => Number(parts[index] ?? 0));
@@ -151,7 +151,7 @@ async function getTargetVersion(): Promise<string> {
 
   if (!response.ok || !data?.content || data.encoding !== "base64") {
     throw new Error(
-      data?.message ?? "Could not read the target repository version",
+      data?.message ?? "تعذر قراءة إصدار المستودع الهدف",
     );
   }
 
@@ -159,7 +159,7 @@ async function getTargetVersion(): Promise<string> {
 
   const packageJson = JSON.parse(dataStr) as PackageMetadata;
   if (!packageJson.version) {
-    throw new Error("The target repository package.json has no version");
+    throw new Error("ملف package.json في المستودع الهدف لا يحتوي على رقم إصدار");
   }
 
   return packageJson.version;
@@ -201,7 +201,7 @@ export async function dispatchUpdateWorkflow() {
   if (!response.ok) {
     throw new Error(
       data?.message ??
-        `GitHub returned HTTP ${response.status} dispatching ${UPDATE_WORKFLOW} in ${repository}`,
+        `أعادت GitHub رمز الحالة ${response.status} أثناء تشغيل ${UPDATE_WORKFLOW} في ${repository}`,
     );
   }
 

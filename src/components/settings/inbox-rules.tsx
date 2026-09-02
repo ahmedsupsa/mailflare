@@ -88,9 +88,9 @@ export function InboxRules() {
   function getRuleDestinationLabel(
     rule: Pick<InboxRule, "action" | "folderId">,
   ) {
-    if (rule.action === "spam") return "Spam";
-    if (rule.action === "trash") return "Trash";
-    return folderMap.get(rule.folderId ?? "") ?? "Unknown folder";
+    if (rule.action === "spam") return "البريد العشوائي";
+    if (rule.action === "trash") return "المهملات";
+    return folderMap.get(rule.folderId ?? "") ?? "مجلد غير معروف";
   }
 
   function openCreateDialog() {
@@ -137,12 +137,12 @@ export function InboxRules() {
         disabled={!mailboxId}
       >
         <Plus className="h-4 w-4" />
-        New rule
+        قاعدة جديدة
       </Button>
 			</div>
       {(rules.data?.rules ?? []).length === 0 && (
         <p className="rounded-lg border border-dashed border-neutral-200 px-4 py-5 text-sm text-neutral-500">
-          No rules yet
+          لا توجد قواعد حتى الآن
         </p>
       )}
       <div className="divide-y divide-neutral-100">
@@ -185,7 +185,7 @@ export function InboxRules() {
               }}
               onKeyDown={(event) => event.stopPropagation()}
               className="opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
-              aria-label="Delete rule"
+              aria-label="حذف القاعدة"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
@@ -197,16 +197,16 @@ export function InboxRules() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {editingRule ? "Update rule" : "New rule"}
+              {editingRule ? "تحديث القاعدة" : "قاعدة جديدة"}
             </DialogTitle>
             <DialogDescription>
-              Choose what to match and where the message should go.
+              اختر ما تريد مطابقته والوجهة التي يجب أن تذهب إليها الرسالة.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="matchField">Field</Label>
+                <Label htmlFor="matchField">الحقل</Label>
                 <Select
                   id="matchField"
                   className="h-10 w-full rounded-md border border-neutral-200 px-3 text-sm"
@@ -217,13 +217,13 @@ export function InboxRules() {
                     )
                   }
                 >
-                  <option value="email">Email address</option>
-                  <option value="content">Content</option>
-                  <option value="title">Title</option>
+                  <option value="email">عنوان البريد الإلكتروني</option>
+                  <option value="content">المحتوى</option>
+                  <option value="title">العنوان</option>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="matchOperator">Match</Label>
+                <Label htmlFor="matchOperator">المطابقة</Label>
                 <Select
                   id="matchOperator"
                   className="h-10 w-full rounded-md border border-neutral-200 px-3 text-sm"
@@ -232,33 +232,33 @@ export function InboxRules() {
                     setMatchOperator(event.target.value as "contains" | "exact")
                   }
                 >
-                  <option value="contains">Contains</option>
-                  <option value="exact">Exact match</option>
+                  <option value="contains">يحتوي على</option>
+                  <option value="exact">مطابقة تامة</option>
                 </Select>
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="matchValue">Value</Label>
+              <Label htmlFor="matchValue">القيمة</Label>
               <Input
                 id="matchValue"
                 value={matchValue}
                 onChange={(event) => setMatchValue(event.target.value)}
                 placeholder={
-                  matchField === "email" ? "sender@example.com" : "Invoice"
+                  matchField === "email" ? "sender@example.com" : "فاتورة"
                 }
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="destination">Destination</Label>
+              <Label htmlFor="destination">الوجهة</Label>
               <Select
                 id="destination"
                 className="h-10 w-full rounded-md border border-neutral-200 px-3 text-sm"
                 value={destination}
                 onChange={(event) => setDestination(event.target.value)}
               >
-                <option value="">Select destination</option>
-                <option value="spam">Spam</option>
-                <option value="trash">Trash</option>
+                <option value="">اختر الوجهة</option>
+                <option value="spam">البريد العشوائي</option>
+                <option value="trash">المهملات</option>
                 {(folders.data?.folders ?? []).map((folder) => (
                   <option key={folder.id} value={`folder:${folder.id}`}>
                     {folder.name}
@@ -279,10 +279,10 @@ export function InboxRules() {
               }
             >
               {save.isPending
-                ? "Saving..."
+                ? "جارٍ الحفظ..."
                 : editingRule
-                  ? "Update rule"
-                  : "Add rule"}
+                  ? "تحديث القاعدة"
+                  : "إضافة قاعدة"}
             </Button>
           </form>
         </DialogContent>

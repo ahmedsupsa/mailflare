@@ -91,7 +91,7 @@ function MessageListRow({
 					checked={selected}
 					onChange={(event) => onSelectedChange(message.id, event.target.checked)}
 					className="mt-1 h-4 w-4 rounded border-neutral-300"
-					aria-label={`Select message from ${party}`}
+					aria-label={`اختيار الرسالة من ${party}`}
 				/>
 				<Link href={href} onClick={onMessageNavigate} className="min-w-0">
 					<span className="flex items-baseline justify-between gap-3">
@@ -107,7 +107,7 @@ function MessageListRow({
 							unread ? "font-semibold text-neutral-900" : "text-neutral-700"
 						}`}
 					>
-						{message.subject ?? "(no subject)"}
+						{message.subject ?? "(بدون موضوع)"}
 					</span>
 					<span className="mt-0.5 block truncate text-xs leading-5 text-neutral-500">
 						{preview}
@@ -124,7 +124,7 @@ function MessageListRow({
 	const content = (
 		<>
 			{config.folder === "inbox" && message.direction === "inbound" && (
-				<Tooltip label={starred ? "Starred" : "Not starred"}>
+				<Tooltip label={starred ? "مميزة بنجمة" : "غير مميزة بنجمة"}>
 					<Button
 						type="button"
 						variant="ghost"
@@ -134,7 +134,7 @@ function MessageListRow({
 							event.stopPropagation();
 							void toggleMessageStar(message.id).then((result) => setStarred(result.starred));
 						}}
-						aria-label={starred ? "Starred" : "Not starred"}
+						aria-label={starred ? "مميزة بنجمة" : "غير مميزة بنجمة"}
 					>
 						<Icon className={`h-4 w-4 ${starred ? "fill-amber-400 text-amber-400" : "text-neutral-300"}`} />
 					</Button>
@@ -148,7 +148,7 @@ function MessageListRow({
 			</span>
 			<span className="truncate text-neutral-700">
 				<span className={unread ? "font-bold text-neutral-900" : ""}>
-					{rowMessage.subject ?? "(no subject)"}
+					{rowMessage.subject ?? "(بدون موضوع)"}
 				</span>
 				<span className="text-neutral-500"> - {getMessagePreview(rowMessage, config.folder)}</span>
 			</span>
@@ -170,7 +170,7 @@ function MessageListRow({
 					checked={selected}
 					onChange={(event) => onSelectedChange(message.id, event.target.checked)}
 					className="h-4 w-4 rounded border-neutral-300"
-					aria-label="Select message"
+					aria-label="اختيار الرسالة"
 				/>
 				<button type="button" className="contents text-left" onClick={() => openDraftComposer(message.id)}>
 					{content}
@@ -193,7 +193,7 @@ function MessageListRow({
 				checked={selected}
 				onChange={(event) => onSelectedChange(message.id, event.target.checked)}
 				className="h-4 w-4 rounded border-neutral-300"
-				aria-label="Select message"
+				aria-label="اختيار الرسالة"
 			/>
 			<Link href={href} onClick={onMessageNavigate} className="contents">
 				{content}
@@ -350,13 +350,13 @@ export function MessageFolderPage({
 		<div className="flex h-full min-h-0 flex-col">
 			<div className={`flex h-14 shrink-0 items-center justify-between border-b border-neutral-200 ${compact ? "px-4" : "px-6"}`}>
 				<div className="flex items-center gap-3 w-full">
-					<Tooltip label="Select all visible messages">
+					<Tooltip label="تحديد جميع الرسائل الظاهرة">
 						<Checkbox
 							checked={allVisibleSelected}
 							disabled={messages.length === 0}
 							onChange={(event) => toggleAllVisible(event.target.checked)}
 							className="h-4 w-4 rounded border-neutral-300"
-							aria-label="Select all visible messages"
+							aria-label="تحديد جميع الرسائل الظاهرة"
 						/>
 					</Tooltip>
 					{selectedIds.length > 0 && !compact ? (
@@ -381,37 +381,37 @@ export function MessageFolderPage({
 				{(selectedIds.length === 0 || compact) && (
 					<div className="flex items-center gap-2 text-neutral-500">
 						<span className="text-xs text-neutral-500 whitespace-nowrap">
-							{pageRange.start} - {pageRange.end} of {pageRange.total}
+							{pageRange.start} - {pageRange.end} من {pageRange.total}
 						</span>
-						<Tooltip label="Previous page">
+						<Tooltip label="الصفحة السابقة">
 							<Button
 								variant="ghost"
 								size="sm"
 								disabled={offset === 0 || isLoading}
 								onClick={() => setOffset(Math.max(offset - limit, 0))}
-								aria-label="Previous page"
+								aria-label="الصفحة السابقة"
 							>
 								<ChevronLeft className="h-4 w-4" />
 							</Button>
 						</Tooltip>
-						<Tooltip label="Next page">
+						<Tooltip label="الصفحة التالية">
 							<Button
 								variant="ghost"
 								size="sm"
 								disabled={offset + messages.length >= total || isLoading}
 								onClick={() => setOffset(offset + limit)}
-								aria-label="Next page"
+								aria-label="الصفحة التالية"
 							>
 								<ChevronRight className="h-4 w-4" />
 							</Button>
 						</Tooltip>
 						{config.folder === "inbox" && (
-							<Tooltip label={unreadOnly ? "Showing unread emails" : "Show unread emails only"}>
+							<Tooltip label={unreadOnly ? "تُعرض الرسائل غير المقروءة فقط" : "عرض الرسائل غير المقروءة فقط"}>
 								<Button
 									type="button"
 									variant="ghost"
 									size="sm"
-									aria-label="Show unread emails only"
+									aria-label="عرض الرسائل غير المقروءة فقط"
 									aria-pressed={unreadOnly}
 									onClick={() => setUnreadOnly((current) => !current)}
 									className={unreadOnly ? "bg-blue-100 text-blue-700 hover:bg-blue-100" : undefined}
@@ -444,7 +444,7 @@ export function MessageFolderPage({
 				))}
 				{!isLoading && messages.length === 0 && (
 					<p className="px-6 py-4 text-sm text-neutral-500">
-						{hasActiveFilters ? "No messages match these filters" : config.emptyText}
+						{hasActiveFilters ? "لا توجد رسائل تطابق عوامل التصفية هذه" : config.emptyText}
 					</p>
 				)}
 			</div>

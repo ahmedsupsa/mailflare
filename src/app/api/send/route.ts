@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 		input = await parseSendRequest(request);
 	} catch (error) {
 		const status = error instanceof RequestBodyTooLargeError ? 413 : 400;
-		return NextResponse.json({ error: "Invalid send request" }, { status });
+		return NextResponse.json({ error: "طلب الإرسال غير صالح" }, { status });
 	}
 	const { attachments, ...fields } = input;
 	const parsed = sendEmailSchema.omit({ attachments: true }).safeParse(fields);
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 		});
 		return NextResponse.json(result);
 	} catch (err) {
-		const message = err instanceof Error ? err.message : "Send failed";
+		const message = err instanceof Error ? err.message : "فشل الإرسال";
 		return NextResponse.json({ error: message }, { status: getSendErrorStatus(message) });
 	}
 }

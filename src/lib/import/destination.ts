@@ -8,7 +8,7 @@ export function parseImportDestination(value: unknown): ImportDestination {
 	const destination = typeof value === "string" && value.trim() ? value.trim() : DEFAULT_IMPORT_DESTINATION;
 	if (destination.startsWith("folder:")) {
 		const folderId = destination.slice("folder:".length).trim();
-		if (!folderId) throw new Error("Import folder is required");
+		if (!folderId) throw new Error("مجلد الاستيراد مطلوب");
 		return { type: "folder", folderId };
 	}
 
@@ -19,7 +19,7 @@ export function parseImportDestination(value: unknown): ImportDestination {
 		return { type: "system", section: section as ImportSystemSection };
 	}
 
-	throw new Error("Import destination is invalid");
+	throw new Error("وجهة الاستيراد غير صالحة");
 }
 
 export function getImportMessagePlacement(destination: ImportDestination): ImportMessagePlacement {

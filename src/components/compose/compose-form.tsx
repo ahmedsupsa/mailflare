@@ -96,7 +96,7 @@ export function ComposeForm({
 			})
 			.catch((err) => {
 				if (cancelled) return;
-				const message = err instanceof Error ? err.message : "Failed to load draft";
+				const message = err instanceof Error ? err.message : "فشل تحميل المسودة";
 				setToast({ type: "error", message });
 			})
 			.finally(() => {
@@ -175,7 +175,7 @@ export function ComposeForm({
 		setLoading(false);
 
 		if (!res.ok) {
-			setToast({ type: "error", message: data.error ?? "Send failed" });
+			setToast({ type: "error", message: data.error ?? "فشل الإرسال" });
 			return;
 		}
 
@@ -189,7 +189,7 @@ export function ComposeForm({
 		setSubject("");
 		setText(applyMailboxSignature("", "", selectedMailbox?.signature));
 		setAttachments([]);
-		setToast({ type: "success", message: "Message sent" });
+		setToast({ type: "success", message: "تم إرسال الرسالة" });
 		window.dispatchEvent(new Event("mailflare:messages-changed"));
 	}
 
@@ -203,15 +203,15 @@ export function ComposeForm({
 		);
 
 		if (nextCount > 10) {
-			setToast({ type: "error", message: "A message can include at most 10 attachments" });
+			setToast({ type: "error", message: "يمكن أن تحتوي الرسالة على 10 مرفقات كحد أقصى" });
 			return;
 		}
 		if (nextFiles.some((file) => file.size > 10 * 1024 * 1024)) {
-			setToast({ type: "error", message: "Each attachment must be 10 MB or smaller" });
+			setToast({ type: "error", message: "يجب ألا يتجاوز حجم كل مرفق 10 ميغابايت" });
 			return;
 		}
 		if (totalSize > 20 * 1024 * 1024) {
-			setToast({ type: "error", message: "Attachments must total 20 MB or less" });
+			setToast({ type: "error", message: "يجب ألا يتجاوز إجمالي حجم المرفقات 20 ميغابايت" });
 			return;
 		}
 
@@ -248,7 +248,7 @@ export function ComposeForm({
 			)}
 			<form onSubmit={onSubmit} className={frameClass}>
 				<div className="flex h-9 items-center justify-between bg-neutral-800 px-4 text-sm font-medium text-white">
-					<span>{loadingDraft ? "Loading draft" : draftId ? "Draft saved" : "New Message"}</span>
+					<span>{loadingDraft ? "جارٍ تحميل المسودة" : draftId ? "تم حفظ المسودة" : "رسالة جديدة"}</span>
 					{mode === "popup" && (
 						<div className="flex items-center gap-3 text-neutral-300">
 							<Minimize2 className="h-4 w-4" />
@@ -259,49 +259,49 @@ export function ComposeForm({
 					)}
 				</div>
 				<div className="border-b border-neutral-100 px-4 py-1">
-					<Label htmlFor={`${mode}-from`} className="sr-only">From</Label>
+					<Label htmlFor={`${mode}-from`} className="sr-only">من</Label>
 					<Select
 						id={`${mode}-from`}
 						value={selectedMailbox && selectedFrom ? `${selectedMailbox.id}|${selectedFrom}` : ""}
 						onChange={(event) => selectSender(event.target.value)}
-						placeholder="Select a mailbox first"
+						placeholder="اختر صندوق بريد أولاً"
 						required
 						disabled={loadingDraft || senderOptions.length === 0}
 						className="h-8 border-0 px-0 py-1 text-sm shadow-none focus-visible:ring-0"
 					>
-						{senderOptions.length === 0 && <option value="">Select a mailbox first</option>}
+						{senderOptions.length === 0 && <option value="">اختر صندوق بريد أولاً</option>}
 						{senderOptions.map(({ mailbox, address }) => (
 							<option key={`${mailbox.id}|${address}`} value={`${mailbox.id}|${address}`}>{address}</option>
 						))}
 					</Select>
 				</div>
 				<div className="border-b border-neutral-100 px-4 py-1">
-					<Label htmlFor={`${mode}-to`} className="sr-only">To</Label>
+					<Label htmlFor={`${mode}-to`} className="sr-only">إلى</Label>
 					<Input
 						id={`${mode}-to`}
 						value={to}
 						onChange={(event) => setTo(event.target.value)}
 						type="text"
-						placeholder='Recipients, or "Maya Chen" <maya@example.com>'
+						placeholder='المستلمون، أو "مايا تشين" <maya@example.com>'
 						required
 						disabled={loadingDraft}
 						className="h-8 border-0 px-0 py-1 shadow-none focus-visible:ring-0"
 					/>
 				</div>
 				<div className="border-b border-neutral-100 px-4 py-1">
-					<Label htmlFor={`${mode}-subject`} className="sr-only">Subject</Label>
+					<Label htmlFor={`${mode}-subject`} className="sr-only">الموضوع</Label>
 					<Input
 						id={`${mode}-subject`}
 						value={subject}
 						onChange={(event) => setSubject(event.target.value)}
-						placeholder="Subject"
+						placeholder="الموضوع"
 						required
 						disabled={loadingDraft}
 						className="h-8 border-0 px-0 py-1 shadow-none focus-visible:ring-0"
 					/>
 				</div>
 				<div className="min-h-0 flex-1 px-4 py-2">
-					<Label htmlFor={`${mode}-text`} className="sr-only">Body</Label>
+					<Label htmlFor={`${mode}-text`} className="sr-only">نص الرسالة</Label>
 					<Textarea
 						id={`${mode}-text`}
 						value={text}
@@ -332,7 +332,7 @@ export function ComposeForm({
 									className="rounded-full p-1 text-neutral-400 hover:bg-neutral-200 hover:text-neutral-700"
 								>
 									<X className="h-3.5 w-3.5" />
-									<span className="sr-only">Remove attachment</span>
+									<span className="sr-only">إزالة المرفق</span>
 								</button>
 							</div>
 						))}
@@ -354,13 +354,13 @@ export function ComposeForm({
 						disabled={loading || loadingDraft}
 					>
 						<Paperclip className="h-4 w-4" />
-						Attach
+						إرفاق
 					</Button>
 					<span className="flex-1" />
-					<p className="text-xs text-neutral-500">{draftId ? "Saved to drafts" : "Autosaves as draft"}</p>
+					<p className="text-xs text-neutral-500">{draftId ? "تم الحفظ في المسودات" : "يُحفظ تلقائيًا كمسودة"}</p>
 					<Button type="submit" disabled={loading || loadingDraft || !fromAddr} className="rounded-full px-5">
 						<Send className="h-4 w-4" />
-						{loading ? "Sending" : "Send"}
+						{loading ? "جارٍ الإرسال" : "إرسال"}
 					</Button>
 				</div>
 			</form>

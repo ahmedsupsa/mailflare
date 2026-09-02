@@ -42,20 +42,20 @@ function sanitizeFilename(filename: string): string {
 
 export function validateAttachments(attachments: AttachmentContent[]): void {
 	if (attachments.length > MAX_ATTACHMENT_COUNT) {
-		throw new Error(`A message can include at most ${MAX_ATTACHMENT_COUNT} attachments`);
+		throw new Error(`لا يمكن أن تحتوي الرسالة على أكثر من ${MAX_ATTACHMENT_COUNT} مرفقات`);
 	}
 
 	let totalSize = 0;
 	for (const attachment of attachments) {
 		const size = attachment.content.byteLength;
 		if (size > MAX_ATTACHMENT_SIZE) {
-			throw new Error(`${attachment.filename} exceeds the 10 MB attachment limit`);
+			throw new Error(`الملف ${attachment.filename} يتجاوز الحد الأقصى للمرفق البالغ 10 ميجابايت`);
 		}
 		totalSize += size;
 	}
 
 	if (totalSize > MAX_TOTAL_ATTACHMENT_SIZE) {
-		throw new Error("Attachments exceed the 20 MB total limit");
+		throw new Error("يتجاوز إجمالي حجم المرفقات الحد الأقصى البالغ 20 ميجابايت");
 	}
 }
 

@@ -23,7 +23,7 @@ export async function updateCurrentMailboxName(id: string, displayName: string):
 	const data = (await res.json()) as CurrentMailboxFormResponse;
 
 	if (!res.ok || !data.mailbox) {
-		throw new Error(typeof data.error === "string" ? data.error : "Failed to update mailbox");
+		throw new Error(typeof data.error === "string" ? data.error : "تعذّر تحديث صندوق البريد");
 	}
 	clearMailboxesCache();
 
@@ -42,7 +42,7 @@ export async function loadAccountSettings(): Promise<Required<AccountSettingsRes
 	const data = (await res.json()) as AccountSettingsResponse;
 
 	if (!res.ok || !data.user) {
-		throw new Error(typeof data.error === "string" ? data.error : "Failed to load account");
+		throw new Error(typeof data.error === "string" ? data.error : "تعذّر تحميل الحساب");
 	}
 
 	return data.user;
@@ -56,7 +56,7 @@ export async function updateForwardingEmail(forwardingEmail: string): Promise<st
 	});
 	const data = (await res.json()) as ForwardingEmailResponse;
 	if (!res.ok) {
-		throw new Error(typeof data.error === "string" ? data.error : "Failed to update forwarding email");
+		throw new Error(typeof data.error === "string" ? data.error : "تعذّر تحديث البريد الإلكتروني لإعادة التوجيه");
 	}
 	return data.forwardingEmail ?? "";
 }
@@ -69,7 +69,7 @@ export async function updateMailboxSignature(mailboxId: string, signature: strin
 	});
 	const data = (await res.json()) as MailboxSignatureResponse;
 	if (!res.ok || !data.mailbox) {
-		throw new Error(typeof data.error === "string" ? data.error : "Failed to update signature");
+		throw new Error(typeof data.error === "string" ? data.error : "تعذّر تحديث التوقيع");
 	}
 	clearMailboxesCache();
 	return data.mailbox.signature ?? "";
@@ -90,7 +90,7 @@ export async function updateMailboxAutoReply(
 	});
 	const data = (await res.json()) as MailboxAutoReplyResponse;
 	if (!res.ok || !data.mailbox) {
-		throw new Error(typeof data.error === "string" ? data.error : "Failed to update auto-reply");
+		throw new Error(typeof data.error === "string" ? data.error : "تعذّر تحديث الرد التلقائي");
 	}
 	clearMailboxesCache();
 	return {
@@ -109,6 +109,6 @@ export async function updatePassword(currentPassword: string, newPassword: strin
 	const data = (await res.json()) as ChangePasswordResponse;
 
 	if (!res.ok) {
-		throw new Error(typeof data.error === "string" ? data.error : "Failed to change password");
+		throw new Error(typeof data.error === "string" ? data.error : "تعذّر تغيير كلمة المرور");
 	}
 }

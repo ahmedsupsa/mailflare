@@ -25,7 +25,7 @@ export function MessageListRowActions({ message, onAction }: MessageListRowActio
 			await snoozeMessage(message.id, snoozedUntil);
 			setSnoozeOpen(false);
 		} catch (nextError) {
-			setError(nextError instanceof Error ? nextError.message : "Unable to snooze message");
+			setError(nextError instanceof Error ? nextError.message : "تعذر تأجيل الرسالة");
 		} finally {
 			setSnoozing(false);
 		}
@@ -34,29 +34,29 @@ export function MessageListRowActions({ message, onAction }: MessageListRowActio
 	return (
 		<>
 			<div className="pointer-events-none absolute right-6 top-1/2 z-10 flex -translate-y-1/2 items-center gap-1 pl-3 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 bg-[#f2f6fc]">
-				<Tooltip label="Archive">
-					<Button type="button" variant="ghost" size="sm" onClick={() => void onAction("archive")} aria-label="Archive">
+				<Tooltip label="أرشفة">
+					<Button type="button" variant="ghost" size="sm" onClick={() => void onAction("archive")} aria-label="أرشفة">
 						<Archive className="h-4 w-4" />
 					</Button>
 				</Tooltip>
-				<Tooltip label="Trash">
-					<Button type="button" variant="ghost" size="sm" onClick={() => void onAction("trash")} aria-label="Trash">
+				<Tooltip label="حذف">
+					<Button type="button" variant="ghost" size="sm" onClick={() => void onAction("trash")} aria-label="حذف">
 						<Trash2 className="h-4 w-4" />
 					</Button>
 				</Tooltip>
-				<Tooltip label={readAction === "read" ? "Mark as read" : "Mark as unread"}>
-					<Button type="button" variant="ghost" size="sm" onClick={() => void onAction(readAction)} aria-label={readAction === "read" ? "Mark as read" : "Mark as unread"}>
+				<Tooltip label={readAction === "read" ? "تحديد كمقروءة" : "تحديد كغير مقروءة"}>
+					<Button type="button" variant="ghost" size="sm" onClick={() => void onAction(readAction)} aria-label={readAction === "read" ? "تحديد كمقروءة" : "تحديد كغير مقروءة"}>
 						{readAction === "read" ? <MailOpen className="h-4 w-4" /> : <Mail className="h-4 w-4" />}
 					</Button>
 				</Tooltip>
-				<Tooltip label={snoozed ? "Unsnooze" : "Snooze"}>
+				<Tooltip label={snoozed ? "إلغاء التأجيل" : "تأجيل"}>
 					<Button type="button" variant="ghost" size="sm" onClick={() => {
 						if (snoozed) {
 							void unsnoozeMessage(message.id);
 							return;
 						}
 						setSnoozeOpen(true);
-					}} aria-label={snoozed ? "Unsnooze" : "Snooze"}>
+					}} aria-label={snoozed ? "إلغاء التأجيل" : "تأجيل"}>
 						<Clock className="h-4 w-4" />
 					</Button>
 				</Tooltip>
@@ -65,8 +65,8 @@ export function MessageListRowActions({ message, onAction }: MessageListRowActio
 			<Dialog open={snoozeOpen} onOpenChange={setSnoozeOpen}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Snooze email</DialogTitle>
-						<DialogDescription>Hide this email from the inbox until the time you choose.</DialogDescription>
+						<DialogTitle>تأجيل الرسالة</DialogTitle>
+						<DialogDescription>إخفاء هذه الرسالة من البريد الوارد حتى الوقت الذي تختاره.</DialogDescription>
 					</DialogHeader>
 					<div className="space-y-4">
 						<div className="grid gap-2 sm:grid-cols-3">
@@ -77,12 +77,12 @@ export function MessageListRowActions({ message, onAction }: MessageListRowActio
 							))}
 						</div>
 						<div className="space-y-2">
-							<label htmlFor={`snooze-until-${message.id}`} className="text-sm font-medium text-neutral-700">Select date and time</label>
+							<label htmlFor={`snooze-until-${message.id}`} className="text-sm font-medium text-neutral-700">اختر التاريخ والوقت</label>
 							<Input id={`snooze-until-${message.id}`} type="datetime-local" value={snoozedUntil} onChange={(event) => setSnoozedUntil(event.target.value)} />
 						</div>
 						{error && <p className="text-sm text-red-600">{error}</p>}
 						<Button type="button" onClick={() => void handleSnooze()} disabled={snoozing}>
-							{snoozing ? "Snoozing..." : "Snooze"}
+							{snoozing ? "جارٍ التأجيل..." : "تأجيل"}
 						</Button>
 					</div>
 				</DialogContent>

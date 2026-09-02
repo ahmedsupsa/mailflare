@@ -35,7 +35,7 @@ export async function addDomainForUser(
 	const db = getDb(env);
 	const [existing] = await db.select().from(domains).where(eq(domains.hostname, provisioned.hostname)).limit(1);
 	if (existing && existing.userId !== userId) {
-		throw new Error("Domain is already registered");
+		throw new Error("النطاق مسجل بالفعل");
 	}
 
 	const domainId = existing?.id ?? newId("dom");
@@ -105,7 +105,7 @@ export async function removeDomainForUser(
 		.from(domains)
 		.where(and(eq(domains.id, domainId), eq(domains.userId, userId)))
 		.limit(1);
-	if (!domain) throw new Error("Domain not found");
+	if (!domain) throw new Error("النطاق غير موجود");
 
 	try {
 		await deleteEmailRoutingRulesForDomain(env, domain.zoneId, domain.hostname);

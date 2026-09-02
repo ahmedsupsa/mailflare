@@ -91,7 +91,7 @@ export default function MailboxSettingsPage() {
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h1 className="truncate text-3xl font-medium text-neutral-900">
-            Settings
+            الإعدادات
           </h1>
           {address ? (
             <p className="mt-1 truncate no-font-mono text-sm text-neutral-500">
@@ -103,10 +103,10 @@ export default function MailboxSettingsPage() {
         </div>
         <div className="flex shrink-0 items-center gap-2">
           {mailbox.data?.type === "shared" && (
-            <Badge variant="secondary">Shared</Badge>
+            <Badge variant="secondary">مشترك</Badge>
           )}
           {mailbox.data?.isPrimary && (
-            <Badge variant="secondary">Primary</Badge>
+            <Badge variant="secondary">أساسي</Badge>
           )}
         </div>
       </div>
@@ -115,13 +115,13 @@ export default function MailboxSettingsPage() {
         <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {mailbox.error instanceof Error
             ? mailbox.error.message
-            : "Failed to load mailbox"}
+            : "تعذر تحميل صندوق البريد"}
         </p>
       )}
 
       <Card className="rounded-3xl border-0 bg-white p-6">
         <CardHeader className="py-0">
-          <CardTitle>Account</CardTitle>
+          <CardTitle>الحساب</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 pt-5">
           {mailbox.data ? (
@@ -135,12 +135,12 @@ export default function MailboxSettingsPage() {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="displayName">Name</Label>
+            <Label htmlFor="displayName">الاسم</Label>
             <Input
               id="displayName"
               value={displayName}
               onChange={(event) => setDisplayName(event.target.value)}
-              placeholder={mailbox.data?.localPart ?? "Mailbox name"}
+              placeholder={mailbox.data?.localPart ?? "اسم صندوق البريد"}
               disabled={mailbox.isLoading || updateName.isPending}
             />
           </div>
@@ -151,9 +151,9 @@ export default function MailboxSettingsPage() {
               disabled={mailbox.isLoading || updateName.isPending}
             />
             <span>
-              <span className="block text-sm font-medium text-neutral-900">Use all domains</span>
+              <span className="block text-sm font-medium text-neutral-900">استخدام جميع النطاقات</span>
               <span className="mt-1 block text-sm text-neutral-500">
-                Receive and send mail as this username on every active domain in this admin account.
+                استقبال البريد وإرساله بهذا الاسم على كل نطاق نشط في حساب الإدارة هذا.
               </span>
             </span>
           </label>
@@ -161,18 +161,18 @@ export default function MailboxSettingsPage() {
             <p className="text-sm text-red-600">
               {updateName.error instanceof Error
                 ? updateName.error.message
-                : "Failed to update mailbox"}
+                : "تعذر تحديث صندوق البريد"}
             </p>
           )}
           {updateName.isSuccess && (
-            <p className="text-sm text-green-700">Mailbox settings saved</p>
+            <p className="text-sm text-green-700">تم حفظ إعدادات صندوق البريد</p>
           )}
           <Button
             onClick={() => updateName.mutate()}
             disabled={mailbox.isLoading || updateName.isPending}
           >
             <Save className="h-4 w-4" />
-            {updateName.isPending ? "Saving..." : "Save changes"}
+            {updateName.isPending ? "جارٍ الحفظ..." : "حفظ التغييرات"}
           </Button>
         </CardContent>
       </Card>
@@ -180,9 +180,9 @@ export default function MailboxSettingsPage() {
       {mailbox.data?.type === "shared" && (
         <Card className="rounded-3xl border-0 bg-white p-6">
           <CardHeader className="py-0">
-            <CardTitle>Shared access</CardTitle>
+            <CardTitle>الوصول المشترك</CardTitle>
             <CardDescription>
-              Team members added here can read, send, organize, and manage mail in this inbox.
+              يمكن لأعضاء الفريق المضافين هنا قراءة البريد في هذا الصندوق وإرساله وتنظيمه وإدارته.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 pt-5">
@@ -202,7 +202,7 @@ export default function MailboxSettingsPage() {
                   type="button"
                   size="icon"
                   variant="ghost"
-                  aria-label={`Remove ${member.userName}`}
+                  aria-label={`إزالة ${member.userName}`}
                   disabled={removeMember.isPending}
                   onClick={() => removeMember.mutate(member.userId)}
                 >
@@ -212,14 +212,14 @@ export default function MailboxSettingsPage() {
             ))}
             {sharedAccess.data && sharedAccess.data.members.length === 0 && (
               <p className="rounded-2xl bg-neutral-50 px-4 py-3 text-sm text-neutral-500">
-                No Team members have access yet.
+                لا يملك أي عضو من الفريق حق الوصول بعد.
               </p>
             )}
             {sharedAccess.isError && (
               <p className="text-sm text-red-600">
                 {sharedAccess.error instanceof Error
                   ? sharedAccess.error.message
-                  : "Failed to load shared access"}
+                  : "تعذر تحميل الوصول المشترك"}
               </p>
             )}
             <div className="flex gap-2">
@@ -228,7 +228,7 @@ export default function MailboxSettingsPage() {
                 onChange={(event) => setSelectedUserId(event.target.value)}
                 className="h-10 min-w-0 flex-1 text-sm"
               >
-                <option value="">Choose an account</option>
+                <option value="">اختر حسابًا</option>
                 {(sharedAccess.data?.availableUsers ?? [])
                   .filter(
                     (account) =>
@@ -246,12 +246,12 @@ export default function MailboxSettingsPage() {
                 onClick={() => addMember.mutate()}
               >
                 <UserPlus className="h-4 w-4" />
-                {addMember.isPending ? "Adding..." : "Add user"}
+                {addMember.isPending ? "جارٍ الإضافة..." : "إضافة مستخدم"}
               </Button>
             </div>
             {addMember.isError && (
               <p className="text-sm text-red-600">
-                {addMember.error instanceof Error ? addMember.error.message : "Failed to add account"}
+                {addMember.error instanceof Error ? addMember.error.message : "تعذرت إضافة الحساب"}
               </p>
             )}
           </CardContent>
@@ -259,12 +259,12 @@ export default function MailboxSettingsPage() {
       )}
       <Card className="rounded-3xl border-0 bg-white p-6">
         <CardHeader className="py-0">
-          <CardTitle className="text-red-700">Danger zone</CardTitle>
+          <CardTitle className="text-red-700">منطقة الخطر</CardTitle>
           <CardDescription>
-            Deleting this mailbox removes its Cloudflare Email Routing rule, so
-            new mail sent to {address || "this address"} will no longer be
-            accepted. Messages already received are kept in the database but
-            will no longer appear in any inbox. This cannot be undone.
+            حذف صندوق البريد هذا يزيل قاعدة توجيه البريد الإلكتروني الخاصة به في
+            Cloudflare، لذا لن يُقبل بعد الآن أي بريد جديد يُرسل إلى {address || "هذا العنوان"}.
+            تبقى الرسائل المستلمة سابقًا في قاعدة البيانات لكنها لن تظهر بعد الآن في
+            أي صندوق وارد. لا يمكن التراجع عن هذا الإجراء.
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-5">
@@ -272,7 +272,7 @@ export default function MailboxSettingsPage() {
             <p className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {removeMailbox.error instanceof Error
                 ? removeMailbox.error.message
-                : "Failed to delete mailbox"}
+                : "تعذر حذف صندوق البريد"}
             </p>
           )}
           <Button
@@ -282,7 +282,7 @@ export default function MailboxSettingsPage() {
             onClick={() => {
               if (
                 !window.confirm(
-                  `Delete ${address}? This removes its email routing rule and cannot be undone.`,
+                  `هل تريد حذف ${address}؟ سيؤدي هذا إلى إزالة قاعدة توجيه البريد الإلكتروني الخاصة به ولا يمكن التراجع عنه.`,
                 )
               )
                 return;
@@ -290,7 +290,7 @@ export default function MailboxSettingsPage() {
             }}
           >
             <Trash2 className="h-4 w-4" />
-            {removeMailbox.isPending ? "Deleting..." : "Delete mailbox"}
+            {removeMailbox.isPending ? "جارٍ الحذف..." : "حذف صندوق البريد"}
           </Button>
         </CardContent>
       </Card>

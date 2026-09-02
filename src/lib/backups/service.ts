@@ -75,7 +75,7 @@ export async function deleteBackup(env: CloudflareEnv, id: string): Promise<bool
 	const [backup] = await db.select().from(backups).where(eq(backups.id, id)).limit(1);
 	if (!backup) return false;
 	if (backup.status === "queued" || backup.status === "running") {
-		throw new Error("A backup in progress cannot be deleted");
+		throw new Error("لا يمكن حذف نسخة احتياطية قيد التنفيذ");
 	}
 	if (backup.r2Key) await env.BUCKET.delete(backup.r2Key);
 	await db.delete(backups).where(eq(backups.id, id));

@@ -59,7 +59,7 @@ export class DatabaseBackupWorkflow extends WorkflowEntrypoint<CloudflareEnv, Ba
 			await step.do("Delete expired backups", async () => this.deleteExpiredBackups());
 			return { backupId, ...stored };
 		} catch (error) {
-			const message = error instanceof Error ? error.message : "Backup failed";
+			const message = error instanceof Error ? error.message : "فشلت عملية النسخ الاحتياطي";
 			await getDb(this.env)
 				.update(backups)
 				.set({ status: "failed", error: message, completedAt: new Date() })

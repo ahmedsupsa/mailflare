@@ -13,7 +13,7 @@ export function MailSearchInput() {
 			<Input
 				value={query}
 				onChange={(event) => setQuery(event.target.value)}
-				placeholder='Search mail'
+				placeholder='البحث في البريد'
 				className="h-full min-w-0 flex-1 bg-transparent text-[15px] text-neutral-800 outline-none! shadow-none! border-none! placeholder:text-neutral-500"
 			/>
 			{query && (
@@ -21,7 +21,7 @@ export function MailSearchInput() {
 					type="button"
 					onClick={() => setQuery("")}
 					className="rounded-full p-1 text-neutral-500 hover:bg-blue-100 hover:text-neutral-800"
-					aria-label="Clear search"
+					aria-label="مسح البحث"
 				>
 					<X className="h-4 w-4" />
 				</button>

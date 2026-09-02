@@ -9,6 +9,6 @@ export async function saveBranding(appName: string, icon: File | null): Promise<
 	if (icon) form.set("icon", icon, icon.name);
 	const response = await authFetch("/api/branding", { method: "PUT", body: form });
 	const data = (await response.json()) as BrandingFormResponse;
-	if (!response.ok) throw new Error(data.error ?? "Unable to save branding");
+	if (!response.ok) throw new Error(data.error ?? "تعذر حفظ الهوية");
 	return data;
 }

@@ -10,7 +10,7 @@ export async function GET(request: Request, { params }: Params) {
 	const env = getEnv();
 	const user = await requireUser(env, request);
 	const domain = await getDomainForUser(env, user.id, id);
-	if (!domain) return NextResponse.json({ error: "Not found" }, { status: 404 });
+	if (!domain) return NextResponse.json({ error: "غير موجود" }, { status: 404 });
 	return NextResponse.json({ domain });
 }
 
@@ -22,7 +22,7 @@ export async function DELETE(request: Request, { params }: Params) {
 		await removeDomainForUser(env, user.id, id);
 		return NextResponse.json({ ok: true });
 	} catch (err) {
-		const message = err instanceof Error ? err.message : "Failed to remove domain";
+		const message = err instanceof Error ? err.message : "فشل حذف النطاق";
 		return NextResponse.json({ error: message }, { status: 400 });
 	}
 }

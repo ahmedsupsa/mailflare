@@ -48,7 +48,7 @@ export function mergeLegacyMessageBodies(document: DatabaseBackupDocument): void
 	const bodiesByMessageId = new Map<string, DatabaseRecord>();
 	for (const body of bodyRows) {
 		if (!isDatabaseRecord(body) || typeof body.message_id !== "string") {
-			throw new Error("Backup contains an invalid message_bodies record");
+			throw new Error("تحتوي النسخة الاحتياطية على سجل message_bodies غير صالح");
 		}
 		bodiesByMessageId.set(body.message_id, body);
 	}

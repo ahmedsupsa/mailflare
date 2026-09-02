@@ -47,7 +47,7 @@ export function RegisterClient() {
       setChecks(preparation.data.checks ?? []);
       setDatabaseMigrated(!!preparation.data.migrated);
       if (!preparation.ok) {
-        setError(preparation.data.error ?? "Complete the missing configuration before continuing.");
+        setError(preparation.data.error ?? "أكمل الإعدادات الناقصة قبل المتابعة.");
         return;
       }
 
@@ -57,7 +57,7 @@ export function RegisterClient() {
       setPrimaryDomain(data.primaryDomain?.hostname ?? null);
       setPreparationComplete(true);
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Installation preparation failed");
+      setError(error instanceof Error ? error.message : "فشل تجهيز التثبيت");
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ export function RegisterClient() {
     setLoading(false);
     if (!ok || !data.domain) {
       setError(
-        typeof data.error === "string" ? data.error : "Domain setup failed",
+        typeof data.error === "string" ? data.error : "فشل إعداد النطاق",
       );
       return;
     }
@@ -91,7 +91,7 @@ export function RegisterClient() {
     const domain = setupDomain ?? primaryDomain;
     if (!domain) {
       setLoading(false);
-      setError("Domain setup is not complete");
+      setError("إعداد النطاق غير مكتمل");
       return;
     }
 
@@ -99,7 +99,7 @@ export function RegisterClient() {
     setLoading(false);
     if (!ok) {
       setError(
-        typeof data.error === "string" ? data.error : "Registration failed",
+        typeof data.error === "string" ? data.error : "فشل إنشاء الحساب",
       );
       setTurnstileReset((value) => value + 1);
       return;
@@ -114,27 +114,27 @@ export function RegisterClient() {
     return (
       <AuthShell
         icon={MailPlus}
-        title="Account registration is closed"
+        title="التسجيل مغلق"
         footer={
           <Link
             href="/login"
             className="inline-flex items-center gap-2 hover:underline"
           >
-            Sign in instead
+            تسجيل الدخول بدلاً من ذلك
             <ArrowRight className="h-4 w-4" />
           </Link>
         }
       >
         <div className="space-y-5">
           <p className="text-sm leading-6 text-neutral-600">
-            This installation already has an account for {primaryDomain ?? "this workspace"}.
+            يوجد بالفعل حساب لهذا التثبيت على {primaryDomain ?? "مساحة العمل هذه"}.
           </p>
           <Button
             type="button"
             className="h-11 w-full rounded-full px-6 active:scale-[0.98]"
             onClick={() => router.push("/login")}
           >
-            Go to login
+            الانتقال إلى تسجيل الدخول
           </Button>
         </div>
       </AuthShell>
@@ -144,7 +144,7 @@ export function RegisterClient() {
   return (
     <AuthShell
       icon={MailPlus}
-      title={step === 1 ? "Prepare installation" : showDomainStep ? "Add your domain" : "Create your mailbox"}
+      title={step === 1 ? "تجهيز التثبيت" : showDomainStep ? "أضف نطاقك" : "أنشئ صندوق بريدك"}
       // description={
       // 	showDomainStep
       // 		? "Connect the primary Cloudflare zone first so routing records can be created before the first mailbox."
@@ -152,22 +152,22 @@ export function RegisterClient() {
       // }
       steps={
         [
-          { label: "System", active: step === 1 },
-          { label: "Domain", active: step === 2 },
-          { label: "Account", active: step === 3 },
+          { label: "النظام", active: step === 1 },
+          { label: "النطاق", active: step === 2 },
+          { label: "الحساب", active: step === 3 },
         ]
       }
     >
       {step === 1 ? (
         <div className="space-y-5">
           <p className="text-sm leading-6 text-neutral-600">
-            Mailflare checks its required Cloudflare configuration and initializes a clean D1 database before setup continues.
+            يتحقق Mailflare من إعدادات Cloudflare المطلوبة ويهيئ قاعدة بيانات D1 نظيفة قبل متابعة الإعداد.
           </p>
           <div className="space-y-2">
             {loading && checks.length === 0 && (
               <div className="flex items-center gap-3 rounded-2xl bg-neutral-50 px-4 py-3 text-sm text-neutral-600">
                 <LoaderCircle className="h-4 w-4 animate-spin" />
-                Checking installation
+                جارٍ التحقق من التثبيت
               </div>
             )}
             {checks.map((check) => (
@@ -186,7 +186,7 @@ export function RegisterClient() {
             {preparationComplete && (
               <div className="flex items-center gap-3 rounded-2xl bg-green-50 px-4 py-3 text-sm text-green-700">
                 <CheckCircle2 className="h-4 w-4" />
-                {databaseMigrated ? "Clean database migrated successfully" : "Database schema is ready"}
+                {databaseMigrated ? "تمت ترحيل قاعدة البيانات النظيفة بنجاح" : "مخطط قاعدة البيانات جاهز"}
               </div>
             )}
           </div>
@@ -201,7 +201,7 @@ export function RegisterClient() {
               className="h-11 w-full rounded-full px-6 active:scale-[0.98]"
               onClick={() => setStep(hasPrimaryDomain ? 3 : 2)}
             >
-              Continue
+              متابعة
             </Button>
           ) : (
             <Button
@@ -211,14 +211,14 @@ export function RegisterClient() {
               disabled={loading}
               onClick={() => void runPreparation()}
             >
-              {loading ? "Checking..." : "Check again"}
+              {loading ? "جارٍ التحقق..." : "إعادة التحقق"}
             </Button>
           )}
         </div>
       ) : showDomainStep ? (
         <form method="post" onSubmit={onDomainSubmit} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="domain">Primary domain</Label>
+            <Label htmlFor="domain">النطاق الأساسي</Label>
             <Input
               id="domain"
               name="domain"
@@ -227,7 +227,7 @@ export function RegisterClient() {
               required
             />
             <p className="text-xs leading-5 text-neutral-500">
-              The domain must already be a Cloudflare zone on this account.
+              يجب أن يكون النطاق منطقة Cloudflare مفعّلة بالفعل على هذا الحساب.
             </p>
           </div>
           {error && (
@@ -240,13 +240,13 @@ export function RegisterClient() {
             className="h-11 w-full rounded-full px-6 active:scale-[0.98]"
             disabled={loading}
           >
-            {loading ? "Adding domain..." : "Continue"}
+            {loading ? "جارٍ إضافة النطاق..." : "متابعة"}
           </Button>
         </form>
       ) : (
         <form method="post" onSubmit={onSubmit} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="username">اسم المستخدم</Label>
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 relative">
               <Input
                 id="username"
@@ -262,7 +262,7 @@ export function RegisterClient() {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">كلمة المرور</Label>
             <Input
               id="password"
               name="password"
@@ -274,7 +274,7 @@ export function RegisterClient() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="resetEmail">Recovery email</Label>
+            <Label htmlFor="resetEmail">البريد الإلكتروني لاسترداد الحساب</Label>
             <Input
               id="resetEmail"
               name="resetEmail"
@@ -296,7 +296,7 @@ export function RegisterClient() {
             className="h-11 w-full rounded-full px-6 active:scale-[0.98] mt-8"
             disabled={loading || hasAdminAccount === null || hasPrimaryDomain === null}
           >
-            {loading ? "Creating..." : "Create account"}
+            {loading ? "جارٍ الإنشاء..." : "إنشاء حساب"}
           </Button>
         </form>
       )}

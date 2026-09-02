@@ -12,7 +12,7 @@ import { updateMailboxAutoReply } from "./utils";
 
 const defaultSettings: MailboxAutoReplySettings = {
 	enabled: false,
-	subject: "Out of office",
+	subject: "خارج المكتب",
 	body: "",
 };
 
@@ -26,7 +26,7 @@ export function MailboxAutoReplyForm() {
 	useEffect(() => {
 		const nextSettings = {
 			enabled: selectedMailbox?.autoReplyEnabled ?? false,
-			subject: selectedMailbox?.autoReplySubject ?? "Out of office",
+			subject: selectedMailbox?.autoReplySubject ?? "خارج المكتب",
 			body: selectedMailbox?.autoReplyBody ?? "",
 		};
 		setSettings(nextSettings);
@@ -43,7 +43,7 @@ export function MailboxAutoReplyForm() {
 		event.preventDefault();
 		if (!selectedMailbox) return;
 		if (settings.enabled && !settings.body.trim()) {
-			setStatus("Enter an auto-reply message before enabling it.");
+			setStatus("أدخل رسالة الرد التلقائي قبل تفعيله.");
 			return;
 		}
 		setSaving(true);
@@ -58,16 +58,16 @@ export function MailboxAutoReplyForm() {
 				autoReplySubject: saved.subject,
 				autoReplyBody: saved.body,
 			});
-			setStatus("Saved");
+			setStatus("تم الحفظ");
 		} catch (error) {
-			setStatus(error instanceof Error ? error.message : "Failed to update auto-reply");
+			setStatus(error instanceof Error ? error.message : "تعذّر تحديث الرد التلقائي");
 		} finally {
 			setSaving(false);
 		}
 	}
 
-	if (isLoading) return <p className="text-sm text-neutral-500">Loading inbox…</p>;
-	if (!selectedMailbox) return <p className="text-sm text-neutral-500">Select an inbox to configure auto-reply.</p>;
+	if (isLoading) return <p className="text-sm text-neutral-500">جارٍ تحميل صندوق البريد…</p>;
+	if (!selectedMailbox) return <p className="text-sm text-neutral-500">اختر صندوق بريد لتكوين الرد التلقائي.</p>;
 
 	const address = `${selectedMailbox.localPart}@${selectedMailbox.hostname}`;
 	const canManage = selectedMailbox.permission === "full_access";
@@ -82,38 +82,38 @@ export function MailboxAutoReplyForm() {
 					disabled={!canManage || saving}
 				/>
 				<span>
-					<span className="block text-sm font-medium text-neutral-900">Enable auto-reply for {address}</span>
+					<span className="block text-sm font-medium text-neutral-900">تفعيل الرد التلقائي لـ {address}</span>
 					<span className="mt-1 block text-sm text-neutral-500">
-						Each sender receives at most one automatic response every 24 hours.
+						يتلقى كل مرسل ردًا تلقائيًا واحدًا على الأكثر كل 24 ساعة.
 					</span>
 				</span>
 			</label>
 			<div className="space-y-2">
-				<Label htmlFor="autoReplySubject">Subject</Label>
+				<Label htmlFor="autoReplySubject">الموضوع</Label>
 				<Input
 					id="autoReplySubject"
 					value={settings.subject}
 					onChange={(event) => setSettings({ ...settings, subject: event.target.value })}
-					placeholder="Out of office"
+					placeholder="خارج المكتب"
 					disabled={!canManage || saving}
 				/>
 			</div>
 			<div className="space-y-2">
-				<Label htmlFor="autoReplyBody">Message</Label>
+				<Label htmlFor="autoReplyBody">الرسالة</Label>
 				<Textarea
 					id="autoReplyBody"
 					value={settings.body}
 					onChange={(event) => setSettings({ ...settings, body: event.target.value })}
-					placeholder="Thanks for your message. I am currently away and will reply when I return."
+					placeholder="شكرًا لرسالتك. أنا غائب حاليًا وسأرد عند عودتي."
 					rows={7}
 					disabled={!canManage || saving}
 				/>
 			</div>
 			<div className="flex items-center gap-3">
 				<Button type="submit" disabled={!canManage || saving || !changed}>
-					{saving ? "Saving..." : "Save auto-reply"}
+					{saving ? "جارٍ الحفظ..." : "حفظ الرد التلقائي"}
 				</Button>
-				{!canManage && <p className="text-sm text-neutral-500">Full access is required to edit auto-reply.</p>}
+				{!canManage && <p className="text-sm text-neutral-500">الوصول الكامل مطلوب لتعديل الرد التلقائي.</p>}
 				{status && <p className="text-sm text-neutral-500">{status}</p>}
 			</div>
 		</form>

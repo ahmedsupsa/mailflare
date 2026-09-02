@@ -17,7 +17,7 @@ export async function provisionDomainOnCloudflare(
 	const zone = await findZoneByHostname(env, normalized);
 	if (!zone) {
 		throw new Error(
-			`Zone not found for "${normalized}". The domain must use Cloudflare DNS on this account.`,
+			`لم يتم العثور على Zone للنطاق "${normalized}". يجب أن يستخدم النطاق خوادم Cloudflare DNS ضمن هذا الحساب.`,
 		);
 	}
 

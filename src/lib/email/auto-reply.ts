@@ -57,7 +57,7 @@ export async function sendMailboxAutoReply(
 		mailboxId: input.mailboxId,
 		from: formatEmailAddress(deliveredAddress, mailbox.displayName),
 		to: recipient,
-		subject: mailbox.autoReplySubject.trim() || "Out of office",
+		subject: mailbox.autoReplySubject.trim() || "خارج المكتب",
 		text: mailbox.autoReplyBody.trim(),
 		headers,
 	});

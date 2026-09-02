@@ -16,28 +16,28 @@ export async function PUT(request: Request) {
 	try {
 		assertAdmin(await requireUser(env, request));
 	} catch {
-		return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 	}
 
 	const form = await request.formData();
 	const appName = String(form.get("appName") ?? "").trim();
 	const iconValue = form.get("icon");
 	if (!appName || appName.length > 60) {
-		return NextResponse.json({ error: "App name must be between 1 and 60 characters" }, { status: 400 });
+		return NextResponse.json({ error: "يجب أن يكون اسم التطبيق بين حرف واحد و60 حرفًا" }, { status: 400 });
 	}
 	const icon = isBrandingIcon(iconValue) && iconValue.size > 0 ? iconValue : null;
 	if (icon && !BRANDING_ICON_TYPES.includes(icon.type)) {
-		return NextResponse.json({ error: "Use a PNG, JPEG, WebP, or GIF image" }, { status: 400 });
+		return NextResponse.json({ error: "استخدم صورة بصيغة PNG أو JPEG أو WebP أو GIF" }, { status: 400 });
 	}
 	if (icon && icon.size > MAX_BRANDING_ICON_SIZE) {
-		return NextResponse.json({ error: "Icon must be 2 MB or smaller" }, { status: 413 });
+		return NextResponse.json({ error: "يجب ألا يتجاوز حجم الأيقونة 2 ميجابايت" }, { status: 413 });
 	}
 
 	try {
 		return NextResponse.json(await updateBranding(env, { appName, icon }));
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Unable to update branding";
-		const status = /license is required/i.test(message) ? 403 : 500;
+		const message = error instanceof Error ? error.message : "تعذر تحديث الهوية البصرية";
+		const status = /يلزم ترخيص/.test(message) ? 403 : 500;
 		return NextResponse.json({ error: message }, { status });
 	}
 }

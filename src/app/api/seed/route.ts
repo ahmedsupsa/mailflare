@@ -5,7 +5,7 @@ import { demoCredentials } from "@/lib/seed-utils";
 
 export async function POST() {
 	if (process.env.NODE_ENV === "production") {
-		return NextResponse.json({ error: "Not available in production" }, { status: 403 });
+		return NextResponse.json({ error: "غير متاح في بيئة الإنتاج" }, { status: 403 });
 	}
 	const env = getEnv();
 	const result = await seedDemoData(env);

@@ -6,7 +6,7 @@ export async function fetchDraft(draftId: string): Promise<ComposeDraft> {
 	const json = (await res.json()) as DraftResponse;
 
 	if (!res.ok || !json.draft) {
-		throw new Error(json.error ?? "Failed to load draft");
+		throw new Error(json.error ?? "فشل تحميل المسودة");
 	}
 
 	return json.draft;
@@ -50,7 +50,7 @@ export function applyMailboxSignature(
 	}
 	if (!nextBlock || text.includes(nextBlock)) return text;
 	if (!text) return nextBlock;
-	if (/^\s*[^\n]+ wrote:\n>/i.test(text)) return `${nextBlock}${text}`;
+	if (/^\s*كتب [^\n]+:\n>/i.test(text)) return `${nextBlock}${text}`;
 	return `${text}${nextBlock}`;
 }
 

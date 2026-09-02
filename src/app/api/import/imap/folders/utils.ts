@@ -7,9 +7,9 @@ export function parseImapFolderListRequest(input: ImapFolderListRequest): Omit<I
 	const username = input.username?.trim() ?? "";
 	const password = input.password ?? "";
 
-	if (!host) throw new Error("IMAP host is required");
-	if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("IMAP port is invalid");
-	if (!username || !password) throw new Error("IMAP username and password are required");
+	if (!host) throw new Error("عنوان خادم IMAP مطلوب");
+	if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("منفذ IMAP غير صالح");
+	if (!username || !password) throw new Error("اسم المستخدم وكلمة المرور الخاصان بـ IMAP مطلوبان");
 
 	return {
 		host,

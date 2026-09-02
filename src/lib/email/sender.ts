@@ -13,7 +13,7 @@ export async function getAuthorizedSenderAddress(
 		mailboxId?: string | null;
 	},
 ): Promise<{ fromAddr: string; mailboxId: string }> {
-	if (!input.mailboxId) throw new Error("Mailbox is required");
+	if (!input.mailboxId) throw new Error("صندوق البريد مطلوب");
 
 	const db = getDb(env);
 	const [mailbox] = await db
@@ -30,19 +30,19 @@ export async function getAuthorizedSenderAddress(
 		.where(eq(mailboxes.id, input.mailboxId))
 		.limit(1);
 
-	if (!mailbox) throw new Error("Mailbox not found");
+	if (!mailbox) throw new Error("صندوق البريد غير موجود");
 	const [actor] = await db.select().from(users).where(eq(users.id, input.userId)).limit(1);
-	if (!actor || actor.disabled) throw new Error("Sender account not found");
+	if (!actor || actor.disabled) throw new Error("حساب المرسل غير موجود");
 
 	const access = await getMailboxAccessLevel(db, actor, mailbox.id);
 	if (!access?.canSendOnBehalf) {
-		throw new Error("You do not have permission to send from this mailbox");
+		throw new Error("ليس لديك إذن للإرسال من صندوق البريد هذا");
 	}
 
 	const requestedAddress = getEmailAddress(input.from);
 	const permittedAddresses = await getMailboxDomainAddresses(db, mailbox);
 	if (!permittedAddresses.includes(requestedAddress.toLowerCase())) {
-		throw new Error("Sender address does not match the selected mailbox");
+		throw new Error("عنوان المرسل لا يطابق صندوق البريد المحدد");
 	}
 	const senderAddress = requestedAddress.toLowerCase();
 

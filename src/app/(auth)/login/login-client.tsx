@@ -24,7 +24,7 @@ export function LoginClient() {
     try {
       const { ok, data } = await submitLogin(new FormData(e.currentTarget));
       if (!ok) {
-        setError(data.error ?? "Login failed");
+        setError(data.error ?? "فشل تسجيل الدخول");
         setTurnstileReset((value) => value + 1);
         return;
       }
@@ -33,8 +33,8 @@ export function LoginClient() {
     } catch (error) {
       setError(
         error instanceof DOMException && error.name === "TimeoutError"
-          ? "Login timed out. Please try again."
-          : "Unable to reach the login service. Please try again.",
+          ? "انتهت مهلة تسجيل الدخول. يرجى المحاولة مرة أخرى."
+          : "تعذر الوصول إلى خدمة تسجيل الدخول. يرجى المحاولة مرة أخرى.",
       );
       setTurnstileReset((value) => value + 1);
     } finally {
@@ -45,12 +45,12 @@ export function LoginClient() {
   return (
     <AuthShell
       icon={Mail}
-      title="Sign in"
-      description="Open your mailbox and continue from the same inbox workspace."
+      title="تسجيل الدخول"
+      description="افتح بريدك الإلكتروني وتابع من نفس مساحة عمل البريد الوارد."
     >
       <form method="post" onSubmit={onSubmit} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">البريد الإلكتروني</Label>
           <Input
             id="email"
             name="email"
@@ -60,7 +60,7 @@ export function LoginClient() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">كلمة المرور</Label>
           <Input
             id="password"
             name="password"
@@ -80,7 +80,7 @@ export function LoginClient() {
           className="h-11 w-full rounded-full px-6 active:scale-[0.98]"
           disabled={loading}
         >
-          {loading ? "Signing in..." : "Sign in"}
+          {loading ? "جارٍ تسجيل الدخول..." : "تسجيل الدخول"}
         </Button>
       </form>
     </AuthShell>

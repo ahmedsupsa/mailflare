@@ -40,7 +40,7 @@ export async function runSingleMessageAction(
   });
 
   if (!response.ok) {
-    throw new Error("Unable to update message");
+    throw new Error("تعذر تحديث الرسالة");
   }
 
   window.dispatchEvent(new Event("mailflare:messages-changed"));
@@ -52,7 +52,7 @@ export function openUnsubscribeUrl(url: string) {
 
 export function confirmTrashWithoutUnsubscribe() {
   return window.confirm(
-    "This email does not provide an unsubscribe link. It will be moved to Trash, and future emails from this sender will also be moved to Trash.",
+    "لا يوفر هذا البريد الإلكتروني رابطًا لإلغاء الاشتراك. سيتم نقله إلى المهملات، وستُنقل أيضًا الرسائل المستقبلية من هذا المرسل إلى المهملات.",
   );
 }
 
@@ -61,7 +61,7 @@ export async function createTrashSenderRule({
   senderAddress,
 }: TrashSenderRuleInput) {
   const sender = getEmailAddress(senderAddress).trim().toLowerCase();
-  if (!sender) throw new Error("Sender address is required");
+  if (!sender) throw new Error("عنوان المرسل مطلوب");
 
   const response = await authFetch("/api/routing-rules", {
     method: "POST",
@@ -77,7 +77,7 @@ export async function createTrashSenderRule({
   });
   const data = (await response.json()) as { error?: string };
   if (!response.ok)
-    throw new Error(data.error ?? "Unable to create trash rule");
+    throw new Error(data.error ?? "تعذر إنشاء قاعدة النقل إلى المهملات");
 }
 
 export async function blockMessageContact({
@@ -90,7 +90,7 @@ export async function blockMessageContact({
     body: JSON.stringify({ mailboxId, address: senderAddress }),
   });
   const data = (await response.json()) as { error?: string };
-  if (!response.ok) throw new Error(data.error ?? "Unable to block contact");
+  if (!response.ok) throw new Error(data.error ?? "تعذر حظر جهة الاتصال");
 }
 
 export function getMoveMessageActions(
@@ -99,14 +99,14 @@ export function getMoveMessageActions(
 ): MoveMessageActionItem[] {
   const actions: MoveMessageActionItem[] = [];
   if (status === "archived" && direction === "inbound") {
-    actions.push({ action: "inbox", label: "Inbox", icon: InboxIcon });
+    actions.push({ action: "inbox", label: "البريد الوارد", icon: InboxIcon });
   }
   if (status !== "archived")
-    actions.push({ action: "archive", label: "Archived", icon: ArchiveIcon });
+    actions.push({ action: "archive", label: "الأرشيف", icon: ArchiveIcon });
   if (status !== "spam")
-    actions.push({ action: "spam", label: "Spam", icon: ShieldAlertIcon });
+    actions.push({ action: "spam", label: "البريد المزعج", icon: ShieldAlertIcon });
   if (status !== "trash")
-    actions.push({ action: "trash", label: "Trash", icon: Trash2Icon });
+    actions.push({ action: "trash", label: "المهملات", icon: Trash2Icon });
   return actions;
 }
 
@@ -137,7 +137,7 @@ export function buildReplyQuote(
     .split("\n")
     .map((line) => `> ${line}`)
     .join("\n");
-  return `\n\n${getEmailAddress(senderAddress)} wrote:\n${quoted}\n`;
+  return `\n\nكتب ${getEmailAddress(senderAddress)}:\n${quoted}\n`;
 }
 
 export async function createReplyDraft({
@@ -148,7 +148,7 @@ export async function createReplyDraft({
   bodyText,
 }: ReplyDraftInput) {
   const to = getEmailAddress(senderAddress).trim();
-  if (!to) throw new Error("Sender address is required");
+  if (!to) throw new Error("عنوان المرسل مطلوب");
 
   const response = await authFetch("/api/drafts", {
     method: "POST",
@@ -167,6 +167,6 @@ export async function createReplyDraft({
     error?: string;
   };
   if (!response.ok || !data.draft)
-    throw new Error(data.error ?? "Unable to create reply draft");
+    throw new Error(data.error ?? "تعذر إنشاء مسودة الرد");
   return data.draft.id;
 }

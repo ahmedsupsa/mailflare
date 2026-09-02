@@ -14,13 +14,13 @@ export async function GET(request: Request) {
 	const mailboxId = url.searchParams.get("mailboxId");
 	const email = normalizeEmailAddress(url.searchParams.get("address") ?? "");
 	if (!mailboxId || !email) {
-		return NextResponse.json({ error: "Mailbox and contact are required" }, { status: 400 });
+		return NextResponse.json({ error: "صندوق البريد وجهة الاتصال مطلوبان" }, { status: 400 });
 	}
 
 	const db = getDb(env);
 	const access = await getMailboxAccessLevel(db, user, mailboxId);
 	if (!access?.canRead) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 	const contact = await getContactByEmail(db, access.mailbox.userId, email);
 	return NextResponse.json({
@@ -41,13 +41,13 @@ export async function PATCH(request: Request) {
 	const email = normalizeEmailAddress(body.address ?? "");
 	const displayName = body.displayName?.trim() ?? "";
 	if (!body.mailboxId || !email || !displayName || displayName.length > 100) {
-		return NextResponse.json({ error: "A valid contact name is required" }, { status: 400 });
+		return NextResponse.json({ error: "اسم جهة اتصال صالح مطلوب" }, { status: 400 });
 	}
 
 	const db = getDb(env);
 	const access = await getMailboxAccessLevel(db, user, body.mailboxId);
 	if (!access?.canManage) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 	const contact = await saveManualContactName(db, {
 		userId: access.mailbox.userId,

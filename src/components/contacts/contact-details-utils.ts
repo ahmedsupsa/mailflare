@@ -9,7 +9,7 @@ export async function fetchContactDetails(
 	const params = new URLSearchParams({ mailboxId, address: getEmailAddress(address) });
 	const response = await authFetch(`/api/contacts?${params.toString()}`);
 	const data = (await response.json()) as ContactDetailsResponse;
-	if (!response.ok || !data.contact) throw new Error(data.error ?? "Unable to load contact");
+	if (!response.ok || !data.contact) throw new Error(data.error ?? "تعذر تحميل جهة الاتصال");
 	return data.contact;
 }
 
@@ -24,7 +24,7 @@ export async function updateContactName(
 		body: JSON.stringify({ mailboxId, address: getEmailAddress(address), displayName }),
 	});
 	const data = (await response.json()) as ContactDetailsResponse;
-	if (!response.ok || !data.contact) throw new Error(data.error ?? "Unable to update contact");
+	if (!response.ok || !data.contact) throw new Error(data.error ?? "تعذر تحديث جهة الاتصال");
 	return data.contact;
 }
 

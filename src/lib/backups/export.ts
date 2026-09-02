@@ -69,8 +69,8 @@ export async function restoreDatabaseRecords(db: D1Database, content: ArrayBuffe
 
 function parseDatabaseBackup(content: ArrayBuffer): DatabaseBackupDocument {
 	let value: unknown;
-	try { value = JSON.parse(new TextDecoder().decode(content)); } catch { throw new Error("The selected file is not a valid Mailflare backup"); }
-	if (!isDatabaseBackupDocument(value)) throw new Error("The selected file is not a valid Mailflare backup");
+	try { value = JSON.parse(new TextDecoder().decode(content)); } catch { throw new Error("الملف المحدد ليس نسخة احتياطية صالحة من Mailflare"); }
+	if (!isDatabaseBackupDocument(value)) throw new Error("الملف المحدد ليس نسخة احتياطية صالحة من Mailflare");
 	return value;
 }
 
@@ -87,7 +87,7 @@ function isDatabaseBackupDocument(value: unknown): value is DatabaseBackupDocume
 
 function createInsertStatement(db: D1Database, table: DatabaseBackupTable, row: DatabaseRecord) {
 	const columns = Object.keys(row);
-	if (columns.length === 0) throw new Error(`Backup contains an invalid ${table} record`);
+	if (columns.length === 0) throw new Error(`تحتوي النسخة الاحتياطية على سجل ${table} غير صالح`);
 	const placeholders = columns.map(() => "?").join(", ");
 	const identifiers = columns.map((column) => `\`${column.replaceAll("`", "``")}\``).join(", ");
 	return db.prepare(`INSERT INTO ${table} (${identifiers}) VALUES (${placeholders})`).bind(...columns.map((column) => row[column]));
@@ -104,7 +104,7 @@ function validateDatabaseBackup(document: DatabaseBackupDocument): void {
 	for (const table of BACKUP_TABLES) {
 		for (const row of document.tables[table]) {
 			if (!row || typeof row !== "object" || Array.isArray(row)) {
-				throw new Error(`Backup contains an invalid ${table} record`);
+				throw new Error(`تحتوي النسخة الاحتياطية على سجل ${table} غير صالح`);
 			}
 		}
 	}

@@ -47,8 +47,8 @@ export function showBrowserNewMessageNotification(event: NewMessageEvent): void 
 		return;
 	}
 
-	const notification = new Notification(event.subject || "New email", {
-		body: `From ${event.fromName ?? event.from}`,
+	const notification = new Notification(event.subject || "بريد إلكتروني جديد", {
+		body: `من ${event.fromName ?? event.from}`,
 		icon: "/icon-96.png",
 		tag: event.messageId,
 	});

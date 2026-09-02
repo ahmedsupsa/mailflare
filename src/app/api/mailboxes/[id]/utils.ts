@@ -35,7 +35,7 @@ export function getMailboxUpdateValues(input: MailboxUpdateValues): MailboxUpdat
 	if ("displayName" in input) values.displayName = input.displayName?.trim() || null;
 	if ("signature" in input) values.signature = input.signature?.trim() || null;
 	if ("autoReplyEnabled" in input) values.autoReplyEnabled = input.autoReplyEnabled;
-	if ("autoReplySubject" in input) values.autoReplySubject = input.autoReplySubject?.trim() || "Out of office";
+	if ("autoReplySubject" in input) values.autoReplySubject = input.autoReplySubject?.trim() || "خارج المكتب";
 	if ("autoReplyBody" in input) values.autoReplyBody = input.autoReplyBody?.trim() || "";
 	if ("useAllDomains" in input) values.useAllDomains = input.useAllDomains;
 	return values;

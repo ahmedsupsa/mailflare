@@ -19,7 +19,7 @@ export async function callPaymugLicenseApi(
 			signal: AbortSignal.timeout(15_000),
 		});
 	} catch {
-		throw new Error("Unable to reach Paymug. Try again later.");
+		throw new Error("تعذر الوصول إلى Paymug. حاول مرة أخرى لاحقًا.");
 	}
 
 	const rs = await response.json()
@@ -27,20 +27,20 @@ export async function callPaymugLicenseApi(
 
 	if (!response.ok) {
 		if (response.status === 409) {
-			throw new Error("This license is active on another installation. Deactivate it there before retrying.");
+			throw new Error("هذا الترخيص مُفعّل على تثبيت آخر. قم بإلغاء تفعيله هناك قبل إعادة المحاولة.");
 		}
 		if (response.status === 401 || response.status === 403) {
-			throw new Error("Paymug rejected this license key.");
+			throw new Error("رفض Paymug مفتاح الترخيص هذا.");
 		}
 		if (response.status >= 500) {
-			throw new Error("Paymug is temporarily unavailable. Try again later.");
+			throw new Error("خدمة Paymug غير متاحة مؤقتًا. حاول مرة أخرى لاحقًا.");
 		}
-		throw new Error("Paymug could not process this license request.");
+		throw new Error("تعذر على Paymug معالجة طلب الترخيص هذا.");
 	}
 
 	try {
 		return parsePaymugLicenseResponse(rs);
 	} catch {
-		throw new Error("Paymug returned an invalid license response");
+		throw new Error("أعاد Paymug استجابة ترخيص غير صالحة");
 	}
 }

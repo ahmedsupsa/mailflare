@@ -2,32 +2,32 @@ import type { SettingsNavSection } from "./settings-nav-types";
 
 export const settingsNavSections: SettingsNavSection[] = [
 	{
-		label: "Settings",
+		label: "الإعدادات",
 		items: [
 			{
 				href: "/settings/account",
-				label: "Account",
+				label: "الحساب",
 			},
 			{
 				href: "/settings/rules",
-				label: "Rules",
+				label: "القواعد",
 			},
 		],
 	},
 	{
-		label: "Mailbox",
+		label: "صندوق البريد",
 		items: [
 			{
 				href: "/settings/auto-reply",
-				label: "Auto-Reply",
+				label: "الرد التلقائي",
 			},
 			{
 				href: "/settings/import",
-				label: "Import",
+				label: "استيراد",
 			},
 			{
 				href: "/settings/export",
-				label: "Export",
+				label: "تصدير",
 			},
 		],
 	},

@@ -86,7 +86,7 @@ export async function migrateCleanDatabase(db: D1Database): Promise<boolean> {
 		const tableNames = new Set(existing.results.map((table) => table.name));
 		if (tableNames.has("users") && tableNames.has("domains")) return false;
 		throw new Error(
-			"The D1 database is not empty, but the Mailflare schema is incomplete. Apply the committed D1 migrations before continuing setup.",
+			"قاعدة بيانات D1 غير فارغة، لكن مخطط Mailflare غير مكتمل. يرجى تطبيق تحديثات D1 قبل متابعة الإعداد.",
 		);
 	}
 

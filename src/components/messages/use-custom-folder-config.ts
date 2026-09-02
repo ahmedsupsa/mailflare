@@ -9,7 +9,7 @@ import type { MessageFolderConfig } from "./types";
 
 export function useCustomFolderConfig(folderId: string): MessageFolderConfig {
 	const { selectedMailbox } = useSelectedMailbox();
-	const [folderName, setFolderName] = useState("Folder");
+	const [folderName, setFolderName] = useState("مجلد");
 
 	useEffect(() => {
 		if (!selectedMailbox?.id) return;
@@ -35,7 +35,7 @@ export function useCustomFolderConfig(folderId: string): MessageFolderConfig {
 			folder: "inbox",
 			folderId,
 			title: folderName,
-			emptyText: "No emails in this folder",
+			emptyText: "لا توجد رسائل في هذا المجلد",
 			hrefPrefix: `/folders/${folderId}`,
 			icon: Folder,
 			showRowBadge: false,

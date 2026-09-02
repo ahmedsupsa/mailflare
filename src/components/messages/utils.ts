@@ -12,10 +12,10 @@ export function getMessageParty(
 	folder: MessageFolderConfig["folder"],
 	currentAccountName?: string,
 ) {
-	if (folder === "drafts") return "Draft";
-	if (folder === "sent") return message.toContactName ?? (message.toAddr ? getEmailDisplayName(message.toAddr) : "No recipient");
+	if (folder === "drafts") return "مسودة";
+	if (folder === "sent") return message.toContactName ?? (message.toAddr ? getEmailDisplayName(message.toAddr) : "لا يوجد مستلم");
 	if (message.direction === "outbound" && currentAccountName) return currentAccountName;
-	return message.fromContactName ?? (message.fromAddr ? getEmailDisplayName(message.fromAddr) : "Unknown sender");
+	return message.fromContactName ?? (message.fromAddr ? getEmailDisplayName(message.fromAddr) : "مرسل غير معروف");
 }
 
 export function getMessagePartyClassName(message: Message, folder: MessageFolderConfig["folder"]) {
@@ -26,8 +26,8 @@ export function getMessagePartyClassName(message: Message, folder: MessageFolder
 }
 
 export function getMessagePreview(message: Message, folder: MessageFolderConfig["folder"]) {
-	if (folder === "drafts") return message.snippet || message.toAddr || "No content";
-	return message.snippet || "No preview";
+	if (folder === "drafts") return message.snippet || message.toAddr || "لا يوجد محتوى";
+	return message.snippet || "لا توجد معاينة";
 }
 
 export function formatMessageListTimestamp(createdAt: string): string {
@@ -69,6 +69,6 @@ export async function runBulkMessageAction(messageIds: string[], action: string,
 		body: JSON.stringify({ messageIds, action }),
 	});
 
-	if (!response.ok) throw new Error("Unable to update selected messages");
+	if (!response.ok) throw new Error("تعذر تحديث الرسائل المحددة");
 	if (notify) window.dispatchEvent(new Event("mailflare:messages-changed"));
 }

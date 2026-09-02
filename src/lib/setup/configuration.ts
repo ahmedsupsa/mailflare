@@ -6,19 +6,19 @@ export function getSetupRequirementChecks(env: CloudflareEnv): SetupRequirementC
 
 	return [
 		{
-			key: "Cloudflare API credentials",
+			key: "بيانات اعتماد Cloudflare API",
 			configured: hasApiToken || hasGlobalKey,
-			message: "Set CF_TOKEN, or set both CF_API_KEY and CF_EMAIL.",
+			message: "اضبط CF_TOKEN، أو اضبط كلًا من CF_API_KEY وCF_EMAIL.",
 		},
 		{
-			key: "Email Worker name",
+			key: "اسم Email Worker",
 			configured: !!env.CF_EMAIL_WORKER_NAME?.trim(),
-			message: "Set CF_EMAIL_WORKER_NAME to the deployed Worker name.",
+			message: "اضبط CF_EMAIL_WORKER_NAME على اسم الـ Worker الذي تم نشره.",
 		},
 		{
-			key: "D1 database",
+			key: "قاعدة بيانات D1",
 			configured: !!env.DB,
-			message: "Deploy the Worker with the DB binding from wrangler.jsonc.",
+			message: "انشر الـ Worker مع ربط قاعدة البيانات (DB binding) من wrangler.jsonc.",
 		},
 	];
 }

@@ -61,7 +61,7 @@ export default function DomainsPage() {
         }),
       });
       const json = (await res.json()) as { error?: string };
-      if (!res.ok) throw new Error(json.error ?? "Failed");
+      if (!res.ok) throw new Error(json.error ?? "فشلت العملية");
       return json;
     },
     onSuccess: () => {
@@ -74,7 +74,7 @@ export default function DomainsPage() {
   const remove = useMutation({
     mutationFn: async (id: string) => {
       const res = await authFetch(`/api/domains/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to remove");
+      if (!res.ok) throw new Error("تعذرت الإزالة");
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["domains"] }),
   });
@@ -89,30 +89,30 @@ export default function DomainsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-medium">Domains</h1>
+          <h1 className="text-3xl font-medium">النطاقات</h1>
           <p className="mt-1 text-sm text-neutral-500">
-            Domains must be on your Cloudflare account. Adding a domain enables
-            Email Routing and Email Sending DNS automatically.
+            يجب أن تكون النطاقات ضمن حساب Cloudflare الخاص بك. إضافة نطاق تفعّل
+            تلقائيًا سجلات DNS الخاصة بتوجيه البريد الإلكتروني وإرساله.
           </p>
         </div>
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4" />
-              New domain
+              نطاق جديد
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add domain</DialogTitle>
+              <DialogTitle>إضافة نطاق</DialogTitle>
               <DialogDescription>
-                Provision Cloudflare routing and sending DNS for a zone in your
-                account.
+                توفير سجلات DNS الخاصة بالتوجيه والإرسال في Cloudflare لمنطقة
+                ضمن حسابك.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="hostname">Hostname</Label>
+                <Label htmlFor="hostname">اسم المضيف</Label>
                 <Input
                   id="hostname"
                   value={hostname}
@@ -129,7 +129,7 @@ export default function DomainsPage() {
                 onClick={() => create.mutate()}
                 disabled={!hostname || create.isPending}
               >
-                {create.isPending ? "Adding..." : "Add domain"}
+                {create.isPending ? "جارٍ الإضافة..." : "إضافة نطاق"}
               </Button>
             </div>
           </DialogContent>
@@ -144,7 +144,7 @@ export default function DomainsPage() {
         )}
         {!isLoading && (data?.domains ?? []).length === 0 && (
           <p className="rounded-2xl bg-white px-5 py-4 text-sm text-neutral-500">
-            No domains yet
+            لا توجد نطاقات بعد
           </p>
         )}
         <div className="grid gap-3">
@@ -170,7 +170,7 @@ export default function DomainsPage() {
           <CardContent className="space-y-4 pt-5 text-xs no-font-mono">
             <div>
               <p className="font-sans font-medium text-sm mb-2">
-                Email Routing
+                توجيه البريد الإلكتروني
               </p>
               <pre className="overflow-auto bg-neutral-50 dark:bg-neutral-900 p-3 rounded-md">
                 {JSON.stringify(
@@ -182,7 +182,7 @@ export default function DomainsPage() {
             </div>
             <div>
               <p className="font-sans font-medium text-sm mb-2">
-                Email Sending
+                إرسال البريد الإلكتروني
               </p>
               <pre className="overflow-auto bg-neutral-50 dark:bg-neutral-900 p-3 rounded-md">
                 {JSON.stringify(

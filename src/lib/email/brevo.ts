@@ -55,7 +55,7 @@ export async function sendEmailWithBrevo(
 			email: getEmailAddress(input.from),
 			name: getEmailDisplayName(input.from),
 		},
-		subject: input.subject || "(no subject)",
+		subject: input.subject || "(بدون موضوع)",
 		...(input.html ? { htmlContent: input.html } : { textContent: input.text || " " }),
 		...(brevoHeaders ? { headers: brevoHeaders } : {}),
 		...(input.attachments?.length

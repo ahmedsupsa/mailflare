@@ -14,10 +14,10 @@ export function getCloudflareAuth(env: CloudflareEnv): CfAuth {
 	}
 
 	if (key && !email) {
-		throw new Error("CF_EMAIL is required when using CF_API_KEY");
+		throw new Error("CF_EMAIL مطلوب عند استخدام CF_API_KEY");
 	}
 
-	throw new Error("CF_TOKEN or CF_API_KEY is not configured");
+	throw new Error("لم يتم ضبط CF_TOKEN أو CF_API_KEY");
 }
 
 export function getCloudflareAuthHeaders(auth: CfAuth): HeadersInit {

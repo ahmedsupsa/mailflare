@@ -48,7 +48,7 @@ export function splitRepliedEmailContent(
 			latestContent: trimEmptyLines(lines.slice(0, quoteIndex)).join("\n").trim(),
 			quotedContent: buildQuotedContent(
 				quotedLines,
-				"Unknown time",
+				"وقت غير معروف",
 				"received",
 				options,
 			),
@@ -102,7 +102,7 @@ function splitOriginalMessage(
 
 	const quotedContent = buildQuotedContent(
 		stripSingleQuotePrefix(quotedLines.slice(contentStartIndex)),
-		headers.get("date") ?? headers.get("sent") ?? "Unknown time",
+		headers.get("date") ?? headers.get("sent") ?? "وقت غير معروف",
 		getPreviousMessageDirection(headers.get("from"), options.ownAddress),
 		options,
 	);
@@ -120,7 +120,7 @@ function splitSeparatorQuotedContent(
 		latestContent: trimEmptyLines(lines.slice(0, separatorIndex)).join("\n").trim(),
 		quotedContent: buildQuotedContent(
 			quotedLines,
-			getHeaderValue(quotedLines, "sent") ?? getHeaderValue(quotedLines, "date") ?? "Unknown time",
+			getHeaderValue(quotedLines, "sent") ?? getHeaderValue(quotedLines, "date") ?? "وقت غير معروف",
 			getPreviousMessageDirection(getHeaderValue(quotedLines, "from"), options.ownAddress),
 			options,
 		),
@@ -133,7 +133,7 @@ function getWroteDateLine(line: string): string {
 	return rawDateLine
 		.replace(/,\s*["']?[^,<"]+["']?\s*<[^>]+>\s*$/i, "")
 		.replace(/\b([0-9]{1,2}:[0-9]{2}\s?(?:AM|PM))(?:,?\s+.*)?$/i, "$1")
-		.trim() || "Unknown time";
+		.trim() || "وقت غير معروف";
 }
 
 function getWroteAddress(line: string): string | undefined {

@@ -9,16 +9,16 @@ export const LICENSE_PLANS: LicensePlan[] = [
 		name: "Pro",
 		price: 19,
 		originalPrice: 39,
-		description: "A perpetual license for one account, including one year of product updates.",
-		features: ["Custom branding", "All future Pro features", "One year of updates", "Keep the licensed version forever"],
+		description: "ترخيص دائم لحساب واحد، يشمل سنة واحدة من تحديثات المنتج.",
+		features: ["تخصيص الهوية المرئية", "جميع ميزات Pro المستقبلية", "سنة واحدة من التحديثات", "احتفظ بالنسخة المرخصة إلى الأبد"],
 		icon: Sparkles,
 		checkoutUrl: "https://app.paymug.co/buy/mailflare-pro",
 	},
 	{
 		name: "Team",
 		price: 249,
-		description: "A perpetual multi-account license with every Pro capability and one year of updates.",
-		features: ["Everything in Pro", "Add and manage other accounts", "Shared mailbox access as available", "One year of updates", "Keep the licensed version forever"],
+		description: "ترخيص دائم متعدد الحسابات يشمل كل إمكانيات Pro وسنة واحدة من التحديثات.",
+		features: ["كل ما في Pro", "إضافة حسابات أخرى وإدارتها", "الوصول المشترك لصناديق البريد عند توفره", "سنة واحدة من التحديثات", "احتفظ بالنسخة المرخصة إلى الأبد"],
 		icon: Building2,
 		checkoutUrl: "https://app.paymug.co/buy/mailflare-team",
 	},
@@ -27,7 +27,7 @@ export const LICENSE_PLANS: LicensePlan[] = [
 export async function loadLicenseStatus(): Promise<NonNullable<LicenseResponse["license"]>> {
 	const response = await authFetch("/api/licenses");
 	const data = (await response.json()) as LicenseResponse;
-	if (!response.ok || !data.license) throw new Error(data.error ?? "Unable to load license status");
+	if (!response.ok || !data.license) throw new Error(data.error ?? "تعذر تحميل حالة الترخيص");
 	return data.license;
 }
 
@@ -42,13 +42,13 @@ export async function runLicenseAction(
 		body: JSON.stringify({ licenseKey, ...(plan ? { plan } : {}) }),
 	});
 	const data = (await response.json()) as LicenseResponse;
-	if (!response.ok || !data.license) throw new Error(data.error ?? "License request failed");
+	if (!response.ok || !data.license) throw new Error(data.error ?? "فشل طلب الترخيص");
 	window.dispatchEvent(new Event(LICENSE_STATUS_CHANGED_EVENT));
 	return data.license;
 }
 
 export function formatLicensePlan(plan: string): string {
-	return plan === "team" ? "Team" : plan === "pro" ? "Pro" : "Community";
+	return plan === "team" ? "Team" : plan === "pro" ? "Pro" : "المجتمعي";
 }
 
 export function formatLicenseDate(value: Date | string | null): string | null {

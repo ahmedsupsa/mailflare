@@ -18,7 +18,7 @@ export function ChangePasswordForm() {
 		setStatus(null);
 
 		if (newPassword !== confirmPassword) {
-			setStatus("New passwords do not match");
+			setStatus("كلمتا المرور الجديدتان غير متطابقتين");
 			return;
 		}
 
@@ -28,9 +28,9 @@ export function ChangePasswordForm() {
 			setCurrentPassword("");
 			setNewPassword("");
 			setConfirmPassword("");
-			setStatus("Password changed");
+			setStatus("تم تغيير كلمة المرور");
 		} catch (err) {
-			setStatus(err instanceof Error ? err.message : "Failed to change password");
+			setStatus(err instanceof Error ? err.message : "فشل تغيير كلمة المرور");
 		} finally {
 			setLoading(false);
 		}
@@ -39,7 +39,7 @@ export function ChangePasswordForm() {
 	return (
 		<form onSubmit={onSubmit} className="space-y-4">
 			<div className="space-y-2">
-				<Label htmlFor="currentPassword">Current password</Label>
+				<Label htmlFor="currentPassword">كلمة المرور الحالية</Label>
 				<Input
 					id="currentPassword"
 					type="password"
@@ -50,7 +50,7 @@ export function ChangePasswordForm() {
 				/>
 			</div>
 			<div className="space-y-2">
-				<Label htmlFor="newPassword">New password</Label>
+				<Label htmlFor="newPassword">كلمة المرور الجديدة</Label>
 				<Input
 					id="newPassword"
 					type="password"
@@ -62,7 +62,7 @@ export function ChangePasswordForm() {
 				/>
 			</div>
 			<div className="space-y-2">
-				<Label htmlFor="confirmPassword">Confirm new password</Label>
+				<Label htmlFor="confirmPassword">تأكيد كلمة المرور الجديدة</Label>
 				<Input
 					id="confirmPassword"
 					type="password"
@@ -75,7 +75,7 @@ export function ChangePasswordForm() {
 			</div>
 			<div className="flex items-center gap-3">
 				<Button type="submit" disabled={loading}>
-					{loading ? "Changing..." : "Change password"}
+					{loading ? "جارٍ التغيير..." : "تغيير كلمة المرور"}
 				</Button>
 				{status && <p className="text-sm text-neutral-500">{status}</p>}
 			</div>

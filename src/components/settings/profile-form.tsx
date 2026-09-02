@@ -32,7 +32,7 @@ export function ProfileForm({ initialName, initialResetEmail, email }: ProfileFo
 			const data = (await res.json()) as ProfileFormResponse;
 
 			if (!res.ok) {
-				setStatus(typeof data.error === "string" ? data.error : "Failed to update account");
+				setStatus(typeof data.error === "string" ? data.error : "تعذّر تحديث الحساب");
 				return;
 			}
 
@@ -42,9 +42,9 @@ export function ProfileForm({ initialName, initialResetEmail, email }: ProfileFo
 			setResetEmail(nextResetEmail);
 			setSavedName(nextName);
 			setSavedResetEmail(nextResetEmail);
-			setStatus("Saved");
+			setStatus("تم الحفظ");
 		} catch (err) {
-			setStatus(err instanceof Error ? err.message : "Failed to update account");
+			setStatus(err instanceof Error ? err.message : "تعذّر تحديث الحساب");
 		} finally {
 			setLoading(false);
 		}
@@ -53,15 +53,15 @@ export function ProfileForm({ initialName, initialResetEmail, email }: ProfileFo
 	return (
 		<form onSubmit={onSubmit} className="space-y-4">
 			<div className="space-y-2">
-				<Label htmlFor="accountEmail">Current email</Label>
+				<Label htmlFor="accountEmail">البريد الإلكتروني الحالي</Label>
 				<Input id="accountEmail" value={email} type="email" readOnly aria-readonly="true" className="bg-neutral-50" />
 			</div>
 			<div className="space-y-2">
-				<Label htmlFor="name">Name</Label>
+				<Label htmlFor="name">الاسم</Label>
 				<Input id="name" value={name} onChange={(event) => setName(event.target.value)} required />
 			</div>
 			<div className="space-y-2">
-				<Label htmlFor="resetEmail">Recovery email</Label>
+				<Label htmlFor="resetEmail">البريد الإلكتروني للاسترداد</Label>
 				<Input
 					id="resetEmail"
 					value={resetEmail}
@@ -72,7 +72,7 @@ export function ProfileForm({ initialName, initialResetEmail, email }: ProfileFo
 			</div>
 			<div className="flex items-center gap-3">
 				<Button type="submit" disabled={loading || !hasChanges}>
-					{loading ? "Saving..." : "Save"}
+					{loading ? "جارٍ الحفظ..." : "حفظ"}
 				</Button>
 				{status && <p className="text-sm text-neutral-500">{status}</p>}
 			</div>

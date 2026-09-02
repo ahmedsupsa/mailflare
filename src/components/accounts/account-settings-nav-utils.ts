@@ -1,9 +1,9 @@
 import type { AccountSettingsNavItem } from "./account-settings-nav-types";
 
 export const accountSettingsNavItems: AccountSettingsNavItem[] = [
-	{ segment: "", label: "Details" },
-	{ segment: "permissions", label: "Permissions" },
-	{ segment: "mailboxes", label: "Mailboxes" },
+	{ segment: "", label: "التفاصيل" },
+	{ segment: "permissions", label: "الصلاحيات" },
+	{ segment: "mailboxes", label: "صناديق البريد" },
 ];
 
 export function getAccountSettingsHref(accountId: string, segment: AccountSettingsNavItem["segment"]): string {

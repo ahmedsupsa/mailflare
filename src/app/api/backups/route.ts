@@ -38,7 +38,7 @@ export async function GET(request: Request) {
 			configuration: getD1ExportConfigurationStatus(env),
 		});
 	} catch {
-		return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 	}
 }
 
@@ -46,11 +46,11 @@ export async function PUT(request: Request) {
 	try {
 		const { env } = await requireAdmin(request);
 		const input = parseBackupSettingsInput(await request.json());
-		if (!input) return NextResponse.json({ error: "Invalid backup settings" }, { status: 400 });
+		if (!input) return NextResponse.json({ error: "إعدادات النسخ الاحتياطي غير صالحة" }, { status: 400 });
 		await updateBackupSettings(env, input);
 		return NextResponse.json({ ok: true });
 	} catch {
-		return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 	}
 }
 
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 				params: { backupId, force: true },
 			});
 		} catch (error) {
-			const message = error instanceof Error ? error.message : "Failed to start backup";
+			const message = error instanceof Error ? error.message : "فشل بدء النسخ الاحتياطي";
 			await getDb(env)
 				.update(backups)
 				.set({ status: "failed", error: message, completedAt: new Date() })
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 		}
 		return NextResponse.json({ backupId }, { status: 202 });
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Failed to start backup";
+		const message = error instanceof Error ? error.message : "فشل بدء النسخ الاحتياطي";
 		const status = error instanceof BackupWorkflowUnavailableError ? 503 : 400;
 		return NextResponse.json({ error: message }, { status });
 	}

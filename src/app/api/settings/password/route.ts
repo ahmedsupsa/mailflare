@@ -20,15 +20,15 @@ export async function PATCH(request: Request) {
 		if (err instanceof ZodError) {
 			return NextResponse.json({ error: err.flatten() }, { status: 400 });
 		}
-		return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+		return NextResponse.json({ error: "الطلب غير صالح" }, { status: 400 });
 	}
 
 	if (!verifyPassword(parsed.currentPassword, user.passwordHash)) {
-		return NextResponse.json({ error: "Current password is incorrect" }, { status: 400 });
+		return NextResponse.json({ error: "كلمة المرور الحالية غير صحيحة" }, { status: 400 });
 	}
 
 	if (verifyPassword(parsed.newPassword, user.passwordHash)) {
-		return NextResponse.json({ error: "New password must be different from the current password" }, { status: 400 });
+		return NextResponse.json({ error: "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية" }, { status: 400 });
 	}
 
 	const db = getDb(env);

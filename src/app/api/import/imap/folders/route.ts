@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 		input = parseImapFolderListRequest(body);
 	} catch (error) {
 		const status = error instanceof RequestBodyTooLargeError ? 413 : 400;
-		return NextResponse.json({ error: error instanceof Error ? error.message : "Invalid IMAP folder request" }, { status });
+		return NextResponse.json({ error: error instanceof Error ? error.message : "طلب مجلدات IMAP غير صالح" }, { status });
 	}
 
 	try {
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 		return NextResponse.json({ folders });
 	} catch (error) {
 		return NextResponse.json(
-			{ error: error instanceof Error ? error.message : "Unable to list IMAP folders" },
+			{ error: error instanceof Error ? error.message : "تعذر جلب قائمة مجلدات IMAP" },
 			{ status: 502 },
 		);
 	}

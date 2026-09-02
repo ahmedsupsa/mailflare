@@ -9,13 +9,13 @@ import type {
 } from "./types";
 
 export const importSourceOptions: ImportSourceOption[] = [
-	{ value: "inbox", label: "Inbox", imapFolder: "INBOX", destination: "system:inbox", system: true },
-	{ value: "sent", label: "Sent", imapFolder: "Sent", destination: "system:sent", system: true },
-	{ value: "drafts", label: "Drafts", imapFolder: "Drafts", destination: "system:drafts", system: true },
-	{ value: "archived", label: "Archived", imapFolder: "Archive", destination: "system:archived", system: true },
-	{ value: "spam", label: "Spam", imapFolder: "Spam", destination: "system:spam", system: true },
-	{ value: "trash", label: "Trash", imapFolder: "Trash", destination: "system:trash", system: true },
-	{ value: "others", label: "Others", imapFolder: "", destination: "system:inbox" },
+	{ value: "inbox", label: "البريد الوارد", imapFolder: "INBOX", destination: "system:inbox", system: true },
+	{ value: "sent", label: "المرسل", imapFolder: "Sent", destination: "system:sent", system: true },
+	{ value: "drafts", label: "المسودات", imapFolder: "Drafts", destination: "system:drafts", system: true },
+	{ value: "archived", label: "الأرشيف", imapFolder: "Archive", destination: "system:archived", system: true },
+	{ value: "spam", label: "البريد المزعج", imapFolder: "Spam", destination: "system:spam", system: true },
+	{ value: "trash", label: "المحذوفات", imapFolder: "Trash", destination: "system:trash", system: true },
+	{ value: "others", label: "أخرى", imapFolder: "", destination: "system:inbox" },
 ];
 
 export function getImportSourceOption(section: ImportSourceSection): ImportSourceOption {
@@ -83,7 +83,7 @@ export async function ensureImportDestination(
 		body: JSON.stringify({ mailboxId, name: source.folderName }),
 	});
 	const data = (await response.json()) as ImportFolderSummary & { error?: string };
-	if (!response.ok) throw new Error(data.error ?? `Unable to create folder ${source.folderName}`);
+	if (!response.ok) throw new Error(data.error ?? `تعذّر إنشاء المجلد ${source.folderName}`);
 	return `folder:${data.id}`;
 }
 
@@ -91,7 +91,7 @@ async function fetchMailboxFolders(mailboxId: string): Promise<ImportFolderSumma
 	const params = new URLSearchParams({ mailboxId });
 	const response = await authFetch(`/api/folders?${params.toString()}`);
 	const data = (await response.json()) as { folders?: ImportFolderSummary[]; error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to load folders");
+	if (!response.ok) throw new Error(data.error ?? "تعذّر تحميل المجلدات");
 	return data.folders ?? [];
 }
 
@@ -116,7 +116,7 @@ export async function importFromImap(
 		}),
 	});
 	const data = (await response.json()) as ImportResult;
-	if (!response.ok) throw new Error(data.error ?? "IMAP import failed");
+	if (!response.ok) throw new Error(data.error ?? "فشل الاستيراد عبر IMAP");
 	return data;
 }
 
@@ -133,13 +133,13 @@ export async function fetchImapFolders(form: ImapFormState): Promise<string[]> {
 		}),
 	});
 	const data = (await response.json()) as { folders?: string[]; error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to list IMAP folders");
+	if (!response.ok) throw new Error(data.error ?? "تعذّر عرض مجلدات IMAP");
 	return data.folders ?? [];
 }
 
 export function formatImportResult(result: ImportResult | null): string {
 	if (!result) return "";
-	return `${result.imported ?? 0} imported, ${result.skipped ?? 0} skipped`;
+	return `تم استيراد ${result.imported ?? 0}، وتخطي ${result.skipped ?? 0}`;
 }
 
 function findFolderMatch(folders: string[], aliases: string[]): string | null {

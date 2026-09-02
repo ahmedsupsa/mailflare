@@ -12,23 +12,23 @@ import type {
 } from "./types";
 
 export const permissionLabels: Record<NonNullable<AccountMailboxAccessItem["permission"]>, string> = {
-	read_only: "Read Only",
-	send_as: "Send As",
-	send_on_behalf: "Send on Behalf",
-	full_access: "Full Access",
+	read_only: "قراءة فقط",
+	send_as: "الإرسال كـ",
+	send_on_behalf: "الإرسال نيابة عن",
+	full_access: "وصول كامل",
 };
 
 export async function fetchAccountMailboxAccess(accountId: string): Promise<AccountMailboxAccessResponse> {
 	const res = await authFetch(`/api/accounts/${accountId}/mailbox-access`);
 	const json = (await res.json()) as AccountMailboxAccessResponse;
-	if (!res.ok) throw new Error(json.error ?? "Failed to load account access");
+	if (!res.ok) throw new Error(json.error ?? "تعذر تحميل صلاحيات وصول الحساب");
 	return json;
 }
 
 export async function fetchAccount(accountId: string): Promise<AccountDetail> {
 	const res = await authFetch(`/api/accounts/${accountId}`);
 	const json = (await res.json()) as AccountDetailResponse;
-	if (!res.ok || !json.account) throw new Error(json.error ?? "Failed to load account");
+	if (!res.ok || !json.account) throw new Error(json.error ?? "تعذر تحميل الحساب");
 	return json.account;
 }
 
@@ -42,20 +42,20 @@ export async function updateAccount(
 		body: JSON.stringify(input),
 	});
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to update account");
+	if (!res.ok) throw new Error(json.error ?? "تعذر تحديث الحساب");
 }
 
 export async function fetchDomains(): Promise<DomainOption[]> {
 	const res = await authFetch("/api/domains");
 	const json = (await res.json()) as { domains?: DomainOption[]; error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to load domains");
+	if (!res.ok) throw new Error(json.error ?? "تعذر تحميل النطاقات");
 	return json.domains ?? [];
 }
 
 export async function fetchAccountMailboxes(accountId: string): Promise<AccountMailboxItem[]> {
 	const res = await authFetch(`/api/accounts/${accountId}/mailboxes`);
 	const json = (await res.json()) as { mailboxes?: AccountMailboxItem[]; error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to load account mailboxes");
+	if (!res.ok) throw new Error(json.error ?? "تعذر تحميل صناديق بريد الحساب");
 	return json.mailboxes ?? [];
 }
 
@@ -69,7 +69,7 @@ export async function createAccountMailbox(
 		body: JSON.stringify(input),
 	});
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to create mailbox");
+	if (!res.ok) throw new Error(json.error ?? "تعذر إنشاء صندوق البريد");
 }
 
 export async function grantAccountMailboxAccess(
@@ -83,7 +83,7 @@ export async function grantAccountMailboxAccess(
 		body: JSON.stringify({ mailboxId, permission }),
 	});
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to update access");
+	if (!res.ok) throw new Error(json.error ?? "تعذر تحديث الصلاحية");
 }
 
 export async function revokeAccountMailboxAccess(accountId: string, mailboxId: string): Promise<void> {
@@ -91,7 +91,7 @@ export async function revokeAccountMailboxAccess(accountId: string, mailboxId: s
 		method: "DELETE",
 	});
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to remove access");
+	if (!res.ok) throw new Error(json.error ?? "تعذرت إزالة الصلاحية");
 }
 
 export function getMailboxAddress(mailbox: Pick<AccountMailboxAccessItem, "localPart" | "hostname">): string {
@@ -105,7 +105,7 @@ export function getMailboxLabel(mailbox: Pick<AccountMailboxAccessItem, "display
 export async function fetchManagedAccount(accountId: string): Promise<ManagedAccount> {
 	const response = await authFetch(`/api/accounts/${accountId}`);
 	const data = (await response.json()) as { account?: ManagedAccount; error?: string };
-	if (!response.ok || !data.account) throw new Error(data.error ?? "Unable to load account");
+	if (!response.ok || !data.account) throw new Error(data.error ?? "تعذر تحميل الحساب");
 	return data.account;
 }
 
@@ -122,27 +122,27 @@ export async function saveManagedAccount(account: ManagedAccount): Promise<void>
 		}),
 	});
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to update account");
+	if (!response.ok) throw new Error(data.error ?? "تعذر تحديث الحساب");
 }
 
 export async function uploadManagedAccountAvatar(accountId: string, file: File): Promise<void> {
 	const form = new FormData();
 	form.set("file", file);
 	const response = await authFetch(`/api/accounts/${accountId}/avatar`, { method: "POST", body: form });
-	if (!response.ok) throw new Error("Unable to update avatar");
+	if (!response.ok) throw new Error("تعذر تحديث الصورة الرمزية");
 }
 
 export async function fetchManagedMailboxes(accountId: string): Promise<ManagedMailbox[]> {
 	const response = await authFetch(`/api/accounts/${accountId}/mailboxes`);
 	const data = (await response.json()) as { mailboxes?: ManagedMailbox[]; error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to load mailboxes");
+	if (!response.ok) throw new Error(data.error ?? "تعذر تحميل صناديق البريد");
 	return data.mailboxes ?? [];
 }
 
 export async function fetchManagedDomains(): Promise<ManagedDomain[]> {
 	const response = await authFetch("/api/domains");
 	const data = (await response.json()) as { domains?: ManagedDomain[]; error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to load domains");
+	if (!response.ok) throw new Error(data.error ?? "تعذر تحميل النطاقات");
 	return data.domains ?? [];
 }
 
@@ -162,11 +162,11 @@ export async function addManagedMailbox(
 		}),
 	});
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to add mailbox");
+	if (!response.ok) throw new Error(data.error ?? "تعذرت إضافة صندوق البريد");
 }
 
 export async function removeManagedMailbox(mailboxId: string): Promise<void> {
 	const response = await authFetch(`/api/mailboxes/${mailboxId}`, { method: "DELETE" });
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Unable to remove mailbox");
+	if (!response.ok) throw new Error(data.error ?? "تعذرت إزالة صندوق البريد");
 }

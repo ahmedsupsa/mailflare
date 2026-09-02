@@ -37,7 +37,7 @@ export function OnboardingClient() {
 		const { ok, data } = await createDomain(hostname);
 		setLoading(false);
 		if (!ok || !data.domain) {
-			setError(data.error ?? "Failed to add domain");
+			setError(data.error ?? "تعذّرت إضافة النطاق");
 			return;
 		}
 		setDomainId(data.domain.id);
@@ -51,7 +51,7 @@ export function OnboardingClient() {
 		const { ok, data } = await createMailbox(domainId, localPart);
 		setLoading(false);
 		if (!ok) {
-			setError(data.error ?? "Failed to create mailbox");
+			setError(data.error ?? "تعذّر إنشاء صندوق البريد");
 			return;
 		}
 		router.push("/inbox");
@@ -60,19 +60,19 @@ export function OnboardingClient() {
 	return (
 		<AuthShell
 			icon={MailPlus}
-			title={step === 1 ? "Connect mail routing" : "Create your first mailbox"}
+			title={step === 1 ? "ربط توجيه البريد" : "إنشاء أول صندوق بريد"}
 			description={
 				step === 1
-					? "Add the Cloudflare domain that will receive and send mail through this workspace."
-					: "Choose the mailbox address that should open directly into the inbox."
+					? "أضف نطاق Cloudflare الذي سيستقبل البريد ويرسله عبر مساحة العمل هذه."
+					: "اختر عنوان صندوق البريد الذي سيفتح مباشرةً إلى البريد الوارد."
 			}
 			steps={[
-				{ label: "Domain", active: step === 1 },
-				{ label: "Mailbox", active: step === 2 },
+				{ label: "النطاق", active: step === 1 },
+				{ label: "صندوق البريد", active: step === 2 },
 			]}
 			footer={
 				<span className="inline-flex items-center gap-2 text-neutral-500">
-					Setup completes in the inbox
+					يكتمل الإعداد في البريد الوارد
 					<ArrowRight className="h-4 w-4" />
 				</span>
 			}
@@ -81,11 +81,11 @@ export function OnboardingClient() {
 				{step === 1 && (
 					<>
 						<p className="rounded-2xl bg-[#eaf1fb] px-4 py-3 text-sm leading-6 text-neutral-700">
-							Your domain must use Cloudflare DNS on the same account as{" "}
+							يجب أن يستخدم نطاقك خوادم Cloudflare DNS على نفس الحساب الذي يحمل{" "}
 							<code className="no-font-mono text-xs font-semibold text-blue-800">CF_TOKEN</code>.
 						</p>
 						<div className="space-y-2">
-							<Label htmlFor="domain">Domain</Label>
+							<Label htmlFor="domain">النطاق</Label>
 							<Input
 								id="domain"
 								value={hostname}
@@ -98,14 +98,14 @@ export function OnboardingClient() {
 							disabled={!hostname || loading}
 							className="h-11 w-full rounded-full px-6 active:scale-[0.98]"
 						>
-							{loading ? "Adding..." : "Add domain"}
+							{loading ? "جارٍ الإضافة..." : "إضافة النطاق"}
 						</Button>
 					</>
 				)}
 				{step === 2 && (
 					<>
 						<div className="space-y-2">
-							<Label htmlFor="localPart">Mailbox address</Label>
+							<Label htmlFor="localPart">عنوان صندوق البريد</Label>
 							<div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
 								<Input
 									id="localPart"
@@ -121,7 +121,7 @@ export function OnboardingClient() {
 							disabled={!localPart || loading}
 							className="h-11 w-full rounded-full px-6 active:scale-[0.98]"
 						>
-							{loading ? "Creating..." : "Go to inbox"}
+							{loading ? "جارٍ الإنشاء..." : "الانتقال إلى البريد الوارد"}
 						</Button>
 					</>
 				)}

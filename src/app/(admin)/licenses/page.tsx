@@ -15,10 +15,10 @@ export default function LicensesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-medium text-neutral-900">Licenses</h1>
+        <h1 className="text-3xl font-medium text-neutral-900">التراخيص</h1>
         <p className="mt-2 text-sm text-neutral-500">
-          Choose a perpetual license. Each purchase includes updates released
-          during the first year.
+          اختر ترخيصًا دائمًا. يشمل كل شراء التحديثات الصادرة خلال السنة
+          الأولى.
         </p>
       </div>
       <LicenseActivation />
@@ -67,7 +67,7 @@ export default function LicensesPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Get {plan.name}
+                    احصل على {plan.name}
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </Button>

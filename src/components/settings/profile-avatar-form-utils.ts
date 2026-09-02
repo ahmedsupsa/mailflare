@@ -7,10 +7,10 @@ const MAX_PROFILE_AVATAR_SIZE = 2 * 1024 * 1024;
 
 export function validateProfileAvatar(file: File): string | null {
 	if (!PROFILE_AVATAR_ACCEPT.split(",").includes(file.type)) {
-		return "Use a JPEG, PNG, WebP, or GIF image";
+		return "استخدم صورة بصيغة JPEG أو PNG أو WebP أو GIF";
 	}
 	if (file.size > MAX_PROFILE_AVATAR_SIZE) {
-		return "Image must be 2 MB or smaller";
+		return "يجب ألا يتجاوز حجم الصورة 2 ميجابايت";
 	}
 	return null;
 }
@@ -22,7 +22,7 @@ export async function uploadProfileAvatar(file: File): Promise<void> {
 	if (response.ok) return;
 
 	const data = (await response.json().catch(() => null)) as ProfileAvatarUploadResponse | null;
-	throw new Error(data?.error ?? "Upload failed");
+	throw new Error(data?.error ?? "فشل الرفع");
 }
 
 export function getMailboxProfileAvatarUrl(mailboxId: string): string {
@@ -42,5 +42,5 @@ export async function uploadMailboxProfileAvatar(mailboxId: string, file: File):
 	}
 
 	const data = (await response.json().catch(() => null)) as ProfileAvatarUploadResponse | null;
-	throw new Error(data?.error ?? "Upload failed");
+	throw new Error(data?.error ?? "فشل الرفع");
 }

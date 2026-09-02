@@ -5,7 +5,7 @@ export async function exportMailbox(mailboxId: string, filename: string): Promis
 	const response = await authFetch(`/api/export/messages?${params.toString()}`);
 	if (!response.ok) {
 		const data = (await response.json()) as { error?: string };
-		throw new Error(data.error ?? "Export failed");
+		throw new Error(data.error ?? "فشل التصدير");
 	}
 
 	const blob = await response.blob();

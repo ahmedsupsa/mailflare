@@ -75,7 +75,7 @@ export default function MessageDetailPage() {
   if (!data?.message) {
     return (
       <p className="px-6 py-4 text-sm text-neutral-500">
-        {data?.error ?? "Message not found"}
+        {data?.error ?? "الرسالة غير موجودة"}
       </p>
     );
   }
@@ -132,7 +132,7 @@ export default function MessageDetailPage() {
       </div>
       <article className="px-6 py-4">
         <h1 className="text-2xl text-neutral-900 mb-4">
-          {message.subject ?? "(no subject)"}
+          {message.subject ?? "(بدون موضوع)"}
         </h1>
 
         <div className="mb-6 flex items-start justify-between border-b border-neutral-100 pb-5">
@@ -152,7 +152,7 @@ export default function MessageDetailPage() {
               <span className="text-neutral-500">&lt;{fromAddress}&gt;</span>
             </p>
             <p className="text-xs text-neutral-500">
-              to{" "}
+              إلى{" "}
               {message.direction === "outbound" ? (
                 <ContactDetailsTrigger
                   mailboxId={message.mailboxId}
@@ -186,7 +186,7 @@ export default function MessageDetailPage() {
         {cloudAttachmentResult.attachments.length > 0 && (
           <section className="mt-8 border-t border-neutral-100 py-6">
             <h2 className="mb-3 text-sm font-semibold text-neutral-900">
-              Cloud files ({cloudAttachmentResult.attachments.length})
+              ملفات سحابية ({cloudAttachmentResult.attachments.length})
             </h2>
             <div className="grid gap-2 sm:grid-cols-2">
               {cloudAttachmentResult.attachments.map((attachment) => (
@@ -203,7 +203,7 @@ export default function MessageDetailPage() {
                       {attachment.filename}
                     </span>
                     <span className="block text-xs text-neutral-500">
-                      Open from {attachment.provider}
+                      فتح من {attachment.provider}
                     </span>
                   </span>
                   <ExternalLink className="h-4 w-4 shrink-0 text-neutral-400" />
@@ -215,7 +215,7 @@ export default function MessageDetailPage() {
         {attachments.length > 0 && (
           <section className="mt-8 border-t border-neutral-100 py-6">
             <h2 className="mb-3 text-sm font-semibold text-neutral-900">
-              Attachments ({attachments.length})
+              المرفقات ({attachments.length})
             </h2>
             <div className="grid gap-2 sm:grid-cols-2">
               {attachments.map((attachment) => (

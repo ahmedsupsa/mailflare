@@ -17,12 +17,12 @@ export async function GET(request: Request, { params }: MailboxRouteParams) {
 	const db = getDb(env);
 	const access = await getMailboxAccessLevel(db, user, id);
 	if (!access?.canRead) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 	const [mailbox] = await selectMailboxForUser(db, user.id, id);
 
 	if (!mailbox) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 	const { avatarKey, ...mailboxDetails } = mailbox;
 
@@ -51,7 +51,7 @@ export async function PATCH(request: Request, { params }: MailboxRouteParams) {
 	const [existing] = await selectMailboxForUser(db, user.id, id);
 
 	if (!existing || !access?.canManage) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 
 	const updateValues = getMailboxUpdateValues(parsed.data);
@@ -66,7 +66,7 @@ export async function PATCH(request: Request, { params }: MailboxRouteParams) {
 		} catch (error) {
 			console.error("ensureMailboxDomainRouting", error);
 			return NextResponse.json(
-				{ error: "Failed to configure inbound routing for all domains. Please try saving again." },
+				{ error: "فشل ضبط توجيه البريد الوارد لجميع النطاقات. يرجى المحاولة مرة أخرى." },
 				{ status: 502 },
 			);
 		}
@@ -97,14 +97,14 @@ export async function DELETE(request: Request, { params }: MailboxRouteParams) {
 	const user = await requireUser(env, request);
 	const db = getDb(env);
 	const [mailbox] = await db.select().from(mailboxes).where(eq(mailboxes.id, id)).limit(1);
-	if (!mailbox) return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+	if (!mailbox) return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 
 	let allowed = mailbox.userId === user.id && user.canManageMailboxes;
 	if (!allowed && user.role === "admin") {
 		const [owner] = await db.select({ createdByUserId: users.createdByUserId }).from(users).where(eq(users.id, mailbox.userId)).limit(1);
 		allowed = mailbox.userId === user.id || owner?.createdByUserId === user.id;
 	}
-	if (!allowed) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+	if (!allowed) return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 
 	try {
 		await removeMailboxDomainRouting(env, db, {
@@ -114,7 +114,7 @@ export async function DELETE(request: Request, { params }: MailboxRouteParams) {
 			useAllDomains: mailbox.useAllDomains,
 		});
 	} catch (err) {
-		const message = err instanceof Error ? err.message : "Failed to remove Cloudflare routing rule";
+		const message = err instanceof Error ? err.message : "فشل إزالة قاعدة التوجيه في Cloudflare";
 		return NextResponse.json({ error: message }, { status: 502 });
 	}
 

@@ -8,8 +8,8 @@ export async function GET(request: Request) {
 	try {
 		return NextResponse.json(await getUpdateStatus(authorization.env));
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Could not check for updates";
-		const status = message.includes("must be configured") ? 503 : 502;
+		const message = error instanceof Error ? error.message : "تعذر التحقق من وجود تحديثات";
+		const status = message.includes("يجب ضبط") ? 503 : 502;
 		return NextResponse.json({ error: message }, { status });
 	}
 }

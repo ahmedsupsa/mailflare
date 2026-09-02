@@ -6,32 +6,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const sections = [
 	{
 		href: "/mailboxes",
-		title: "Mailboxes",
-		description: "Create and manage mailbox addresses.",
+		title: "صناديق البريد",
+		description: "إنشاء عناوين صناديق البريد وإدارتها.",
 		icon: Mail,
 	},
 	{
 		href: "/domains",
-		title: "Domains",
-		description: "Add Cloudflare domains and inspect DNS state.",
+		title: "النطاقات",
+		description: "إضافة نطاقات Cloudflare وفحص حالة DNS.",
 		icon: Globe2,
 	},
 	{
 		href: "/branding",
-		title: "Branding",
-		description: "Customize the app name, icon, and favicon.",
+		title: "الهوية",
+		description: "تخصيص اسم التطبيق والأيقونة وأيقونة المفضلة.",
 		icon: Palette,
 	},
 	{
 		href: "/licenses",
-		title: "Licenses",
-		description: "Compare Pro and Team perpetual licenses.",
+		title: "التراخيص",
+		description: "قارن بين ترخيصي Pro وTeam الدائمين.",
 		icon: BadgeDollarSign,
 	},
 	{
 		href: "/accounts",
-		title: "Accounts",
-		description: "Add and manage user accounts with a Team license.",
+		title: "الحسابات",
+		description: "إضافة حسابات المستخدمين وإدارتها بترخيص الفريق.",
 		icon: Users,
 	},
 	// {
@@ -58,9 +58,9 @@ export default function AdminSettingsPage() {
 	return (
 		<div>
 			<div className="mb-8">
-				<h1 className="text-3xl font-medium text-neutral-900">Admin settings</h1>
+				<h1 className="text-3xl font-medium text-neutral-900">إعدادات الإدارة</h1>
 				<p className="mt-2 text-sm text-neutral-500">
-					Manage workspace-level mail infrastructure and integrations.
+					إدارة البنية التحتية للبريد والتكاملات على مستوى مساحة العمل.
 				</p>
 			</div>
 			<div className="grid lg:grid-cols-2 gap-4">

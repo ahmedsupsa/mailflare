@@ -17,13 +17,13 @@ export async function POST(request: Request) {
 	const env = getEnv();
 	const user = await getCurrentUser(env, request);
 	if (!user) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 401 });
 	}
 
 	const payload = (await request.json()) as BulkMessagePayload;
 	const messageIds = payload.messageIds?.filter(Boolean) ?? [];
 	if (messageIds.length === 0 || !isAllowedBulkMessageAction(payload.action)) {
-		return NextResponse.json({ error: "Invalid bulk message action" }, { status: 400 });
+		return NextResponse.json({ error: "إجراء المعالجة الجماعية غير صالح" }, { status: 400 });
 	}
 
 	const status = getStatusForBulkAction(payload.action);
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
 	if (payload.action === "folder") {
 		if (!payload.folderId) {
-			return NextResponse.json({ error: "Folder is required" }, { status: 400 });
+			return NextResponse.json({ error: "المجلد مطلوب" }, { status: 400 });
 		}
 		const [folder] = await db
 			.select({ id: folders.id, mailboxId: folders.mailboxId })
@@ -41,11 +41,11 @@ export async function POST(request: Request) {
 			.where(eq(folders.id, payload.folderId))
 			.limit(1);
 		if (!folder) {
-			return NextResponse.json({ error: "Folder not found" }, { status: 404 });
+			return NextResponse.json({ error: "المجلد غير موجود" }, { status: 404 });
 		}
 		const folderAccess = await getMailboxAccessLevel(db, user, folder.mailboxId);
 		if (!folderAccess?.canManage) {
-			return NextResponse.json({ error: "Folder not found" }, { status: 404 });
+			return NextResponse.json({ error: "المجلد غير موجود" }, { status: 404 });
 		}
 		folderId = folder.id;
 	} else if (payload.action === "spam" || payload.action === "trash" || payload.action === "inbox" || payload.action === "archive") {
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 	};
 
 	if (Object.keys(values).length === 0) {
-		return NextResponse.json({ error: "No changes requested" }, { status: 400 });
+		return NextResponse.json({ error: "لم يتم طلب أي تغييرات" }, { status: 400 });
 	}
 
 	const selectedMessages = await db.select().from(messages).where(inArray(messages.id, messageIds));
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 	}
 
 	if (allowedMessageIds.length === 0) {
-		return NextResponse.json({ error: "No accessible messages" }, { status: 404 });
+		return NextResponse.json({ error: "لا توجد رسائل يمكن الوصول إليها" }, { status: 404 });
 	}
 
 	await db.update(messages).set(values).where(inArray(messages.id, allowedMessageIds));

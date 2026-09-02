@@ -10,13 +10,13 @@ export async function GET(request: Request, { params }: Params) {
 	const env = getEnv();
 	const user = await requireUser(env, request);
 	const domain = await getDomainForUser(env, user.id, id);
-	if (!domain) return NextResponse.json({ error: "Not found" }, { status: 404 });
+	if (!domain) return NextResponse.json({ error: "غير موجود" }, { status: 404 });
 
 	try {
 		const dns = await getDomainDns(env, domain);
 		return NextResponse.json({ domain, dns });
 	} catch (err) {
-		const message = err instanceof Error ? err.message : "Failed to fetch DNS";
+		const message = err instanceof Error ? err.message : "فشل جلب سجلات DNS";
 		return NextResponse.json({ error: message }, { status: 500 });
 	}
 }

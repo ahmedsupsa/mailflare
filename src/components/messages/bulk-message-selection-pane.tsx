@@ -36,10 +36,10 @@ export function BulkMessageSelectionPane({
 					<CheckSquare2 className="h-6 w-6" />
 				</div>
 				<h2 className="mt-4 text-lg font-semibold text-neutral-900">
-					{selectedMessages.length} selected
+					{selectedMessages.length} محدد
 				</h2>
 				<p className="mt-1 text-sm text-neutral-500">
-					Choose an action to apply to the selected emails.
+					اختر إجراءً لتطبيقه على الرسائل المحددة.
 				</p>
 				<div className="mt-5 rounded-xl border border-neutral-200 bg-white p-3 shadow-sm">
 					<BulkMessageToolbar

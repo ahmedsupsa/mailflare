@@ -14,7 +14,7 @@ export async function requireLicenseAdmin(env: CloudflareEnv, request: Request):
 		assertAdmin(await requireUser(env, request));
 		return null;
 	} catch {
-		return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 	}
 }
 
@@ -28,12 +28,12 @@ export function getLicenseInstanceUrl(request: Request): string {
 
 export function getLicenseErrorResponse(error: unknown): NextResponse {
 	if (error instanceof z.ZodError) {
-		return NextResponse.json({ error: "Enter a valid license key" }, { status: 400 });
+		return NextResponse.json({ error: "أدخل مفتاح ترخيص صالح" }, { status: 400 });
 	}
-	const message = error instanceof Error ? error.message : "License request failed";
+	const message = error instanceof Error ? error.message : "فشل طلب الترخيص";
 	const migrationMissing = /no such table|license_settings/i.test(message);
 	return NextResponse.json(
-		{ error: migrationMissing ? "Apply the latest database migration before activating a license" : message },
+		{ error: migrationMissing ? "يرجى تطبيق آخر تحديث لقاعدة البيانات قبل تفعيل الترخيص" : message },
 		{ status: migrationMissing ? 503 : 400 },
 	);
 }

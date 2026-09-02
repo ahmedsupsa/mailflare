@@ -40,7 +40,7 @@ export default function AccountMailboxesPage() {
   useEffect(() => {
     void load().catch((error) =>
       setMessage(
-        error instanceof Error ? error.message : "Unable to load mailboxes",
+        error instanceof Error ? error.message : "تعذر تحميل صناديق البريد",
       ),
     );
   }, [id]);
@@ -56,7 +56,7 @@ export default function AccountMailboxesPage() {
       await load();
     } catch (error) {
       setMessage(
-        error instanceof Error ? error.message : "Unable to add mailbox",
+        error instanceof Error ? error.message : "تعذرت إضافة صندوق البريد",
       );
     } finally {
       setSaving(false);
@@ -70,7 +70,7 @@ export default function AccountMailboxesPage() {
       await load();
     } catch (error) {
       setMessage(
-        error instanceof Error ? error.message : "Unable to remove mailbox",
+        error instanceof Error ? error.message : "تعذرت إزالة صندوق البريد",
       );
     }
   }
@@ -78,9 +78,9 @@ export default function AccountMailboxesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-medium text-neutral-900">Mailboxes</h1>
+        <h1 className="text-3xl font-medium text-neutral-900">صناديق البريد</h1>
         <p className="mt-2 text-sm text-neutral-500">
-          Manage inboxes owned by {account?.name ?? "this account"}.
+          إدارة صناديق البريد الخاصة بـ {account?.name ?? "هذا الحساب"}.
         </p>
       </div>
       <section className="space-y-4 rounded-3xl bg-white p-6">
@@ -103,21 +103,21 @@ export default function AccountMailboxesPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => void removeMailbox(mailbox.id)}
-                aria-label="Remove inbox"
+                aria-label="إزالة صندوق البريد"
               >
                 <Trash2 className="h-4 w-4 text-red-600" />
               </Button>
             </div>
           ))}
           {account && mailboxes.length === 0 && (
-            <p className="text-sm text-neutral-500">No mailboxes yet.</p>
+            <p className="text-sm text-neutral-500">لا توجد صناديق بريد بعد.</p>
           )}
         </div>
         <form onSubmit={addMailbox} className="flex gap-2">
           <Input
             value={localPart}
             onChange={(event) => setLocalPart(event.target.value)}
-            placeholder="inbox"
+            placeholder="بريد"
             required
           />
           <Select
@@ -133,7 +133,7 @@ export default function AccountMailboxesPage() {
           </Select>
           <Button type="submit" disabled={!account || !domainId || saving}>
             <Plus className="h-4 w-4" />
-            {saving ? "Adding..." : "Add inbox"}
+            {saving ? "جارٍ الإضافة..." : "إضافة صندوق بريد"}
           </Button>
         </form>
       </section>

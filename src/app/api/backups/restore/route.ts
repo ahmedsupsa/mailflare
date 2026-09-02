@@ -11,11 +11,11 @@ export async function POST(request: Request) {
 		assertAdmin(user);
 		const form = await request.formData();
 		const file = form.get("backup");
-		if (!(file instanceof File)) return NextResponse.json({ error: "Choose a backup file" }, { status: 400 });
+		if (!(file instanceof File)) return NextResponse.json({ error: "اختر ملف نسخة احتياطية" }, { status: 400 });
 		await restoreDatabaseRecords(env.DB, await file.arrayBuffer());
 		return NextResponse.json({ ok: true });
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Failed to restore backup";
+		const message = error instanceof Error ? error.message : "فشلت استعادة النسخة الاحتياطية";
 		return NextResponse.json({ error: message }, { status: 400 });
 	}
 }

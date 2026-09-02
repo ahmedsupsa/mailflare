@@ -20,9 +20,9 @@ export default function ActivityPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-medium text-neutral-900">Activity</h1>
+        <h1 className="text-3xl font-medium text-neutral-900">سجل النشاط</h1>
         <p className="mt-1 text-sm text-neutral-500">
-          Login and logout activity across user accounts.
+          نشاط تسجيل الدخول والخروج عبر حسابات المستخدمين.
         </p>
       </div>
 
@@ -30,10 +30,10 @@ export default function ActivityPage() {
         <table className="w-full min-w-[760px] table-fixed text-left">
           <thead className="border-b border-neutral-100 bg-neutral-50 text-xs font-semibold uppercase tracking-wide text-neutral-500">
             <tr>
-              <th className="w-32 px-5 py-3">Activity</th>
-              <th className="px-5 py-3">User</th>
-              <th className="w-64 px-5 py-3">Device</th>
-              <th className="w-48 px-5 py-3">Time</th>
+              <th className="w-32 px-5 py-3">النشاط</th>
+              <th className="px-5 py-3">المستخدم</th>
+              <th className="w-64 px-5 py-3">الجهاز</th>
+              <th className="w-48 px-5 py-3">الوقت</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-100">
@@ -57,7 +57,7 @@ export default function ActivityPage() {
             {!activity.isLoading && (activity.data ?? []).length === 0 && (
               <tr>
                 <td colSpan={4} className="px-5 py-4 text-sm text-neutral-500">
-                  No login or logout activity yet
+                  لا يوجد نشاط تسجيل دخول أو خروج بعد
                 </td>
               </tr>
             )}
@@ -74,21 +74,21 @@ export default function ActivityPage() {
                   </td>
                   <td className="px-5 py-4">
                     <p className="flex flex-col truncate no-font-mono">
-                      <span>{log.actorEmail ?? "(unknown email)"}</span>
+                      <span>{log.actorEmail ?? "(بريد إلكتروني غير معروف)"}</span>
                     </p>
                     <small className="text-neutral-500">
-                      {metadata.city || "(unknown city)"} •{" "}
-                      {metadata.country || "(unknown country)"}
+                      {metadata.city || "(مدينة غير معروفة)"} •{" "}
+                      {metadata.country || "(دولة غير معروفة)"}
                     </small>
                   </td>
                   <td className="px-5 py-4">
                     <p className="flex flex-col truncate no-font-mono">
-                      {metadata.device ?? "(unknown device)"}
+                      {metadata.device ?? "(جهاز غير معروف)"}
                     </p>
 
                     <small className="text-neutral-500">
-                      {metadata.platform || "(unknown platform)"} •{" "}
-                      {metadata.ipAddress ?? "(unknown IP)"}
+                      {metadata.platform || "(منصة غير معروفة)"} •{" "}
+                      {metadata.ipAddress ?? "(عنوان IP غير معروف)"}
                     </small>
                   </td>
                   <td className="px-5 py-4 text-sm text-neutral-500">

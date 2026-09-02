@@ -22,12 +22,12 @@ export async function POST(request: Request) {
 		input = parseImapImportRequest(body);
 	} catch (error) {
 		const status = error instanceof RequestBodyTooLargeError ? 413 : 400;
-		return NextResponse.json({ error: error instanceof Error ? error.message : "Invalid IMAP import request" }, { status });
+		return NextResponse.json({ error: error instanceof Error ? error.message : "طلب استيراد IMAP غير صالح" }, { status });
 	}
 
 	const access = await getMailboxAccessLevel(getDb(env), user, input.mailboxId);
 	if (!access?.canManage) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 	if (input.destination.type === "folder") {
 		const db = getDb(env);
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
 			.where(and(eq(folders.id, input.destination.folderId), eq(folders.mailboxId, access.mailbox.id)))
 			.limit(1);
 		if (!folder) {
-			return NextResponse.json({ error: "Folder not found" }, { status: 404 });
+			return NextResponse.json({ error: "المجلد غير موجود" }, { status: 404 });
 		}
 	}
 
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 		return NextResponse.json(result);
 	} catch (error) {
 		return NextResponse.json(
-			{ error: error instanceof Error ? error.message : "IMAP import failed" },
+			{ error: error instanceof Error ? error.message : "فشل استيراد IMAP" },
 			{ status: 502 },
 		);
 	}

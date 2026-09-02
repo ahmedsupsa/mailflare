@@ -23,7 +23,7 @@ export function AccountSettings() {
 				if (!cancelled) setUser(nextUser);
 			})
 			.catch((err) => {
-				if (!cancelled) setError(err instanceof Error ? err.message : "Failed to load account");
+				if (!cancelled) setError(err instanceof Error ? err.message : "تعذّر تحميل الحساب");
 			});
 
 		return () => {
@@ -47,21 +47,21 @@ export function AccountSettings() {
 	return (
 		<div className="space-y-8 py-4">
 			<div>
-				<h1 className="text-3xl font-medium text-neutral-900">Account</h1>
-				<p className="mt-1 text-sm text-neutral-500">Manage your account details and sign-in password.</p>
+				<h1 className="text-3xl font-medium text-neutral-900">الحساب</h1>
+				<p className="mt-1 text-sm text-neutral-500">إدارة تفاصيل حسابك وكلمة مرور تسجيل الدخول.</p>
 			</div>
 
 			<Card className="rounded-3xl border-0 bg-white px-6">
 				<CardHeader>
-					<CardTitle>Account details</CardTitle>
-					<CardDescription>Your current email is assigned to this account and cannot be changed here.</CardDescription>
+					<CardTitle>تفاصيل الحساب</CardTitle>
+					<CardDescription>بريدك الإلكتروني الحالي مرتبط بهذا الحساب ولا يمكن تغييره من هنا.</CardDescription>
 				</CardHeader>
 				<CardContent className="pb-6">
 					<div className="mb-6 flex items-center gap-4 border-b border-neutral-100 pb-6">
 						<ProfileAvatarForm name={user.name} />
 						<div>
-							<p className="text-sm font-medium text-neutral-900">Profile picture</p>
-							<p className="mt-1 text-sm text-neutral-500">Choose a picture to show across your account.</p>
+							<p className="text-sm font-medium text-neutral-900">الصورة الشخصية</p>
+							<p className="mt-1 text-sm text-neutral-500">اختر صورة لعرضها في جميع أنحاء حسابك.</p>
 						</div>
 					</div>
 					<ProfileForm
@@ -75,8 +75,8 @@ export function AccountSettings() {
 			{user.canForwardEmail && (
 				<Card className="rounded-3xl border-0 bg-white px-6">
 					<CardHeader>
-						<CardTitle>Forwarding email</CardTitle>
-						<CardDescription>Send a copy of incoming messages to another email address.</CardDescription>
+						<CardTitle>البريد الإلكتروني لإعادة التوجيه</CardTitle>
+						<CardDescription>إرسال نسخة من الرسائل الواردة إلى عنوان بريد إلكتروني آخر.</CardDescription>
 					</CardHeader>
 					<CardContent className="pb-6">
 						<ForwardingEmailForm initialForwardingEmail={user.forwardingEmail ?? ""} />
@@ -86,8 +86,8 @@ export function AccountSettings() {
 
 			<Card className="rounded-3xl border-0 bg-white px-6">
 				<CardHeader>
-					<CardTitle>Email signature</CardTitle>
-					<CardDescription>Configure the signature for the inbox currently selected above.</CardDescription>
+					<CardTitle>توقيع البريد الإلكتروني</CardTitle>
+					<CardDescription>تكوين التوقيع لصندوق البريد المحدد أعلاه.</CardDescription>
 				</CardHeader>
 				<CardContent className="pb-6">
 					<MailboxSignatureForm />
@@ -96,8 +96,8 @@ export function AccountSettings() {
 
 			<Card className="rounded-3xl border-0 bg-white px-6">
 				<CardHeader>
-					<CardTitle>Change password</CardTitle>
-					<CardDescription>Use at least 8 characters for your new password.</CardDescription>
+					<CardTitle>تغيير كلمة المرور</CardTitle>
+					<CardDescription>استخدم 8 أحرف على الأقل لكلمة المرور الجديدة.</CardDescription>
 				</CardHeader>
 				<CardContent className="pb-6">
 					<ChangePasswordForm />

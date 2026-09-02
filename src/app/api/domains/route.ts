@@ -49,7 +49,7 @@ export async function POST(request: Request) {
 		});
 		return NextResponse.json(result);
 	} catch (err) {
-		const message = err instanceof Error ? err.message : "Failed to add domain";
+		const message = err instanceof Error ? err.message : "فشلت إضافة النطاق";
 		return NextResponse.json({ error: message }, { status: 400 });
 	}
 }

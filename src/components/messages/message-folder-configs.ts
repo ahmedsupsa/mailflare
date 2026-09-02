@@ -3,8 +3,8 @@ import type { MessageFolderConfig } from "./types";
 
 export const inboxFolderConfig: MessageFolderConfig = {
 	folder: "inbox",
-	title: "Inbox",
-	emptyText: "No emails",
+	title: "البريد الوارد",
+	emptyText: "لا توجد رسائل",
 	hrefPrefix: "/inbox",
 	icon: Star,
 	// headerIcons: [MailOpen, Clock],
@@ -13,8 +13,8 @@ export const inboxFolderConfig: MessageFolderConfig = {
 
 export const starredFolderConfig: MessageFolderConfig = {
 	folder: "starred",
-	title: "Starred",
-	emptyText: "No starred emails",
+	title: "المميزة بنجمة",
+	emptyText: "لا توجد رسائل مميزة بنجمة",
 	hrefPrefix: "/starred",
 	icon: Star,
 	badgeVariant: "outline",
@@ -22,8 +22,8 @@ export const starredFolderConfig: MessageFolderConfig = {
 
 export const snoozedFolderConfig: MessageFolderConfig = {
 	folder: "snoozed",
-	title: "Snoozed",
-	emptyText: "No snoozed emails",
+	title: "المؤجلة",
+	emptyText: "لا توجد رسائل مؤجلة",
 	hrefPrefix: "/snoozed",
 	icon: Clock,
 	badgeVariant: "outline",
@@ -31,8 +31,8 @@ export const snoozedFolderConfig: MessageFolderConfig = {
 
 export const sentFolderConfig: MessageFolderConfig = {
 	folder: "sent",
-	title: "Sent",
-	emptyText: "No emails",
+	title: "المرسلة",
+	emptyText: "لا توجد رسائل",
 	hrefPrefix: "/sent",
 	icon: Send,
 	// headerIcons: [MailOpen, Clock],
@@ -41,8 +41,8 @@ export const sentFolderConfig: MessageFolderConfig = {
 
 export const archivedFolderConfig: MessageFolderConfig = {
 	folder: "archived",
-	title: "Archived",
-	emptyText: "No archived emails",
+	title: "الأرشيف",
+	emptyText: "لا توجد رسائل مؤرشفة",
 	hrefPrefix: "/archived",
 	icon: Archive,
 	badgeVariant: "outline",
@@ -50,8 +50,8 @@ export const archivedFolderConfig: MessageFolderConfig = {
 
 export const spamFolderConfig: MessageFolderConfig = {
 	folder: "spam",
-	title: "Spam",
-	emptyText: "No spam",
+	title: "البريد المزعج",
+	emptyText: "لا يوجد بريد مزعج",
 	hrefPrefix: "/spam",
 	icon: ShieldAlert,
 	badgeVariant: "outline",
@@ -59,8 +59,8 @@ export const spamFolderConfig: MessageFolderConfig = {
 
 export const trashFolderConfig: MessageFolderConfig = {
 	folder: "trash",
-	title: "Trash",
-	emptyText: "No emails in trash",
+	title: "المهملات",
+	emptyText: "لا توجد رسائل في المهملات",
 	hrefPrefix: "/trash",
 	icon: Trash2,
 	badgeVariant: "outline",

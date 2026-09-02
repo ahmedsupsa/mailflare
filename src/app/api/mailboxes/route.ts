@@ -38,20 +38,20 @@ export async function POST(request: Request) {
 	if (mailboxType === "shared") {
 		const entitlements = await getLicenseEntitlements(env);
 		if (user.role !== "admin" || !entitlements.canManageAccounts) {
-			return NextResponse.json({ error: "A Team license is required to create shared inboxes" }, { status: 403 });
+			return NextResponse.json({ error: "يلزم ترخيص Team لإنشاء صناديق بريد مشتركة" }, { status: 403 });
 		}
 	}
 	const ownerUserId = mailboxType === "shared" ? user.id : parsed.data.ownerUserId ?? user.id;
 	if (ownerUserId !== user.id) {
 		if (user.role !== "admin") {
-			return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+			return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 		}
 		const [owner] = await db
 			.select({ id: users.id })
 			.from(users)
 			.where(and(eq(users.id, ownerUserId), eq(users.createdByUserId, user.id)))
 			.limit(1);
-		if (!owner) return NextResponse.json({ error: "Account not found" }, { status: 404 });
+		if (!owner) return NextResponse.json({ error: "الحساب غير موجود" }, { status: 404 });
 	}
 	const [domain] = await db
 		.select()
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 		(user.canManageMailboxes && !!user.createdByUserId && domain.userId === user.createdByUserId)
 	);
 	if (!canUseDomain) {
-		return NextResponse.json({ error: "Domain not found" }, { status: 404 });
+		return NextResponse.json({ error: "النطاق غير موجود" }, { status: 404 });
 	}
 
 	const localPart = parsed.data.localPart.toLowerCase();
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
 		.where(and(eq(mailboxes.domainId, domain.id), eq(mailboxes.localPart, localPart)))
 		.limit(1);
 	if (existing) {
-		return NextResponse.json({ error: "Mailbox already exists" }, { status: 409 });
+		return NextResponse.json({ error: "صندوق البريد موجود بالفعل" }, { status: 409 });
 	}
 
 	const id = newId("mbx");
@@ -89,7 +89,7 @@ export async function POST(request: Request) {
 		await ensureMailboxDomainRouting(env, db, { id, domainId: domain.id, localPart, useAllDomains: true });
 	} catch (err) {
 		await db.delete(mailboxes).where(eq(mailboxes.id, id));
-		const message = err instanceof Error ? err.message : "Failed to create Cloudflare routing rule";
+		const message = err instanceof Error ? err.message : "فشل إنشاء قاعدة التوجيه في Cloudflare";
 		return NextResponse.json({ error: message }, { status: 502 });
 	}
 

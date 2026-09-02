@@ -7,7 +7,7 @@ import { migrateCleanDatabase } from "@/lib/setup/migration";
 export async function POST() {
 	const env = getEnv();
 	if (await hasAdminAccount(env)) {
-		return NextResponse.json({ error: "Initial setup is already complete" }, { status: 403 });
+		return NextResponse.json({ error: "تم إكمال الإعداد الأولي بالفعل" }, { status: 403 });
 	}
 
 	const checks = getSetupRequirementChecks(env);
@@ -19,7 +19,7 @@ export async function POST() {
 		const migrated = await migrateCleanDatabase(env.DB);
 		return NextResponse.json({ checks, migrated });
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Database preparation failed";
+		const message = error instanceof Error ? error.message : "فشل تجهيز قاعدة البيانات";
 		return NextResponse.json({ checks, migrated: false, error: message }, { status: 500 });
 	}
 }

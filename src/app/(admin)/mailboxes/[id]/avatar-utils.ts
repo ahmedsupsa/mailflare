@@ -29,5 +29,5 @@ export async function uploadMailboxAvatar(mailboxId: string, file: File): Promis
 	}
 
 	const data = (await response.json().catch(() => null)) as MailboxAvatarUploadResponse | null;
-	throw new Error(data?.error ?? "Upload failed");
+	throw new Error(data?.error ?? "فشل الرفع");
 }

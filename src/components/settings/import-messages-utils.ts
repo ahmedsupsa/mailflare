@@ -21,11 +21,11 @@ export async function importMessageFiles(
 		request.upload.onprogress = (event) => {
 			if (event.lengthComputable) onProgress?.(Math.round((event.loaded / event.total) * 70));
 		};
-		request.onerror = () => reject(new Error("Import upload failed"));
+		request.onerror = () => reject(new Error("فشل رفع الاستيراد"));
 		request.onload = () => {
 			const data = JSON.parse(request.responseText || "{}") as ImportMessagesResult;
 			if (request.status < 200 || request.status >= 300) {
-				reject(new Error(data.error ?? "Import failed"));
+				reject(new Error(data.error ?? "فشل الاستيراد"));
 				return;
 			}
 			onProgress?.(100);
@@ -37,5 +37,5 @@ export async function importMessageFiles(
 
 export function getImportSummary(result: ImportMessagesResult | null): string {
 	if (!result) return "";
-	return `${result.imported ?? 0} imported, ${result.skipped ?? 0} skipped`;
+	return `${result.imported ?? 0} تم استيرادها، ${result.skipped ?? 0} تم تخطيها`;
 }

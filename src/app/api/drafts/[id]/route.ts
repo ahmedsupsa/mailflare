@@ -19,7 +19,7 @@ export async function GET(request: Request, { params }: DraftRouteParams) {
 	const draft = await selectDraftWithBody(db, user.id, id);
 
 	if (!draft) {
-		return NextResponse.json({ error: "Draft not found" }, { status: 404 });
+		return NextResponse.json({ error: "المسودة غير موجودة" }, { status: 404 });
 	}
 
 	return NextResponse.json({ draft });
@@ -34,13 +34,13 @@ export async function PATCH(request: Request, { params }: DraftRouteParams) {
 		input = await readJsonBody<DraftPayload>(request, 1024 * 1024);
 	} catch (error) {
 		const status = error instanceof RequestBodyTooLargeError ? 413 : 400;
-		return NextResponse.json({ error: "Invalid draft request" }, { status });
+		return NextResponse.json({ error: "طلب المسودة غير صالح" }, { status });
 	}
 	const db = getDb(env);
 	const [draft] = await db.select().from(messages).where(eq(messages.id, id)).limit(1);
 
 	if (!userOwnsDraft(draft, user.id)) {
-		return NextResponse.json({ error: "Draft not found" }, { status: 404 });
+		return NextResponse.json({ error: "المسودة غير موجودة" }, { status: 404 });
 	}
 	const sender = await getDraftSender(env, user.id, input);
 	if ("error" in sender) {
@@ -73,7 +73,7 @@ export async function DELETE(request: Request, { params }: DraftRouteParams) {
 	const [draft] = await db.select().from(messages).where(eq(messages.id, id)).limit(1);
 
 	if (!userOwnsDraft(draft, user.id)) {
-		return NextResponse.json({ error: "Draft not found" }, { status: 404 });
+		return NextResponse.json({ error: "المسودة غير موجودة" }, { status: 404 });
 	}
 
 	await db.delete(messages).where(eq(messages.id, id));

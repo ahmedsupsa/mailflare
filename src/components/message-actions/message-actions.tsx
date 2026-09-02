@@ -49,7 +49,7 @@ export function MessageActions({
 			if (redirect) router.push(redirect);
 			router.refresh();
 		} catch {
-			setError("Could not update message");
+			setError("تعذر تحديث الرسالة");
 		} finally {
 			setPendingAction(null);
 		}
@@ -66,7 +66,7 @@ export function MessageActions({
 		if (!confirmTrashWithoutUnsubscribe()) return;
 		setPendingAction("unsubscribe");
 		if (!mailboxId) {
-			setError("Could not create trash rule");
+			setError("تعذر إنشاء قاعدة النقل إلى المهملات");
 			setPendingAction(null);
 			return;
 		}
@@ -75,7 +75,7 @@ export function MessageActions({
 			await createTrashSenderRule({ mailboxId, senderAddress });
 			await runAction("trash");
 		} catch {
-			setError("Could not create trash rule");
+			setError("تعذر إنشاء قاعدة النقل إلى المهملات");
 			setPendingAction(null);
 		}
 	}
@@ -93,7 +93,7 @@ export function MessageActions({
 			});
 			openDraftComposer(draftId);
 		} catch (replyError) {
-			setError(replyError instanceof Error ? replyError.message : "Could not start reply");
+			setError(replyError instanceof Error ? replyError.message : "تعذر بدء الرد");
 		} finally {
 			setPendingAction(null);
 		}
@@ -103,7 +103,7 @@ export function MessageActions({
 		setMoreOpen(false);
 		setError(null);
 		if (!mailboxId) {
-			setError("Could not block contact");
+			setError("تعذر حظر جهة الاتصال");
 			return;
 		}
 
@@ -114,7 +114,7 @@ export function MessageActions({
 			router.push("/trash");
 			router.refresh();
 		} catch (blockError) {
-			setError(blockError instanceof Error ? blockError.message : "Could not block contact");
+			setError(blockError instanceof Error ? blockError.message : "تعذر حظر جهة الاتصال");
 		} finally {
 			setPendingAction(null);
 		}
@@ -128,56 +128,56 @@ export function MessageActions({
 		<div className="flex items-center gap-3 text-neutral-600">
 			{error && <span className="text-xs text-red-600">{error}</span>}
 			<div className="flex items-center gap-2">
-				<Tooltip label="Reply">
+				<Tooltip label="رد">
 					<Button
 						type="button"
 						variant="ghost"
 						size="sm"
-						aria-label="Reply"
+						aria-label="رد"
 						disabled={disabled}
 						onClick={handleReply}
 					>
 						<Reply className="h-5 w-5" />
 					</Button>
 				</Tooltip>
-				<Tooltip label="Archive">
+				<Tooltip label="أرشفة">
 					<Button
 						variant="ghost"
 						size="sm"
-						aria-label="Archive"
+						aria-label="أرشفة"
 						disabled={disabled || status === "archived"}
 						onClick={() => runAction("archive")}
 					>
 						<Archive className="h-5 w-5" />
 					</Button>
 				</Tooltip>
-				<Tooltip label="Report spam">
+				<Tooltip label="الإبلاغ عن بريد مزعج">
 					<Button
 						variant="ghost"
 						size="sm"
-						aria-label="Report spam"
+						aria-label="الإبلاغ عن بريد مزعج"
 						disabled={disabled || status === "spam" || direction !== "inbound"}
 						onClick={() => runAction("spam")}
 					>
 						<ShieldAlert className="h-5 w-5" />
 					</Button>
 				</Tooltip>
-				<Tooltip label="Delete">
+				<Tooltip label="حذف">
 					<Button
 						variant="ghost"
 						size="sm"
-						aria-label="Move to trash"
+						aria-label="نقل إلى المهملات"
 						disabled={disabled || status === "trash"}
 						onClick={() => runAction("trash")}
 					>
 						<Trash2 className="h-5 w-5" />
 					</Button>
 				</Tooltip>
-				<Tooltip label={read ? "Mark as unread" : "Mark as read"}>
+				<Tooltip label={read ? "تحديد كغير مقروءة" : "تحديد كمقروءة"}>
 					<Button
 						variant="ghost"
 						size="sm"
-						aria-label={read ? "Mark as unread" : "Mark as read"}
+						aria-label={read ? "تحديد كغير مقروءة" : "تحديد كمقروءة"}
 						disabled={disabled}
 						onClick={() => runAction(markAction)}
 					>
@@ -185,12 +185,12 @@ export function MessageActions({
 					</Button>
 				</Tooltip>
 				<div className="relative">
-					<Tooltip label="More actions">
+					<Tooltip label="مزيد من الإجراءات">
 						<Button
 							type="button"
 							variant="ghost"
 							size="sm"
-							aria-label="More actions"
+							aria-label="مزيد من الإجراءات"
 							aria-expanded={moreOpen}
 							disabled={disabled}
 							onClick={() => setMoreOpen((open) => !open)}
@@ -209,7 +209,7 @@ export function MessageActions({
 									onClick={() => void onUnsubscribe()}
 								>
 									<BellOff className="h-4 w-4 shrink-0" />
-									Unsubscribe
+									إلغاء الاشتراك
 									</button>
 									<button
 										type="button"
@@ -217,13 +217,13 @@ export function MessageActions({
 										onClick={() => void onBlockContact()}
 									>
 										<Ban className="h-4 w-4" />
-										Block contact
+										حظر جهة الاتصال
 									</button>
 							<hr className="my-1 border-neutral-100" />
 								</>
 							)}
 							<p className="mt-1 px-3 pb-1 pt-2 text-sm font-medium text-neutral-500">
-								Move to
+								نقل إلى
 							</p>
 							{moveActions.map((item) => (
 								<button

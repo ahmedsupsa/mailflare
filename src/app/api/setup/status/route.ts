@@ -18,7 +18,7 @@ export async function GET() {
 			headers: { "Cache-Control": "no-store" },
 		});
 	} catch (error) {
-		const message = error instanceof Error ? error.message : "Could not load setup status";
+		const message = error instanceof Error ? error.message : "تعذر تحميل حالة الإعداد";
 		return NextResponse.json({ error: message }, { status: 500 });
 	}
 }

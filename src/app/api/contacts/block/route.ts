@@ -11,12 +11,12 @@ export async function POST(request: Request) {
 	const user = await requireUser(env, request);
 	const body = (await request.json()) as BlockContactRequest;
 	if (!body.mailboxId || !body.address?.trim()) {
-		return NextResponse.json({ error: "Mailbox and contact are required" }, { status: 400 });
+		return NextResponse.json({ error: "صندوق البريد وجهة الاتصال مطلوبان" }, { status: 400 });
 	}
 
 	const access = await getMailboxAccessLevel(getDb(env), user, body.mailboxId);
 	if (!access?.canManage) {
-		return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 	}
 
 	const contact = await blockContact(env, {

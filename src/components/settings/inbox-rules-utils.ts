@@ -20,7 +20,7 @@ export async function createInboxRule(input: InboxRuleInput) {
 		body: JSON.stringify(input),
 	});
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to create rule");
+	if (!response.ok) throw new Error(data.error ?? "فشل إنشاء القاعدة");
 	return data;
 }
 
@@ -31,7 +31,7 @@ export async function updateInboxRule(ruleId: string, input: InboxRuleInput) {
 		body: JSON.stringify(input),
 	});
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to update rule");
+	if (!response.ok) throw new Error(data.error ?? "فشل تحديث القاعدة");
 	return data;
 }
 
@@ -39,17 +39,17 @@ export async function deleteInboxRule(ruleId: string) {
 	const response = await authFetch(`/api/routing-rules/${ruleId}`, {
 		method: "DELETE",
 	});
-	if (!response.ok) throw new Error("Failed to delete rule");
+	if (!response.ok) throw new Error("فشل حذف القاعدة");
 }
 
 export function getRuleFieldLabel(field: string): string {
-	if (field === "content") return "Content";
-	if (field === "title") return "Title";
-	return "Email address";
+	if (field === "content") return "المحتوى";
+	if (field === "title") return "العنوان";
+	return "عنوان البريد الإلكتروني";
 }
 
 export function getRuleOperatorLabel(operator: string): string {
-	return operator === "exact" ? "exact match" : "contains";
+	return operator === "exact" ? "مطابقة تامة" : "يحتوي على";
 }
 
 export function getInboxRuleDestination(rule: Pick<InboxRule, "action" | "folderId">): string {

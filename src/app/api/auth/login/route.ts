@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 		body = await readJsonBody(request, 16 * 1024);
 	} catch (error) {
 		const status = error instanceof RequestBodyTooLargeError ? 413 : 400;
-		return NextResponse.json({ error: "Invalid login request" }, { status });
+		return NextResponse.json({ error: "طلب تسجيل الدخول غير صالح" }, { status });
 	}
 	const parsed = loginSchema.safeParse(body);
 	if (!parsed.success) {
@@ -27,21 +27,21 @@ export async function POST(request: Request) {
 	}
 	if (!(await allowLoginAttempt(env, request))) {
 		return NextResponse.json(
-			{ error: "Too many login attempts. Try again shortly." },
+			{ error: "عدد محاولات تسجيل الدخول كبير جدًا. حاول مرة أخرى بعد قليل." },
 			{ status: 429, headers: { "Retry-After": "60" } },
 		);
 	}
 	if (!(await verifyTurnstileToken(env, request, (body as Record<string, unknown>).turnstileToken))) {
-		return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
+		return NextResponse.json({ error: "فشل التحقق. يرجى المحاولة مرة أخرى." }, { status: 400 });
 	}
 
 	const db = getDb(env);
 	const [user] = await db.select().from(users).where(eq(users.email, parsed.data.email)).limit(1);
 	if (!user || !verifyPassword(parsed.data.password, user.passwordHash)) {
-		return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+		return NextResponse.json({ error: "بيانات الدخول غير صحيحة" }, { status: 401 });
 	}
 	if (user.disabled) {
-		return NextResponse.json({ error: "Account disabled" }, { status: 403 });
+		return NextResponse.json({ error: "الحساب معطل" }, { status: 403 });
 	}
 
 	const token = await createSession(env, user.id);

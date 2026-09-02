@@ -14,9 +14,9 @@ export async function DELETE(
 		assertAdmin(user);
 		const { id } = await params;
 		const deleted = await deleteBackup(env, id);
-		if (!deleted) return NextResponse.json({ error: "Backup not found" }, { status: 404 });
+		if (!deleted) return NextResponse.json({ error: "النسخة الاحتياطية غير موجودة" }, { status: 404 });
 		return NextResponse.json({ ok: true });
 	} catch {
-		return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 403 });
 	}
 }

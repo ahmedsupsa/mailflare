@@ -13,7 +13,7 @@ export async function getDraftSender(
 			mailboxId: input.mailboxId,
 		});
 	} catch (error) {
-		return { error: error instanceof Error ? error.message : "Mailbox is not authorized" };
+		return { error: error instanceof Error ? error.message : "صندوق البريد غير مخول" };
 	}
 }
 

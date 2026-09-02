@@ -27,7 +27,7 @@ export function getMessageHeaderParties(message: Message, currentAccountName?: s
 		fromAddress: getEmailAddress(message.fromAddr),
 		toName:
 			message.direction === "inbound"
-				? "me"
+				? "أنا"
 				: getDisplayNameForAddress(message.toAddr, message.toContactName),
 	};
 }

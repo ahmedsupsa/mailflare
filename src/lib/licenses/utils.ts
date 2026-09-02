@@ -18,12 +18,12 @@ export function parseFeatures(value: string): string[] {
 }
 
 export function parsePaymugLicenseResponse(value: unknown): PaymugLicenseResponse {
-	if (!value || typeof value !== "object") throw new Error("Paymug returned an invalid license response");
+	if (!value || typeof value !== "object") throw new Error("أعاد Paymug استجابة ترخيص غير صالحة");
 	const response = value as Record<string, unknown>;
 	const states: LicenseState[] = ["active", "invalid", "expired", "deactivated"];
 
 	if (typeof response.valid !== "boolean" || !states.includes(response.state as LicenseState)) {
-		throw new Error("Paymug returned an invalid license response");
+		throw new Error("أعاد Paymug استجابة ترخيص غير صالحة");
 	}
 
 	return {

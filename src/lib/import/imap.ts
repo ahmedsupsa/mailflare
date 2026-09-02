@@ -24,7 +24,7 @@ async function getCloudflareSocketConnect(): Promise<CloudflareSocketConnect> {
 		) as { connect: CloudflareSocketConnect };
 		return sockets.connect;
 	} catch {
-		throw new Error("IMAP import requires the Cloudflare Workers socket runtime");
+		throw new Error("يتطلب استيراد IMAP بيئة تشغيل Cloudflare Workers Sockets");
 	}
 }
 
@@ -51,7 +51,7 @@ class ImapConnection {
 
 	async readGreeting(): Promise<void> {
 		const line = await this.readLine();
-		if (!line.startsWith("* OK")) throw new Error("IMAP server did not send an OK greeting");
+		if (!line.startsWith("* OK")) throw new Error("لم يرسل خادم IMAP رسالة ترحيب OK");
 	}
 
 	async command(command: string): Promise<string[]> {
@@ -63,7 +63,7 @@ class ImapConnection {
 			lines.push(line);
 			if (isTaggedCompletion(line, tag)) {
 				if (!line.toUpperCase().includes(" OK")) {
-					throw new Error(`IMAP command failed: ${line}`);
+					throw new Error(`فشل أمر IMAP: ${line}`);
 				}
 				return lines;
 			}
@@ -84,9 +84,9 @@ class ImapConnection {
 			}
 			if (isTaggedCompletion(line, tag)) {
 				if (!line.toUpperCase().includes(" OK")) {
-					throw new Error(`IMAP fetch failed: ${line}`);
+					throw new Error(`فشل جلب الرسالة عبر IMAP: ${line}`);
 				}
-				if (!raw) throw new Error("IMAP fetch returned no message");
+				if (!raw) throw new Error("لم يُرجع IMAP أي رسالة");
 				return raw;
 			}
 		}
@@ -124,7 +124,7 @@ class ImapConnection {
 
 	private async readMore(): Promise<void> {
 		const { value, done } = await this.reader.read();
-		if (done || !value) throw new Error("IMAP connection closed unexpectedly");
+		if (done || !value) throw new Error("انقطع اتصال IMAP بشكل غير متوقع");
 		const next = new Uint8Array(this.buffer.byteLength + value.byteLength);
 		next.set(this.buffer);
 		next.set(value, this.buffer.byteLength);

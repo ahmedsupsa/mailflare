@@ -14,7 +14,7 @@ export async function GET(request: Request) {
 	const env = getEnv();
 	const user = await getCurrentUser(env, request);
 	if (!user) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 401 });
 	}
 
 	const url = new URL(request.url);
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
 	if (mailboxId) {
 		const access = await getMailboxAccessLevel(db, user, mailboxId);
 		if (!access?.canRead) {
-			return NextResponse.json({ error: "Mailbox not found" }, { status: 404 });
+			return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
 		}
 		conditions.push(eq(messages.mailboxId, mailboxId));
 	} else if (accessibleMailboxIds.length > 0) {

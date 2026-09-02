@@ -42,7 +42,7 @@ export async function POST(request: Request) {
 		input = await readJsonBody<DraftPayload>(request, 1024 * 1024);
 	} catch (error) {
 		const status = error instanceof RequestBodyTooLargeError ? 413 : 400;
-		return NextResponse.json({ error: "Invalid draft request" }, { status });
+		return NextResponse.json({ error: "طلب المسودة غير صالح" }, { status });
 	}
 	const db = getDb(env);
 	const sender = await getDraftSender(env, user.id, input);

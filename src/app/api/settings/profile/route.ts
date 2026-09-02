@@ -19,13 +19,13 @@ export async function PATCH(request: Request) {
 		if (err instanceof ZodError) {
 			return NextResponse.json({ error: err.flatten() }, { status: 400 });
 		}
-		return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+		return NextResponse.json({ error: "الطلب غير صالح" }, { status: 400 });
 	}
 
 	const db = getDb(env);
 	const canForwardEmail = (await getLicenseEntitlements(env)).canForwardEmail;
 	if (!canForwardEmail && parsed.forwardingEmail && parsed.forwardingEmail !== user.forwardingEmail) {
-		return NextResponse.json({ error: "A Pro or Team license is required for email forwarding" }, { status: 403 });
+		return NextResponse.json({ error: "يلزم ترخيص Pro أو Team لتفعيل إعادة توجيه البريد الإلكتروني" }, { status: 403 });
 	}
 	const forwardingEmail = parsed.forwardingEmail === undefined ? user.forwardingEmail : parsed.forwardingEmail;
 	await db

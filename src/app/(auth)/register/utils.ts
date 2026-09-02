@@ -17,7 +17,7 @@ export async function prepareSetup(): Promise<{ ok: boolean; data: SetupPreparat
 export async function getSetupStatus(): Promise<SetupStatus> {
 	const res = await fetch("/api/setup/status");
 	const data = (await res.json()) as SetupStatus;
-	if (!res.ok) throw new Error(data.error ?? "Could not load setup status");
+	if (!res.ok) throw new Error(data.error ?? "تعذّر تحميل حالة الإعداد");
 	return data;
 }
 

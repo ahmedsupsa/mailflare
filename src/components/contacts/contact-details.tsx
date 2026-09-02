@@ -49,7 +49,7 @@ export function ContactDetailsTrigger({
 				setDisplayName(nextContact.displayName ?? shownName);
 			})
 			.catch((loadError) => {
-				if (!cancelled) setError(loadError instanceof Error ? loadError.message : "Unable to load contact");
+				if (!cancelled) setError(loadError instanceof Error ? loadError.message : "تعذر تحميل جهة الاتصال");
 			})
 			.finally(() => {
 				if (!cancelled) setLoading(false);
@@ -73,7 +73,7 @@ export function ContactDetailsTrigger({
 				detail: { email: updated.email, displayName: nextName },
 			}));
 		} catch (saveError) {
-			setError(saveError instanceof Error ? saveError.message : "Unable to update contact");
+			setError(saveError instanceof Error ? saveError.message : "تعذر تحديث جهة الاتصال");
 		} finally {
 			setSaving(false);
 		}
@@ -93,8 +93,8 @@ export function ContactDetailsTrigger({
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Contact details</DialogTitle>
-						<DialogDescription>Update how this contact appears in your mailbox.</DialogDescription>
+						<DialogTitle>تفاصيل جهة الاتصال</DialogTitle>
+						<DialogDescription>تحديث الطريقة التي تظهر بها جهة الاتصال هذه في بريدك.</DialogDescription>
 					</DialogHeader>
 					<div className="space-y-5">
 						<div className="flex items-center gap-4">
@@ -107,7 +107,7 @@ export function ContactDetailsTrigger({
 							</div>
 						</div>
 						<div className="space-y-2">
-							<Label htmlFor="contact-display-name">Name</Label>
+							<Label htmlFor="contact-display-name">الاسم</Label>
 							<Input
 								id="contact-display-name"
 								value={displayName}
@@ -117,17 +117,17 @@ export function ContactDetailsTrigger({
 						</div>
 						<div className="grid gap-3 rounded-lg bg-neutral-50 p-3 text-sm sm:grid-cols-2">
 							<div>
-								<p className="text-xs font-medium uppercase text-neutral-400">Source</p>
-								<p className="mt-1 capitalize text-neutral-700">{contact?.source ?? "Email"}</p>
+								<p className="text-xs font-medium uppercase text-neutral-400">المصدر</p>
+								<p className="mt-1 capitalize text-neutral-700">{contact?.source ?? "البريد الإلكتروني"}</p>
 							</div>
 							<div>
-								<p className="text-xs font-medium uppercase text-neutral-400">Last seen</p>
+								<p className="text-xs font-medium uppercase text-neutral-400">آخر ظهور</p>
 								<p className="mt-1 text-neutral-700">
-									{contact?.lastSeenAt ? dayjs(contact.lastSeenAt).format("MMM DD, YYYY") : "Unknown"}
+									{contact?.lastSeenAt ? dayjs(contact.lastSeenAt).format("MMM DD, YYYY") : "غير معروف"}
 								</p>
 							</div>
 							{contact?.blocked && (
-								<p className="text-sm font-medium text-red-600">Blocked contact</p>
+								<p className="text-sm font-medium text-red-600">جهة اتصال محظورة</p>
 							)}
 						</div>
 						{error && <p className="text-sm text-red-600">{error}</p>}
@@ -136,7 +136,7 @@ export function ContactDetailsTrigger({
 							onClick={saveContact}
 							disabled={loading || saving || !displayName.trim()}
 						>
-							{saving ? "Saving..." : "Save contact"}
+							{saving ? "جارٍ الحفظ..." : "حفظ جهة الاتصال"}
 						</Button>
 					</div>
 				</DialogContent>

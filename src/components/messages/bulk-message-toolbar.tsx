@@ -19,56 +19,56 @@ export function BulkMessageToolbar({
 		<div className="flex min-w-0 items-center gap-2 text-neutral-600 w-full">
 			{!hideSelectedCount && (
 				<span className="mr-2 text-sm font-medium text-neutral-800">
-					{selectedCount} selected
+					{selectedCount} محدد
 				</span>
 			)}
-			<Tooltip label="Archive">
-				<Button variant="ghost" size="sm" onClick={() => onAction("archive")} disabled={pending} aria-label="Archive">
+			<Tooltip label="أرشفة">
+				<Button variant="ghost" size="sm" onClick={() => onAction("archive")} disabled={pending} aria-label="أرشفة">
 					<Archive className="h-4 w-4" />
 				</Button>
 			</Tooltip>
-			<Tooltip label="Report spam">
-				<Button variant="ghost" size="sm" onClick={() => onAction("spam")} disabled={pending} aria-label="Report spam">
+			<Tooltip label="الإبلاغ عن بريد مزعج">
+				<Button variant="ghost" size="sm" onClick={() => onAction("spam")} disabled={pending} aria-label="الإبلاغ عن بريد مزعج">
 					<ShieldAlert className="h-4 w-4" />
 				</Button>
 			</Tooltip>
-			<Tooltip label="Delete">
-				<Button variant="ghost" size="sm" onClick={() => onAction("trash")} disabled={pending} aria-label="Delete">
+			<Tooltip label="حذف">
+				<Button variant="ghost" size="sm" onClick={() => onAction("trash")} disabled={pending} aria-label="حذف">
 					<Trash2 className="h-4 w-4" />
 				</Button>
 			</Tooltip>
-			<Tooltip label={hasUnreadSelection ? "Mark as read" : "Mark as unread"}>
+			<Tooltip label={hasUnreadSelection ? "تحديد كمقروءة" : "تحديد كغير مقروءة"}>
 				<Button
 					variant="ghost"
 					size="sm"
 					onClick={() => onAction(hasUnreadSelection ? "read" : "unread")}
 					disabled={pending}
-					aria-label={hasUnreadSelection ? "Mark as read" : "Mark as unread"}
+					aria-label={hasUnreadSelection ? "تحديد كمقروءة" : "تحديد كغير مقروءة"}
 				>
 					{hasUnreadSelection ? <MailOpen className="h-4 w-4" /> : <Mail className="h-4 w-4" />}
 				</Button>
 			</Tooltip>
 			<span className="flex-1" />
-			<Tooltip label="Move selected messages">
+			<Tooltip label="نقل الرسائل المحددة">
 					<Select
 						className="bg-white text-xs font-medium py-2 text-neutral-700 outline-none"
 						disabled={pending}
 						defaultValue=""
-						aria-label="Move selected messages"
+						aria-label="نقل الرسائل المحددة"
 						onChange={(event) => {
 							if (!event.target.value) return;
 							onAction(event.target.value as BulkMessageAction);
 							event.target.value = "";
 						}}
 					>
-						<option value="">Move to</option>
-						<option value="archive">Archived</option>
-						<option value="spam">Spam</option>
-						<option value="trash">Trash</option>
+						<option value="">نقل إلى</option>
+						<option value="archive">الأرشيف</option>
+						<option value="spam">البريد المزعج</option>
+						<option value="trash">المهملات</option>
 					</Select>
 			</Tooltip>
-			<Tooltip label="Clear selection">
-				<Button variant="ghost" size="sm" onClick={onClearSelection} disabled={pending} aria-label="Clear selection">
+			<Tooltip label="مسح التحديد">
+				<Button variant="ghost" size="sm" onClick={onClearSelection} disabled={pending} aria-label="مسح التحديد">
 					<X className="h-4 w-4" />
 				</Button>
 			</Tooltip>

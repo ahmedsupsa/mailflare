@@ -20,9 +20,9 @@ export function getSnoozePresets(now = new Date()): SnoozePreset[] {
 	nextMonth.setMonth(nextMonth.getMonth() + 1);
 
 	return [
-		{ label: "Tomorrow", value: formatSnoozeDateTime(tomorrow) },
-		{ label: "Next week", value: formatSnoozeDateTime(nextWeek) },
-		{ label: "Next month", value: formatSnoozeDateTime(nextMonth) },
+		{ label: "غدًا", value: formatSnoozeDateTime(tomorrow) },
+		{ label: "الأسبوع القادم", value: formatSnoozeDateTime(nextWeek) },
+		{ label: "الشهر القادم", value: formatSnoozeDateTime(nextMonth) },
 	];
 }
 
@@ -32,7 +32,7 @@ export async function snoozeMessage(messageId: string, snoozedUntil: string) {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ snoozedUntil: new Date(snoozedUntil).toISOString() }),
 	});
-	if (!response.ok) throw new Error("Unable to snooze message");
+	if (!response.ok) throw new Error("تعذر تأجيل الرسالة");
 	window.dispatchEvent(new Event("mailflare:messages-changed"));
 }
 
@@ -42,13 +42,13 @@ export function isMessageSnoozed(snoozedUntil?: string | null): boolean {
 
 export async function unsnoozeMessage(messageId: string) {
 	const response = await authFetch(`/api/messages/${messageId}/snooze`, { method: "DELETE" });
-	if (!response.ok) throw new Error("Unable to unsnooze message");
+	if (!response.ok) throw new Error("تعذر إلغاء تأجيل الرسالة");
 	window.dispatchEvent(new Event("mailflare:messages-changed"));
 }
 
 export async function toggleMessageStar(messageId: string) {
 	const response = await authFetch(`/api/messages/${messageId}/star`, { method: "POST" });
-	if (!response.ok) throw new Error("Unable to update message star");
+	if (!response.ok) throw new Error("تعذر تحديث تمييز الرسالة بنجمة");
 	const result = (await response.json()) as { starred: boolean };
 	window.dispatchEvent(new Event("mailflare:message-counts-changed"));
 	return result;

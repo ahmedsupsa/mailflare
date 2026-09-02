@@ -19,11 +19,11 @@ export async function PATCH(request: Request) {
 		if (error instanceof ZodError) {
 			return NextResponse.json({ error: error.flatten() }, { status: 400 });
 		}
-		return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+		return NextResponse.json({ error: "الطلب غير صالح" }, { status: 400 });
 	}
 
 	if (!(await getLicenseEntitlements(env)).canForwardEmail) {
-		return NextResponse.json({ error: "A Pro or Team license is required for email forwarding" }, { status: 403 });
+		return NextResponse.json({ error: "يلزم ترخيص Pro أو Team لتفعيل إعادة توجيه البريد الإلكتروني" }, { status: 403 });
 	}
 
 	await getDb(env)

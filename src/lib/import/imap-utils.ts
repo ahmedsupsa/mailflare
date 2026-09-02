@@ -30,7 +30,7 @@ export function parseListMailboxName(line: string): string | null {
 export function assertSafeImapHost(host: string): void {
 	const value = host.trim().toLowerCase();
 	if (!value || value === "localhost" || value.endsWith(".local")) {
-		throw new Error("IMAP host is not allowed");
+		throw new Error("عنوان خادم IMAP هذا غير مسموح به");
 	}
 	if (/^\d+\.\d+\.\d+\.\d+$/.test(value)) {
 		const parts = value.split(".").map(Number);
@@ -41,7 +41,7 @@ export function assertSafeImapHost(host: string): void {
 			(parts[0] === 192 && parts[1] === 168) ||
 			(parts[0] === 169 && parts[1] === 254)
 		) {
-			throw new Error("Private IMAP hosts are not allowed");
+			throw new Error("لا يُسمح باستخدام خوادم IMAP الخاصة");
 		}
 	}
 }

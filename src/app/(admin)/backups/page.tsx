@@ -97,10 +97,10 @@ export default function BackupsPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-medium text-neutral-900">
-            Database Backups
+            نسخ قاعدة البيانات الاحتياطية
           </h1>
           <p className="mt-1 text-sm text-neutral-500">
-            Export database records through the D1 binding and store them in the configured R2 bucket.
+            تصدير سجلات قاعدة البيانات عبر ربط D1 وتخزينها في حزمة R2 المُعدّة.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -112,24 +112,24 @@ export default function BackupsPage() {
             onChange={(event) => {
               const file = event.target.files?.[0];
               event.target.value = "";
-              if (!file || !window.confirm("Restore this backup? This replaces all current database records and may sign you out.")) return;
+              if (!file || !window.confirm("استعادة هذه النسخة الاحتياطية؟ سيؤدي هذا إلى استبدال جميع سجلات قاعدة البيانات الحالية وقد يسجّل خروجك.")) return;
               restore.mutate(file);
             }}
           />
           <Button type="button" variant="outline" disabled={restore.isPending} onClick={() => restoreInput.current?.click()}>
             <Upload className="h-4 w-4" />
-            {restore.isPending ? "Restoring..." : "Restore"}
+            {restore.isPending ? "جارٍ الاستعادة..." : "استعادة"}
           </Button>
           <Button onClick={() => runBackup.mutate()} disabled={runBackup.isPending || !backupConfigured}>
             <Play className="h-4 w-4" />
-            {runBackup.isPending ? "Starting..." : "Back up now"}
+            {runBackup.isPending ? "جارٍ البدء..." : "نسخ احتياطي الآن"}
           </Button>
         </div>
       </div>
 
       {error && (
         <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error instanceof Error ? error.message : "Backup operation failed"}
+          {error instanceof Error ? error.message : "فشلت عملية النسخ الاحتياطي"}
         </p>
       )}
 
@@ -140,12 +140,11 @@ export default function BackupsPage() {
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-700" />
               <div>
                 <CardTitle className="text-amber-950">
-                  Complete backup setup
+                  أكمل إعداد النسخ الاحتياطي
                 </CardTitle>
                 <CardDescription className="mt-1 text-amber-800">
-                  Add the missing values under the deployed Worker&apos;s
-                  Variables and Secrets settings. This check disappears after
-                  backup configuration is complete.
+                  أضف القيم المفقودة ضمن إعدادات المتغيرات والأسرار الخاصة بالـ Worker المنشور.
+                  يختفي هذا التنبيه بعد اكتمال إعداد النسخ الاحتياطي.
                 </CardDescription>
               </div>
             </div>
@@ -172,7 +171,7 @@ export default function BackupsPage() {
                 <RefreshCw
                   className={`h-4 w-4 ${backups.isFetching ? "animate-spin" : ""}`}
                 />
-                Check again
+                إعادة التحقق
               </Button>
             </div>
           </CardContent>
@@ -181,10 +180,10 @@ export default function BackupsPage() {
 
       <Card className="rounded-3xl border-0 bg-white p-6">
         <CardHeader className="py-0">
-          <CardTitle>Automatic backup</CardTitle>
+          <CardTitle>النسخ الاحتياطي التلقائي</CardTitle>
           <CardDescription>
-            The schedule runs at 02:00 UTC. Monthly schedules are limited to
-            days 1-28.
+            يعمل الجدول في الساعة 02:00 بالتوقيت العالمي المنسق (UTC). تقتصر الجداول
+            الشهرية على الأيام من 1 إلى 28.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5 pt-5">
@@ -196,16 +195,16 @@ export default function BackupsPage() {
                   onCheckedChange={(enabled) =>
                     setSettings({ ...settings, enabled })
                   }
-                  aria-label="Enable automatic backups"
+                  aria-label="تفعيل النسخ الاحتياطي التلقائي"
                 />
-                <span>Enable automatic backups</span>
+                <span>تفعيل النسخ الاحتياطي التلقائي</span>
               </div>
 
               {settings.enabled && (
                 <>
                   <div className="grid gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="schedule-type">Frequency</Label>
+                      <Label htmlFor="schedule-type">التكرار</Label>
                       <Select
                         id="schedule-type"
                         value={settings.scheduleType}
@@ -225,15 +224,15 @@ export default function BackupsPage() {
                         }}
                         className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm"
                       >
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Selected day of week</option>
-                        <option value="monthly">Selected day of month</option>
+                        <option value="daily">يوميًا</option>
+                        <option value="weekly">يوم محدد من الأسبوع</option>
+                        <option value="monthly">يوم محدد من الشهر</option>
                       </Select>
                     </div>
 
                     {settings.scheduleType === "weekly" && (
                       <div className="space-y-2">
-                        <Label htmlFor="weekday">Day of week</Label>
+                        <Label htmlFor="weekday">يوم الأسبوع</Label>
                         <Select
                           id="weekday"
                           value={settings.scheduleValue ?? 1}
@@ -256,7 +255,7 @@ export default function BackupsPage() {
 
                     {settings.scheduleType === "monthly" && (
                       <div className="space-y-2">
-                        <Label htmlFor="month-day">Day of month</Label>
+                        <Label htmlFor="month-day">يوم الشهر</Label>
                         <Input
                           id="month-day"
                           type="number"
@@ -284,14 +283,14 @@ export default function BackupsPage() {
                             retentionEnabled,
                           })
                         }
-                        aria-label="Delete old backups automatically"
+                        aria-label="حذف النسخ الاحتياطية القديمة تلقائيًا"
                       />
-                      <span>Delete old backups automatically</span>
+                      <span>حذف النسخ الاحتياطية القديمة تلقائيًا</span>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="retention-days">
-                        Delete backups older than
+                        حذف النسخ الاحتياطية الأقدم من
                       </Label>
                       <div className="flex items-center gap-2">
                         <Input
@@ -308,7 +307,7 @@ export default function BackupsPage() {
                             })
                           }
                         />
-                        <span className="text-sm text-neutral-500">days</span>
+                        <span className="text-sm text-neutral-500">يوم</span>
                       </div>
                     </div>
                   </div>
@@ -320,7 +319,7 @@ export default function BackupsPage() {
                 disabled={saveSettings.isPending}
               >
                 <Save className="h-4 w-4" />
-                {saveSettings.isPending ? "Saving..." : "Save settings"}
+                {saveSettings.isPending ? "جارٍ الحفظ..." : "حفظ الإعدادات"}
               </Button>
             </>
           )}
@@ -330,18 +329,18 @@ export default function BackupsPage() {
       <section className="overflow-hidden rounded-3xl bg-white">
         <div className="flex items-center gap-3 border-b border-neutral-100 px-4 py-4">
           <DatabaseBackup className="h-5 w-5 text-neutral-500" />
-          <h2 className="font-semibold text-neutral-900">Backup history</h2>
+          <h2 className="font-semibold text-neutral-900">سجل النسخ الاحتياطية</h2>
         </div>
         <div className="grid grid-cols-[1fr_110px_110px_170px_120px] gap-4 border-b border-neutral-100 bg-neutral-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">
-          <span>File</span>
-          <span>Status</span>
-          <span>Size</span>
-          <span>Created</span>
-          <span>Actions</span>
+          <span>الملف</span>
+          <span>الحالة</span>
+          <span>الحجم</span>
+          <span>تاريخ الإنشاء</span>
+          <span>الإجراءات</span>
         </div>
         {backups.isLoading && <SkeletonRows count={5} />}
         {!backups.isLoading && (backups.data?.backups ?? []).length === 0 && (
-          <p className="px-4 py-6 text-sm text-neutral-500">No backups yet.</p>
+          <p className="px-4 py-6 text-sm text-neutral-500">لا توجد نسخ احتياطية بعد.</p>
         )}
         {(backups.data?.backups ?? []).map((backup: BackupItem) => (
           <div
@@ -353,7 +352,7 @@ export default function BackupsPage() {
                 {backup.filename ?? backup.id}
               </p>
               <p className="truncate text-xs text-neutral-500">
-                {backup.trigger === "manual" ? "Manual" : "Scheduled"}
+                {backup.trigger === "manual" ? "يدوي" : "مجدوَل"}
                 {backup.error ? `: ${backup.error}` : ""}
               </p>
             </div>
@@ -370,7 +369,7 @@ export default function BackupsPage() {
               <Button
                 size="sm"
                 variant="ghost"
-                title="Download backup"
+                title="تنزيل النسخة الاحتياطية"
                 disabled={backup.status !== "completed" || download.isPending}
                 onClick={() => download.mutate(backup)}
               >
@@ -379,7 +378,7 @@ export default function BackupsPage() {
               <Button
                 size="sm"
                 variant="ghost"
-                title="Delete backup"
+                title="حذف النسخة الاحتياطية"
                 disabled={
                   deleteBackup.isPending ||
                   backup.status === "queued" ||

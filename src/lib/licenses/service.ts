@@ -20,7 +20,7 @@ async function getOrCreateLicenseSettings(env: CloudflareEnv) {
 		.from(licenseSettings)
 		.where(eq(licenseSettings.id, LICENSE_SETTINGS_ID))
 		.limit(1);
-	if (!settings) throw new Error("Unable to initialize license settings");
+	if (!settings) throw new Error("تعذر تهيئة إعدادات الترخيص");
 	return settings;
 }
 
@@ -67,7 +67,7 @@ async function updateLicenseFromPaymug(
 	const settings = await getOrCreateLicenseSettings(env);
 	const licenseKeyHash = licenseKey ? await hashLicenseKey(licenseKey) : null;
 	if (action === "validate" && (!licenseKeyHash || settings.licenseKeyHash !== licenseKeyHash)) {
-		throw new Error("This key does not match the activated license");
+		throw new Error("هذا المفتاح لا يطابق الترخيص المُفعّل");
 	}
 
 
@@ -76,7 +76,7 @@ async function updateLicenseFromPaymug(
 		: settings.plan === "pro" || settings.plan === "team"
 			? settings.plan
 			: null;
-	if (!expectedPlan) throw new Error("Choose the license product to activate");
+	if (!expectedPlan) throw new Error("اختر نوع الترخيص المراد تفعيله");
 
 	const result = await callPaymugLicenseApi(
 		action,
@@ -94,7 +94,7 @@ async function updateLicenseFromPaymug(
 	const db = getDb(env);
 
 	if (action === "deactivate") {
-		if (result.state !== "deactivated") throw new Error("Paymug did not confirm deactivation");
+		if (result.state !== "deactivated") throw new Error("لم يؤكد Paymug عملية إلغاء التفعيل");
 		await db
 			.update(licenseSettings)
 			.set({
@@ -120,7 +120,7 @@ async function updateLicenseFromPaymug(
 				.set({ state: result.state === "active" ? "invalid" : result.state, validatedAt: now, updatedAt: now })
 				.where(eq(licenseSettings.id, LICENSE_SETTINGS_ID));
 		}
-		throw new Error(result.state === "expired" ? "This license has expired" : "This license is not valid for this installation");
+		throw new Error(result.state === "expired" ? "انتهت صلاحية هذا الترخيص" : "هذا الترخيص غير صالح لهذا التثبيت");
 	}
 
 	await db

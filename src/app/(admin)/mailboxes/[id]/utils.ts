@@ -11,7 +11,7 @@ export async function fetchMailbox(id: string): Promise<MailboxDetail> {
 	const json = (await res.json()) as MailboxDetailResponse;
 
 	if (!res.ok || !json.mailbox) {
-		throw new Error(json.error ?? "Failed to load mailbox");
+		throw new Error(json.error ?? "تعذر تحميل صندوق البريد");
 	}
 
 	return json.mailbox;
@@ -29,7 +29,7 @@ export async function updateMailboxSettings(
 	const json = (await res.json()) as MailboxDetailResponse;
 
 	if (!res.ok || !json.mailbox) {
-		throw new Error(json.error ?? "Failed to update mailbox");
+		throw new Error(json.error ?? "تعذر تحديث صندوق البريد");
 	}
 
 	clearMailboxesCache();
@@ -39,7 +39,7 @@ export async function updateMailboxSettings(
 export async function fetchSharedInboxAccess(id: string): Promise<SharedInboxAccessResponse> {
 	const res = await authFetch(`/api/mailboxes/${id}/access`);
 	const json = (await res.json()) as SharedInboxAccessResponse;
-	if (!res.ok) throw new Error(json.error ?? "Failed to load shared inbox access");
+	if (!res.ok) throw new Error(json.error ?? "تعذر تحميل الوصول المشترك لصندوق البريد");
 	return json;
 }
 
@@ -50,7 +50,7 @@ export async function grantSharedInboxAccess(id: string, userId: string): Promis
 		body: JSON.stringify({ userId, permission: "full_access" }),
 	});
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to add account");
+	if (!res.ok) throw new Error(json.error ?? "تعذرت إضافة الحساب");
 }
 
 export async function revokeSharedInboxAccess(id: string, userId: string): Promise<void> {
@@ -58,13 +58,13 @@ export async function revokeSharedInboxAccess(id: string, userId: string): Promi
 		method: "DELETE",
 	});
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to remove account");
+	if (!res.ok) throw new Error(json.error ?? "تعذرت إزالة الحساب");
 }
 
 export async function deleteMailbox(id: string): Promise<void> {
 	const res = await authFetch(`/api/mailboxes/${id}`, { method: "DELETE" });
 	const json = (await res.json()) as { error?: string };
-	if (!res.ok) throw new Error(json.error ?? "Failed to delete mailbox");
+	if (!res.ok) throw new Error(json.error ?? "تعذر حذف صندوق البريد");
 
 	clearMailboxesCache();
 }

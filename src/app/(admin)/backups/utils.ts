@@ -2,19 +2,19 @@ import { authFetch } from "@/lib/auth/client";
 import type { BackupItem, BackupsResponse, BackupSettings } from "./types";
 
 export const WEEKDAYS = [
-	{ value: 0, label: "Sunday" },
-	{ value: 1, label: "Monday" },
-	{ value: 2, label: "Tuesday" },
-	{ value: 3, label: "Wednesday" },
-	{ value: 4, label: "Thursday" },
-	{ value: 5, label: "Friday" },
-	{ value: 6, label: "Saturday" },
+	{ value: 0, label: "الأحد" },
+	{ value: 1, label: "الاثنين" },
+	{ value: 2, label: "الثلاثاء" },
+	{ value: 3, label: "الأربعاء" },
+	{ value: 4, label: "الخميس" },
+	{ value: 5, label: "الجمعة" },
+	{ value: 6, label: "السبت" },
 ];
 
 export async function fetchBackups(): Promise<BackupsResponse> {
 	const response = await authFetch("/api/backups");
 	const data = (await response.json()) as BackupsResponse & { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to load backups");
+	if (!response.ok) throw new Error(data.error ?? "تعذر تحميل النسخ الاحتياطية");
 	return data;
 }
 
@@ -25,19 +25,19 @@ export async function saveBackupSettings(settings: BackupSettings): Promise<void
 		body: JSON.stringify(settings),
 	});
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to save backup settings");
+	if (!response.ok) throw new Error(data.error ?? "تعذر حفظ إعدادات النسخ الاحتياطي");
 }
 
 export async function startBackup(): Promise<void> {
 	const response = await authFetch("/api/backups", { method: "POST" });
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to start backup");
+	if (!response.ok) throw new Error(data.error ?? "تعذر بدء النسخ الاحتياطي");
 }
 
 export async function removeBackup(id: string): Promise<void> {
 	const response = await authFetch(`/api/backups/${id}`, { method: "DELETE" });
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to delete backup");
+	if (!response.ok) throw new Error(data.error ?? "تعذر حذف النسخة الاحتياطية");
 }
 
 export async function restoreBackup(file: File): Promise<void> {
@@ -45,14 +45,14 @@ export async function restoreBackup(file: File): Promise<void> {
 	form.set("backup", file);
 	const response = await authFetch("/api/backups/restore", { method: "POST", body: form });
 	const data = (await response.json()) as { error?: string };
-	if (!response.ok) throw new Error(data.error ?? "Failed to restore backup");
+	if (!response.ok) throw new Error(data.error ?? "تعذرت استعادة النسخة الاحتياطية");
 }
 
 export async function downloadBackup(backup: BackupItem): Promise<void> {
 	const response = await authFetch(`/api/backups/${backup.id}/download`);
 	if (!response.ok) {
 		const data = (await response.json()) as { error?: string };
-		throw new Error(data.error ?? "Failed to download backup");
+		throw new Error(data.error ?? "تعذر تنزيل النسخة الاحتياطية");
 	}
 	const blob = await response.blob();
 	const url = URL.createObjectURL(blob);

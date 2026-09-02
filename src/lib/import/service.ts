@@ -35,7 +35,7 @@ export async function importMessagesToMailbox(
 			}
 		} catch (error) {
 			result.skipped += 1;
-			result.errors.push(`${message.filename}: ${error instanceof Error ? error.message : "Import failed"}`);
+			result.errors.push(`${message.filename}: ${error instanceof Error ? error.message : "فشل الاستيراد"}`);
 		}
 	}
 	return result;

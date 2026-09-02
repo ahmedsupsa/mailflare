@@ -34,23 +34,23 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
 	const env = getEnv();
 	const user = await getCurrentUser(env, request);
-	if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+	if (!user) return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 401 });
 
 	let form: FormData;
 	try {
 		form = await request.formData();
 	} catch {
-		return NextResponse.json({ error: "Expected multipart form data" }, { status: 400 });
+		return NextResponse.json({ error: "يجب إرسال البيانات بصيغة multipart form data" }, { status: 400 });
 	}
 	const file = form.get("file");
 	if (!isUploadedAvatarFile(file)) {
-		return NextResponse.json({ error: "Missing image file" }, { status: 400 });
+		return NextResponse.json({ error: "ملف الصورة مفقود" }, { status: 400 });
 	}
 	if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
-		return NextResponse.json({ error: "Use a JPEG, PNG, WebP, or GIF image" }, { status: 400 });
+		return NextResponse.json({ error: "استخدم صورة بصيغة JPEG أو PNG أو WebP أو GIF" }, { status: 400 });
 	}
 	if (file.size > MAX_AVATAR_SIZE) {
-		return NextResponse.json({ error: "Image must be 2 MB or smaller" }, { status: 413 });
+		return NextResponse.json({ error: "يجب ألا يتجاوز حجم الصورة 2 ميجابايت" }, { status: 413 });
 	}
 
 	const key = avatarKeyFor(user.id);
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
 	const env = getEnv();
 	const user = await getCurrentUser(env, request);
-	if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+	if (!user) return NextResponse.json({ error: "غير مصرح لك بالوصول" }, { status: 401 });
 
 	if (user.avatarKey) {
 		await env.BUCKET.delete(user.avatarKey);

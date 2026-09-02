@@ -24,7 +24,7 @@ export default function AccountDetailsPage() {
 	useEffect(() => {
 		void fetchManagedAccount(id)
 			.then(setAccount)
-			.catch((error) => setMessage(error instanceof Error ? error.message : "Unable to load account"));
+			.catch((error) => setMessage(error instanceof Error ? error.message : "تعذر تحميل الحساب"));
 	}, [id]);
 
 	async function saveDetails() {
@@ -33,9 +33,9 @@ export default function AccountDetailsPage() {
 		setMessage(null);
 		try {
 			await saveManagedAccount(account);
-			setMessage("Account details updated");
+			setMessage("تم تحديث بيانات الحساب");
 		} catch (error) {
-			setMessage(error instanceof Error ? error.message : "Unable to update account");
+			setMessage(error instanceof Error ? error.message : "تعذر تحديث الحساب");
 		} finally {
 			setSaving(false);
 		}
@@ -48,17 +48,17 @@ export default function AccountDetailsPage() {
 			setAccount({ ...account, hasAvatar: true });
 			setAvatarVersion(Date.now());
 		} catch (error) {
-			setMessage(error instanceof Error ? error.message : "Unable to update avatar");
+			setMessage(error instanceof Error ? error.message : "تعذر تحديث الصورة الرمزية");
 		}
 	}
 
-	if (!account) return <p className="text-sm text-neutral-500">{message ?? "Loading account..."}</p>;
+	if (!account) return <p className="text-sm text-neutral-500">{message ?? "جارٍ تحميل الحساب..."}</p>;
 
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-3xl font-medium text-neutral-900">Details</h1>
-				<p className="mt-2 text-sm text-neutral-500">Update this account&apos;s profile and status.</p>
+				<h1 className="text-3xl font-medium text-neutral-900">التفاصيل</h1>
+				<p className="mt-2 text-sm text-neutral-500">تحديث الملف الشخصي لهذا الحساب وحالته.</p>
 			</div>
 			<section className="space-y-5 rounded-3xl bg-white p-6">
 				<div className="flex items-center gap-4">
@@ -71,21 +71,21 @@ export default function AccountDetailsPage() {
 					<Label className="cursor-pointer">
 						<span className="inline-flex h-9 items-center gap-2 rounded-md border border-neutral-200 px-3 text-sm">
 							<Upload className="h-4 w-4" />
-							Change avatar
+							تغيير الصورة الرمزية
 						</span>
 						<Input type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="sr-only" onChange={(event) => void uploadAvatar(event.target.files?.[0])} />
 					</Label>
 				</div>
 				<div className="space-y-2">
-					<Label htmlFor="account-email">Email</Label>
+					<Label htmlFor="account-email">البريد الإلكتروني</Label>
 					<Input id="account-email" value={account.email} readOnly className="bg-neutral-50 text-neutral-500" />
 				</div>
 				<div className="space-y-2">
-					<Label htmlFor="account-name">Name</Label>
+					<Label htmlFor="account-name">الاسم</Label>
 					<Input id="account-name" value={account.name} onChange={(event) => setAccount({ ...account, name: event.target.value })} />
 				</div>
 				{account.canForwardEmail && <div className="space-y-2">
-					<Label htmlFor="forwarding-email">Forwarding email (optional)</Label>
+					<Label htmlFor="forwarding-email">البريد الإلكتروني لإعادة التوجيه (اختياري)</Label>
 					<Input
 						id="forwarding-email"
 						type="email"
@@ -94,15 +94,15 @@ export default function AccountDetailsPage() {
 						placeholder="destination@example.com"
 					/>
 					<p className="text-xs leading-5 text-neutral-500">
-						Incoming mail will also be sent to this verified Cloudflare Email Routing destination.
+						سيتم أيضًا إرسال البريد الوارد إلى وجهة توجيه البريد الإلكتروني هذه الموثّقة في Cloudflare.
 					</p>
 				</div>}
 				<label className="flex items-center gap-3 text-sm">
 					<Checkbox checked={!account.disabled} onChange={(event) => setAccount({ ...account, disabled: !event.target.checked })} />
-					Account enabled
+					الحساب مفعّل
 				</label>
 				<Button onClick={() => void saveDetails()} disabled={saving || !account.name.trim()}>
-					{saving ? "Saving..." : "Save details"}
+					{saving ? "جارٍ الحفظ..." : "حفظ التفاصيل"}
 				</Button>
 			</section>
 			{message && <p className="text-sm text-neutral-500">{message}</p>}
