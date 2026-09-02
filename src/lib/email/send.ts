@@ -10,22 +10,52 @@ import { createAuditLog } from "@/lib/mailboxes/audit";
 import { storeMessageAttachments, validateAttachments } from "@/lib/email/attachments";
 import { sendEmailWithBrevo } from "@/lib/email/brevo";
 import { getBranding } from "@/lib/branding/service";
+import type { Branding } from "@/lib/branding/types";
 import type { AttachmentContent } from "@/lib/email/attachment-types";
 
 function escapeHtml(value: string): string {
 	return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function appendHtmlFooter(html: string | undefined, footer: string): string | undefined {
-	if (!footer.trim()) return html;
-	const block = `<div dir="auto" style="margin-top:24px;padding-top:16px;border-top:1px solid #e5e5e5;color:#8a8a8a;font-size:12px;line-height:1.6;font-family:Arial,Helvetica,sans-serif;">${escapeHtml(footer).split("\n").join("<br>")}</div>`;
+type SocialLinks = Pick<Branding, "websiteUrl" | "instagramUrl" | "tiktokUrl">;
+
+function buildSocialBadgesHtml(branding: SocialLinks): string {
+	const links: Array<{ href: string; label: string }> = [];
+	if (branding.websiteUrl) links.push({ href: branding.websiteUrl, label: "الموقع" });
+	if (branding.instagramUrl) links.push({ href: branding.instagramUrl, label: "إنستغرام" });
+	if (branding.tiktokUrl) links.push({ href: branding.tiktokUrl, label: "تيك توك" });
+	if (!links.length) return "";
+
+	const cells = links
+		.map(
+			(link) =>
+				`<td style="padding:0 4px;">` +
+				`<a href="${escapeHtml(link.href)}" style="display:inline-block;padding:6px 14px;border-radius:999px;background-color:#171717;color:#ffffff;font-size:11px;font-family:Arial,Helvetica,sans-serif;text-decoration:none;">${escapeHtml(link.label)}</a>` +
+				`</td>`,
+		)
+		.join("");
+
+	return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:12px;"><tr>${cells}</tr></table>`;
+}
+
+function appendHtmlFooter(html: string | undefined, branding: Branding): string | undefined {
+	const footerText = branding.emailFooter.trim();
+	const badges = buildSocialBadgesHtml(branding);
+	if (!footerText && !badges) return html;
+
+	const textLine = footerText
+		? `<p style="margin:0 0 ${badges ? "10px" : "0"} 0;">${escapeHtml(footerText).split("\n").join("<br>")}</p>`
+		: "";
+	const block = `<div dir="auto" style="margin-top:24px;padding-top:16px;border-top:1px solid #e5e5e5;color:#8a8a8a;font-size:12px;line-height:1.6;font-family:Arial,Helvetica,sans-serif;">${textLine}${badges}</div>`;
 	return html ? `${html}${block}` : block;
 }
 
-function appendTextFooter(text: string | undefined, footer: string): string | undefined {
-	if (!footer.trim()) return text;
-	const block = `\n\n---\n${footer}`;
-	return text ? `${text}${block}` : footer;
+function appendTextFooter(text: string | undefined, branding: Branding): string | undefined {
+	const footerText = branding.emailFooter.trim();
+	const links = [branding.websiteUrl, branding.instagramUrl, branding.tiktokUrl].filter(Boolean);
+	const block = [footerText, links.join(" | ")].filter(Boolean).join("\n");
+	if (!block) return text;
+	return text ? `${text}\n\n---\n${block}` : block;
 }
 
 export type SendEmailInput = {
@@ -52,8 +82,8 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 	});
 	const messageId = newId("msg");
 	const branding = await getBranding(env);
-	const footeredText = appendTextFooter(input.text, branding.emailFooter);
-	const footeredHtml = appendHtmlFooter(input.html, branding.emailFooter);
+	const footeredText = appendTextFooter(input.text, branding);
+	const footeredHtml = appendHtmlFooter(input.html, branding);
 	const snippet = buildSnippet(footeredText ?? null, footeredHtml ?? null);
 
 	await db.insert(messages).values({

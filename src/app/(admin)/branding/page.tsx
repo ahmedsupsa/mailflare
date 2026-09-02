@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ImagePlus, Mail, Palette } from "lucide-react";
+import { Camera, Globe, ImagePlus, Mail, Music2, Palette } from "lucide-react";
 import { useBranding } from "@/components/branding-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,9 @@ export default function BrandingPage() {
 	const branding = useBranding();
 	const [appName, setAppName] = useState(branding.appName);
 	const [emailFooter, setEmailFooter] = useState(branding.emailFooter);
+	const [websiteUrl, setWebsiteUrl] = useState(branding.websiteUrl);
+	const [instagramUrl, setInstagramUrl] = useState(branding.instagramUrl);
+	const [tiktokUrl, setTiktokUrl] = useState(branding.tiktokUrl);
 	const [icon, setIcon] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
 	const [status, setStatus] = useState<string | null>(null);
@@ -23,7 +26,10 @@ export default function BrandingPage() {
 	useEffect(() => {
 		setAppName(branding.appName);
 		setEmailFooter(branding.emailFooter);
-	}, [branding.appName, branding.emailFooter]);
+		setWebsiteUrl(branding.websiteUrl);
+		setInstagramUrl(branding.instagramUrl);
+		setTiktokUrl(branding.tiktokUrl);
+	}, [branding.appName, branding.emailFooter, branding.websiteUrl, branding.instagramUrl, branding.tiktokUrl]);
 
 	function pickIcon(file: File | null) {
 		setIcon(file);
@@ -36,7 +42,14 @@ export default function BrandingPage() {
 		setSaving(true);
 		setStatus(null);
 		try {
-			await saveBranding(appName.trim(), icon, emailFooter.trim());
+			await saveBranding({
+				appName: appName.trim(),
+				icon,
+				emailFooter: emailFooter.trim(),
+				websiteUrl: websiteUrl.trim(),
+				instagramUrl: instagramUrl.trim(),
+				tiktokUrl: tiktokUrl.trim(),
+			});
 			await branding.refreshBranding();
 			setIcon(null);
 			setStatus("تم تحديث الهوية");
@@ -46,6 +59,8 @@ export default function BrandingPage() {
 			setSaving(false);
 		}
 	}
+
+	const hasSocialLinks = websiteUrl.trim() || instagramUrl.trim() || tiktokUrl.trim();
 
 	return (
 		<div className="space-y-6">
@@ -72,35 +87,101 @@ export default function BrandingPage() {
 								<span className="text-sm text-neutral-600"><ImagePlus className="mb-1 h-5 w-5" />اختر PNG أو JPEG أو WebP أو GIF<br /><span className="text-xs text-neutral-400">الحد الأقصى 2 ميجابايت</span></span>
 							</button>
 						</div>
-						<div className="space-y-2">
-							<Label htmlFor="emailFooter" className="flex items-center gap-2">
-								<Mail className="h-4 w-4" />
-								تذييل البريد الإلكتروني
-							</Label>
-							<Textarea
-								id="emailFooter"
-								value={emailFooter}
-								maxLength={2000}
-								rows={3}
-								placeholder="مثال: أُرسلت هذه الرسالة عبر نظام التواصل الداخلي لمنصة مرشح."
-								onChange={(event) => setEmailFooter(event.target.value)}
-							/>
+
+						<div className="space-y-4 rounded-2xl border border-neutral-100 p-4">
+							<div className="space-y-2">
+								<Label htmlFor="emailFooter" className="flex items-center gap-2">
+									<Mail className="h-4 w-4" />
+									تذييل البريد الإلكتروني
+								</Label>
+								<Textarea
+									id="emailFooter"
+									value={emailFooter}
+									maxLength={2000}
+									rows={2}
+									placeholder="مثال: مرشح — الواجهة الرقمية المتكاملة للمطاعم والمقاهي في السعودية."
+									onChange={(event) => setEmailFooter(event.target.value)}
+								/>
+							</div>
+							<div className="grid gap-4 sm:grid-cols-3">
+								<div className="space-y-2">
+									<Label htmlFor="websiteUrl" className="flex items-center gap-2 text-xs">
+										<Globe className="h-3.5 w-3.5" />
+										الموقع الإلكتروني
+									</Label>
+									<Input
+										id="websiteUrl"
+										type="url"
+										value={websiteUrl}
+										placeholder="https://www.example.com"
+										onChange={(event) => setWebsiteUrl(event.target.value)}
+									/>
+								</div>
+								<div className="space-y-2">
+									<Label htmlFor="instagramUrl" className="flex items-center gap-2 text-xs">
+										<Camera className="h-3.5 w-3.5" />
+										إنستغرام
+									</Label>
+									<Input
+										id="instagramUrl"
+										type="url"
+										value={instagramUrl}
+										placeholder="https://instagram.com/..."
+										onChange={(event) => setInstagramUrl(event.target.value)}
+									/>
+								</div>
+								<div className="space-y-2">
+									<Label htmlFor="tiktokUrl" className="flex items-center gap-2 text-xs">
+										<Music2 className="h-3.5 w-3.5" />
+										تيك توك
+									</Label>
+									<Input
+										id="tiktokUrl"
+										type="url"
+										value={tiktokUrl}
+										placeholder="https://tiktok.com/@..."
+										onChange={(event) => setTiktokUrl(event.target.value)}
+									/>
+								</div>
+							</div>
 							<p className="text-xs leading-5 text-neutral-500">
-								يُضاف تلقائيًا إلى نهاية كل رسالة صادرة من أي صندوق بريد بهذا التثبيت، بتصميم خفيف وموحّد.
-								هذا النص لا يظهر للموظفين داخل نافذة الإنشاء ولا يمكنهم تعديله.
+								يُضاف هذا كله تلقائيًا إلى نهاية كل رسالة صادرة من أي صندوق بريد بهذا التثبيت، بتصميم خفيف وموحّد.
+								لا يظهر للموظفين داخل نافذة الإنشاء ولا يمكنهم تعديله.
 							</p>
-							{emailFooter.trim() && (
-								<div className="rounded-2xl border border-neutral-100 bg-neutral-50 p-4">
+							{(emailFooter.trim() || hasSocialLinks) && (
+								<div className="rounded-2xl bg-neutral-50 p-4">
 									<p className="mb-2 text-xs font-medium text-neutral-400">معاينة</p>
 									<div className="rounded-xl bg-white p-4">
 										<p className="text-sm text-neutral-400">— نص الرسالة —</p>
-										<div className="mt-4 border-t border-neutral-200 pt-3 text-xs leading-6 text-neutral-500">
-											{emailFooter}
+										<div className="mt-4 flex flex-col gap-3 border-t border-neutral-200 pt-3">
+											{emailFooter.trim() && (
+												<p className="text-xs leading-6 text-neutral-500">{emailFooter}</p>
+											)}
+											{hasSocialLinks && (
+												<div className="flex items-center gap-2">
+													{websiteUrl.trim() && (
+														<span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white">
+															<Globe className="h-3.5 w-3.5" />
+														</span>
+													)}
+													{instagramUrl.trim() && (
+														<span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white">
+															<Camera className="h-3.5 w-3.5" />
+														</span>
+													)}
+													{tiktokUrl.trim() && (
+														<span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white">
+															<Music2 className="h-3.5 w-3.5" />
+														</span>
+													)}
+												</div>
+											)}
 										</div>
 									</div>
 								</div>
 							)}
 						</div>
+
 						{status && <p className="text-sm text-neutral-600">{status}</p>}
 						<Button type="submit" disabled={saving || !appName.trim()}>{saving ? "جارٍ الحفظ..." : "حفظ الهوية"}</Button>
 					</form>

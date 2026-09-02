@@ -3,4 +3,7 @@ export type Branding = {
 	hasCustomIcon: boolean;
 	canCustomizeBranding: boolean;
 	emailFooter: string;
+	websiteUrl: string;
+	instagramUrl: string;
+	tiktokUrl: string;
 };

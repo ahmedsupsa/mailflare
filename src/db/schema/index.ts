@@ -395,6 +395,9 @@ export const appSettings = sqliteTable("app_settings", {
 	appName: text("app_name").notNull().default("Mailflare"),
 	iconKey: text("icon_key"),
 	emailFooter: text("email_footer"),
+	websiteUrl: text("website_url"),
+	instagramUrl: text("instagram_url"),
+	tiktokUrl: text("tiktok_url"),
 	updatedAt: integer("updated_at", { mode: "timestamp" })
 		.notNull()
 		.$defaultFn(() => new Date()),

@@ -5,6 +5,9 @@ export const DEFAULT_BRANDING: Branding = {
 	hasCustomIcon: false,
 	canCustomizeBranding: false,
 	emailFooter: "",
+	websiteUrl: "",
+	instagramUrl: "",
+	tiktokUrl: "",
 };
 
 export async function fetchBranding(): Promise<Branding> {

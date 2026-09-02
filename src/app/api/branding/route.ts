@@ -22,12 +22,24 @@ export async function PUT(request: Request) {
 	const form = await request.formData();
 	const appName = String(form.get("appName") ?? "").trim();
 	const emailFooter = String(form.get("emailFooter") ?? "").trim();
+	const websiteUrl = String(form.get("websiteUrl") ?? "").trim();
+	const instagramUrl = String(form.get("instagramUrl") ?? "").trim();
+	const tiktokUrl = String(form.get("tiktokUrl") ?? "").trim();
 	const iconValue = form.get("icon");
 	if (!appName || appName.length > 60) {
 		return NextResponse.json({ error: "يجب أن يكون اسم التطبيق بين حرف واحد و60 حرفًا" }, { status: 400 });
 	}
 	if (emailFooter.length > 2000) {
 		return NextResponse.json({ error: "يجب ألا يتجاوز تذييل البريد 2000 حرف" }, { status: 400 });
+	}
+	for (const [label, value] of [
+		["الموقع الإلكتروني", websiteUrl],
+		["إنستغرام", instagramUrl],
+		["تيك توك", tiktokUrl],
+	] as const) {
+		if (value && !isValidHttpUrl(value)) {
+			return NextResponse.json({ error: `رابط ${label} غير صالح` }, { status: 400 });
+		}
 	}
 	const icon = isBrandingIcon(iconValue) && iconValue.size > 0 ? iconValue : null;
 	if (icon && !BRANDING_ICON_TYPES.includes(icon.type)) {
@@ -38,10 +50,21 @@ export async function PUT(request: Request) {
 	}
 
 	try {
-		return NextResponse.json(await updateBranding(env, { appName, icon, emailFooter }));
+		return NextResponse.json(
+			await updateBranding(env, { appName, icon, emailFooter, websiteUrl, instagramUrl, tiktokUrl }),
+		);
 	} catch (error) {
 		const message = error instanceof Error ? error.message : "تعذر تحديث الهوية البصرية";
 		const status = /يلزم ترخيص/.test(message) ? 403 : 500;
 		return NextResponse.json({ error: message }, { status });
+	}
+}
+
+function isValidHttpUrl(value: string): boolean {
+	try {
+		const url = new URL(value);
+		return url.protocol === "http:" || url.protocol === "https:";
+	} catch {
+		return false;
 	}
 }
