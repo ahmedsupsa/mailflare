@@ -6,12 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useSelectedMailbox } from "@/components/mailbox-provider";
 import { authFetch } from "@/lib/auth/client";
 import { formatEmailAddress, getEmailAddress } from "@/lib/email/address";
 import { cn } from "@/lib/utils";
-import { applyMailboxSignature, buildSendFormData, fetchDraft, formatAttachmentSize } from "./utils";
+import {
+	applyMailboxSignatureHtml,
+	buildSendFormData,
+	fetchDraft,
+	formatAttachmentSize,
+	htmlToPlainText,
+	stripSignatureFromHtml,
+	textToHtml,
+} from "./utils";
+import { RichTextEditor } from "./rich-text-editor";
 import type { ComposeAttachment } from "./types";
 
 type Toast = { type: "success" | "error"; message: string } | null;
@@ -29,7 +37,7 @@ export function ComposeForm({
 	const [draftId, setDraftId] = useState<string | null>(null);
 	const [to, setTo] = useState("");
 	const [subject, setSubject] = useState("");
-	const [text, setText] = useState("");
+	const [html, setHtml] = useState("");
 	const [attachments, setAttachments] = useState<ComposeAttachment[]>([]);
 	const [toast, setToast] = useState<Toast>(null);
 	const [loading, setLoading] = useState(false);
@@ -39,7 +47,7 @@ export function ComposeForm({
 	const [selectedFrom, setSelectedFrom] = useState("");
 	const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const attachmentInput = useRef<HTMLInputElement | null>(null);
-	const previousSignature = useRef("");
+	const plainText = useMemo(() => htmlToPlainText(html), [html]);
 
 	useEffect(() => {
 		if (!selectedMailbox && mailboxes.length === 1) setSelectedMailbox(mailboxes[0]);
@@ -90,7 +98,7 @@ export function ComposeForm({
 				setDraftId(draft.id);
 				setTo(draft.toAddr);
 				setSubject(draft.subject ?? "");
-				setText(draft.textBody ?? "");
+				setHtml(draft.htmlBody?.trim() ? draft.htmlBody : textToHtml(draft.textBody ?? ""));
 				setLoadedDraftMailboxId(draft.mailboxId);
 				setLoadedDraftFrom(getEmailAddress(draft.fromAddr).toLowerCase());
 			})
@@ -123,15 +131,12 @@ export function ComposeForm({
 
 	useEffect(() => {
 		if (loadingDraft) return;
-		const nextSignature = selectedMailbox?.signature ?? "";
-		setText((current) => applyMailboxSignature(current, previousSignature.current, nextSignature));
-		previousSignature.current = nextSignature;
+		setHtml((current) => applyMailboxSignatureHtml(current, selectedMailbox?.signature));
 	}, [loadingDraft, selectedMailbox?.id, selectedMailbox?.signature]);
 
 	useEffect(() => {
-		const bodyContent = text.trim();
-		const signatureOnly = bodyContent === (selectedMailbox?.signature?.trim() ?? "");
-		const hasContent = to.trim() || subject.trim() || (bodyContent && !signatureOnly);
+		const hasBodyContent = htmlToPlainText(stripSignatureFromHtml(html)).trim().length > 0;
+		const hasContent = to.trim() || subject.trim() || hasBodyContent;
 		if (!fromAddr || !hasContent || loadingDraft) return;
 		if (saveTimer.current) clearTimeout(saveTimer.current);
 
@@ -141,7 +146,8 @@ export function ComposeForm({
 				from: fromAddr,
 				to,
 				subject,
-				text,
+				text: plainText,
+				html,
 			};
 			const res = await authFetch(draftId ? `/api/drafts/${draftId}` : "/api/drafts", {
 				method: draftId ? "PATCH" : "POST",
@@ -155,7 +161,7 @@ export function ComposeForm({
 		return () => {
 			if (saveTimer.current) clearTimeout(saveTimer.current);
 		};
-	}, [draftId, fromAddr, loadingDraft, selectedMailbox?.id, selectedMailbox?.signature, subject, text, to]);
+	}, [draftId, fromAddr, html, loadingDraft, plainText, selectedMailbox?.id, subject, to]);
 
 	async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -167,7 +173,8 @@ export function ComposeForm({
 				from: fromAddr,
 				to,
 				subject,
-				text,
+				text: plainText,
+				html,
 				mailboxId: selectedMailbox?.id,
 			}),
 		});
@@ -187,7 +194,7 @@ export function ComposeForm({
 		setDraftId(null);
 		setTo("");
 		setSubject("");
-		setText(applyMailboxSignature("", "", selectedMailbox?.signature));
+		setHtml(applyMailboxSignatureHtml("", selectedMailbox?.signature));
 		setAttachments([]);
 		setToast({ type: "success", message: "تم إرسال الرسالة" });
 		window.dispatchEvent(new Event("mailflare:messages-changed"));
@@ -301,13 +308,11 @@ export function ComposeForm({
 					/>
 				</div>
 				<div className="min-h-0 flex-1 px-4 py-2">
-					<Label htmlFor={`${mode}-text`} className="sr-only">نص الرسالة</Label>
-					<Textarea
-						id={`${mode}-text`}
-						value={text}
-						onChange={(event) => setText(event.target.value)}
+					<RichTextEditor
+						key={loadingDraft ? "loading" : draftId ?? "new"}
+						value={html}
+						onChange={setHtml}
 						disabled={loadingDraft}
-						className="h-full min-h-full resize-none border-0 px-0 shadow-none focus-visible:ring-0"
 					/>
 				</div>
 				{attachments.length > 0 && (
