@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Mail } from "lucide-react";
@@ -60,7 +61,12 @@ export function LoginClient() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">كلمة المرور</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">كلمة المرور</Label>
+            <Link href="/forgot-password" className="text-sm font-medium text-neutral-600 hover:text-neutral-900 hover:underline">
+              نسيت كلمة المرور؟
+            </Link>
+          </div>
           <Input
             id="password"
             name="password"

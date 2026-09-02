@@ -342,6 +342,19 @@ export const sessions = sqliteTable("sessions", {
 		.$defaultFn(() => new Date()),
 });
 
+export const passwordResetTokens = sqliteTable("password_reset_tokens", {
+	id: text("id").primaryKey(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => users.id, { onDelete: "cascade" }),
+	tokenHash: text("token_hash").notNull().unique(),
+	expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+	usedAt: integer("used_at", { mode: "timestamp" }),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.notNull()
+		.$defaultFn(() => new Date()),
+});
+
 export const auditLogs = sqliteTable(
 	"audit_logs",
 	{
