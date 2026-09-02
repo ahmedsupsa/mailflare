@@ -26,11 +26,11 @@ export default function DashboardLayout({
               <AdminNav />
             </aside>
             <div className="flex min-h-0 min-w-0 flex-col">
-              <span className="fixed top-6 right-6 flex items-center gap-2">
+              <span className="fixed top-6 end-6 flex items-center gap-2">
                 <LicenseIndicator />
                 <MailboxSelector />
               </span>
-              <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-tl-3xl px-6 py-10 scrollbar-gutter-stable lg:px-12">
+              <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-ss-3xl px-6 py-10 scrollbar-gutter-stable lg:px-12">
                 <div className="w-full max-w-3xl">{children}</div>
               </main>
             </div>

@@ -42,7 +42,7 @@ export default function LicensesPage() {
                     <span className="text-[12px] mt-2">$</span>
                     <b>{plan.price}</b>
                     {plan.originalPrice && (
-                      <span className="absolute right-0 bottom-6 line-through text-base opacity-40">
+                      <span className="absolute end-0 bottom-6 line-through text-base opacity-40">
                         ${plan.originalPrice}
                       </span>
                     )}

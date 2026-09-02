@@ -29,7 +29,7 @@ export default function DashboardLayout({
                 <DashboardNav />
               </aside>
               <div className="flex min-h-0 min-w-0 flex-col">
-                <header className="flex h-16 w-full shrink-0 items-center gap-4 pr-4 text-sm">
+                <header className="flex h-16 w-full shrink-0 items-center gap-4 pe-4 text-sm">
                   <MailSearchInput />
                   <Link
                     href="/settings"

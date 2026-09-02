@@ -21,7 +21,7 @@ export function MessageSplitLayout({
 
 	return (
 		<div className="h-full min-h-0 overflow-hidden lg:grid lg:grid-cols-[minmax(300px,380px)_minmax(0,1fr)]">
-			<aside className="hidden min-h-0 overflow-hidden border-r border-neutral-200 bg-white lg:block">
+			<aside className="hidden min-h-0 overflow-hidden border-e border-neutral-200 bg-white lg:block">
 				<MessageFolderPage
 					config={config}
 					compact

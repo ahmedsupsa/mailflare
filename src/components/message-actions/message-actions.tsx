@@ -199,12 +199,12 @@ export function MessageActions({
 						</Button>
 					</Tooltip>
 					{moreOpen && (
-						<div className="absolute right-0 z-20 mt-2 w-54 rounded-xl border border-neutral-200 bg-white p-2 shadow-lg">
+						<div className="absolute end-0 z-20 mt-2 w-54 rounded-xl border border-neutral-200 bg-white p-2 shadow-lg">
 							{direction === "inbound" && (
 								<>
 									<button
 										type="button"
-									className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400"
+									className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-neutral-700 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400"
 									disabled={!unsubscribeUrl && status === "trash"}
 									onClick={() => void onUnsubscribe()}
 								>
@@ -213,7 +213,7 @@ export function MessageActions({
 									</button>
 									<button
 										type="button"
-									className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-100"
+									className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-neutral-700 hover:bg-neutral-100"
 										onClick={() => void onBlockContact()}
 									>
 										<Ban className="h-4 w-4" />
@@ -229,7 +229,7 @@ export function MessageActions({
 								<button
 									key={item.action}
 									type="button"
-									className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-100"
+									className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-neutral-700 hover:bg-neutral-100"
 									onClick={() => void runAction(item.action)}
 								>
 									{createElement(item.icon, { size: 16 })}

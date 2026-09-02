@@ -40,7 +40,7 @@ export default function AccountPermissionsPage() {
 				<p className="mt-2 text-sm text-neutral-500">التحكم فيما يمكن لهذا الحساب إدارته.</p>
 			</div>
 			<div className="overflow-hidden rounded-3xl bg-white">
-				<table className="w-full text-left">
+				<table className="w-full text-start">
 					<thead className="border-b border-neutral-100 bg-neutral-50 text-xs font-semibold uppercase tracking-wide text-neutral-500">
 						<tr>
 							<th className="px-5 py-3">الصلاحية</th>

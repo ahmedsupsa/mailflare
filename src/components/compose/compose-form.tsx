@@ -231,7 +231,7 @@ export function ComposeForm({
 
 	const frameClass =
 		mode === "popup"
-			? "fixed bottom-4 right-4 z-40 flex h-[min(520px,calc(100vh-88px))] w-[min(560px,calc(100vw-32px))] flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-2xl"
+			? "fixed bottom-4 end-4 z-40 flex h-[min(520px,calc(100vh-88px))] w-[min(560px,calc(100vw-32px))] flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-2xl"
 			: "flex h-full min-h-[720px] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm";
 
 	return (
@@ -239,7 +239,7 @@ export function ComposeForm({
 			{toast && (
 				<div
 					className={cn(
-						"fixed right-6 top-6 z-50 rounded-lg px-4 py-3 text-sm font-medium shadow-lg",
+						"fixed end-6 top-6 z-50 rounded-lg px-4 py-3 text-sm font-medium shadow-lg",
 						toast.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white",
 					)}
 				>

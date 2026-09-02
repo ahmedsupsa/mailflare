@@ -9,7 +9,7 @@ export function SettingsNav() {
 	const pathname = usePathname();
 
 	return (
-		<aside className="min-h-full border-r border-blue-100/70 px-4 py-10 w-64">
+		<aside className="min-h-full border-e border-blue-100/70 px-4 py-10 w-64">
 			<div className="sticky top-6 space-y-7">
 				{settingsNavSections.map((section) => (
 					<div key={section.label} className="space-y-3">

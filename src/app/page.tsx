@@ -80,7 +80,7 @@ export default function HomePage() {
               <Button size="lg" asChild className="rounded-full px-6">
                 <Link href={actions.at(-1)?.href ?? "/setup"}>
                   {hasUser ? "فتح لوحة التحكم" : "إنشاء حساب"}
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                 </Link>
               </Button>
               <Button
@@ -112,7 +112,7 @@ export default function HomePage() {
                   return (
                     <div
                       key={item.label}
-                      className={`flex h-9 items-center justify-between rounded-r-full px-3 text-sm font-medium ${
+                      className={`flex h-9 items-center justify-between rounded-e-full px-3 text-sm font-medium ${
                         item.active
                           ? "bg-blue-100 text-blue-950"
                           : "text-neutral-600"
@@ -143,7 +143,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-tl-3xl bg-white">
+                <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-ss-3xl bg-white">
                   <div className="flex h-14 items-center justify-between border-b border-neutral-200 px-6">
                     <div className="flex items-center gap-3">
                       <h2 className="text-xl font-medium text-neutral-800">

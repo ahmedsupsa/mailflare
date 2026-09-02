@@ -29,7 +29,7 @@ export default function DashboardLayout({
                 <DashboardNav />
               </aside>
               <div className="flex min-h-0 min-w-0 flex-col">
-                <header className="flex h-16 w-full shrink-0 items-center gap-4 pr-4 text-sm">
+                <header className="flex h-16 w-full shrink-0 items-center gap-4 pe-4 text-sm">
                   <MailSearchInput />
                   <Link
                     href="/settings"
@@ -40,7 +40,7 @@ export default function DashboardLayout({
                   <LicenseIndicator />
                   <MailboxSelector />
                 </header>
-                <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain rounded-tl-3xl bg-white scrollbar-gutter-stable">
+                <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain rounded-ss-3xl bg-white scrollbar-gutter-stable">
                   {children}
                 </main>
               </div>

@@ -19,7 +19,7 @@ export function MessageAttachmentCard({
 		<button
 			type="button"
 			onClick={() => onPreview(attachment)}
-			className="group flex w-full items-center gap-3 rounded-lg border border-neutral-200 p-2.5 text-left transition-colors hover:border-blue-200 hover:bg-blue-50/40"
+			className="group flex w-full items-center gap-3 rounded-lg border border-neutral-200 p-2.5 text-start transition-colors hover:border-blue-200 hover:bg-blue-50/40"
 		>
 			{visual.thumbnail === "image" && (
 				<img
@@ -48,7 +48,7 @@ export function MessageAttachmentCard({
 					<Icon className="h-6 w-6" />
 				</span>
 			)}
-			<span className="min-w-0 flex-1 text-left">
+			<span className="min-w-0 flex-1 text-start">
 				<span className="block truncate text-sm font-medium text-neutral-900">
 					{attachment.filename}
 				</span>

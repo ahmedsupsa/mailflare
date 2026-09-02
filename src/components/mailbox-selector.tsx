@@ -75,7 +75,7 @@ function MailboxAccountRow({ mailbox, unread, avatarUrl, onSelect }: MailboxAcco
 		<button
 			type="button"
 			onClick={onSelect}
-			className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left transition-colors hover:bg-white"
+			className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-start transition-colors hover:bg-white"
 		>
 			<AccountAvatar
 				name={name}
@@ -206,7 +206,7 @@ export function MailboxSelector() {
 			</button>
 
 			{open && (
-				<div className="absolute right-0 top-14 z-50 w-[360px] overflow-hidden rounded-[28px] border border-neutral-200 bg-[#eef3fb] p-3 shadow-2xl shadow-neutral-900/20">
+				<div className="absolute end-0 top-14 z-50 w-[360px] overflow-hidden rounded-[28px] border border-neutral-200 bg-[#eef3fb] p-3 shadow-2xl shadow-neutral-900/20">
 					<div className="rounded-[22px] bg-white px-5 py-5">
 						<div className="flex items-center gap-4">
 							<AccountAvatar
@@ -291,7 +291,7 @@ export function MailboxSelector() {
 						<button
 							type="button"
 							onClick={logout}
-							className="flex w-full items-center gap-3 border-t border-neutral-100 px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-[#f2f6fc]"
+							className="flex w-full items-center gap-3 border-t border-neutral-100 px-5 py-4 text-start text-sm font-medium text-neutral-800 hover:bg-[#f2f6fc]"
 						>
 							<LogOut className="h-5 w-5 text-neutral-600" />
 							تسجيل الخروج

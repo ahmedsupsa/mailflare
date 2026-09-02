@@ -73,7 +73,7 @@ export function OnboardingClient() {
 			footer={
 				<span className="inline-flex items-center gap-2 text-neutral-500">
 					يكتمل الإعداد في البريد الوارد
-					<ArrowRight className="h-4 w-4" />
+					<ArrowRight className="h-4 w-4 rtl:rotate-180" />
 				</span>
 			}
 		>

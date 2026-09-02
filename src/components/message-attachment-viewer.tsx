@@ -63,7 +63,7 @@ export function MessageAttachmentViewer({
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="flex h-[min(88vh,900px)] w-[min(1100px,calc(100vw-32px))] flex-col overflow-hidden">
-				<DialogHeader className="shrink-0 pr-10">
+				<DialogHeader className="shrink-0 pe-10">
 					<DialogTitle className="truncate">{attachment.filename}</DialogTitle>
 					<DialogDescription>{attachment.type}</DialogDescription>
 				</DialogHeader>

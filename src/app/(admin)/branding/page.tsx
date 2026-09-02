@@ -85,7 +85,7 @@ export default function BrandingPage() {
 						<div className="space-y-2">
 							<Label>أيقونة التطبيق</Label>
 							<Input ref={inputRef} type="file" accept={BRANDING_ICON_ACCEPT} className="hidden" onChange={(event) => pickIcon(event.target.files?.[0] ?? null)} />
-							<button type="button" onClick={() => inputRef.current?.click()} className="flex items-center gap-4 rounded-2xl border border-dashed border-neutral-300 p-4 text-left hover:bg-neutral-50">
+							<button type="button" onClick={() => inputRef.current?.click()} className="flex items-center gap-4 rounded-2xl border border-dashed border-neutral-300 p-4 text-start hover:bg-neutral-50">
 								<img src={preview ?? branding.iconUrl} alt="معاينة أيقونة التطبيق" className="h-16 w-16 rounded-2xl object-cover" />
 								<span className="text-sm text-neutral-600"><ImagePlus className="mb-1 h-5 w-5" />اختر PNG أو JPEG أو WebP أو GIF<br /><span className="text-xs text-neutral-400">الحد الأقصى 2 ميجابايت</span></span>
 							</button>

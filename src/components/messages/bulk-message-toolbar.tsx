@@ -18,7 +18,7 @@ export function BulkMessageToolbar({
 	return (
 		<div className="flex min-w-0 items-center gap-2 text-neutral-600 w-full">
 			{!hideSelectedCount && (
-				<span className="mr-2 text-sm font-medium text-neutral-800">
+				<span className="me-2 text-sm font-medium text-neutral-800">
 					{selectedCount} محدد
 				</span>
 			)}

@@ -198,7 +198,7 @@ export default function SettingsImportPage() {
             <button
               type="button"
               onClick={() => setSourceDropdownOpen((open) => !open)}
-              className="flex w-full items-center justify-between rounded-md border border-neutral-200 bg-white px-3 py-2 text-left text-sm shadow-sm shadow-neutral-200/50"
+              className="flex w-full items-center justify-between rounded-md border border-neutral-200 bg-white px-3 py-2 text-start text-sm shadow-sm shadow-neutral-200/50"
             >
 							<label className="flex-1">المحدد</label>
               <span className="truncate">{sourceSummary}</span>
@@ -245,7 +245,7 @@ export default function SettingsImportPage() {
                     onChange={(event) =>
                       setFiles(Array.from(event.target.files ?? []))
                     }
-                    className="block w-full rounded-md border border-neutral-200 bg-white px-3 py-1 text-sm shadow-sm shadow-neutral-200/50 file:mr-3 file:rounded-md file:border-0 file:bg-neutral-100 file:px-3 file:py-1.5 file:text-sm file:font-medium"
+                    className="block w-full rounded-md border border-neutral-200 bg-white px-3 py-1 text-sm shadow-sm shadow-neutral-200/50 file:me-3 file:rounded-md file:border-0 file:bg-neutral-100 file:px-3 file:py-1.5 file:text-sm file:font-medium"
                   />
                   <p className="text-xs leading-5 text-neutral-500">
                     ارفع ملفات .eml أو .mbox المصدَّرة. لا تتضمن ملفات التصدير

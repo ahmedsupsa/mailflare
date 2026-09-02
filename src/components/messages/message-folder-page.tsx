@@ -73,12 +73,12 @@ function MessageListRow({
 	if (compact && config.folder !== "drafts") {
 		return (
 			<div
-				className={`group grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-l-2 px-4 py-3 transition-colors ${
+				className={`group grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-s-2 px-4 py-3 transition-colors ${
 					active
-						? "border-l-blue-600 bg-blue-50"
+						? "border-s-blue-600 bg-blue-50"
 						: selected
-							? "border-l-transparent bg-neutral-50"
-							: "border-l-transparent hover:bg-neutral-50"
+							? "border-s-transparent bg-neutral-50"
+							: "border-s-transparent hover:bg-neutral-50"
 				} ${draggable ? "cursor-grab active:cursor-grabbing" : ""}`}
 				draggable={draggable}
 				onDragStart={(event) => {
@@ -118,7 +118,7 @@ function MessageListRow({
 	}
 
 	const className =
-		`group relative grid min-h-12 w-full grid-cols-[24px_32px_minmax(160px,240px)_1fr_auto] items-center gap-3 px-6 text-left text-sm hover:z-10 hover:bg-[#f2f6fc] hover:shadow-sm ${
+		`group relative grid min-h-12 w-full grid-cols-[24px_32px_minmax(160px,240px)_1fr_auto] items-center gap-3 px-6 text-start text-sm hover:z-10 hover:bg-[#f2f6fc] hover:shadow-sm ${
 			active || selected ? "bg-blue-50" : ""
 		} ${draggable ? "cursor-grab active:cursor-grabbing" : ""}`;
 	const content = (
@@ -154,7 +154,7 @@ function MessageListRow({
 			</span>
 			<time
 				dateTime={message.createdAt}
-				className={`min-w-[96px] whitespace-nowrap text-right text-xs group-hover:opacity-0 ${
+				className={`min-w-[96px] whitespace-nowrap text-end text-xs group-hover:opacity-0 ${
 					unread ? "font-semibold text-neutral-800" : "text-neutral-500"
 				}`}
 			>
@@ -172,7 +172,7 @@ function MessageListRow({
 					className="h-4 w-4 rounded border-neutral-300"
 					aria-label="اختيار الرسالة"
 				/>
-				<button type="button" className="contents text-left" onClick={() => openDraftComposer(message.id)}>
+				<button type="button" className="contents text-start" onClick={() => openDraftComposer(message.id)}>
 					{content}
 				</button>
 			</div>
@@ -391,7 +391,7 @@ export function MessageFolderPage({
 								onClick={() => setOffset(Math.max(offset - limit, 0))}
 								aria-label="الصفحة السابقة"
 							>
-								<ChevronLeft className="h-4 w-4" />
+								<ChevronLeft className="h-4 w-4 rtl:rotate-180" />
 							</Button>
 						</Tooltip>
 						<Tooltip label="الصفحة التالية">
@@ -402,7 +402,7 @@ export function MessageFolderPage({
 								onClick={() => setOffset(offset + limit)}
 								aria-label="الصفحة التالية"
 							>
-								<ChevronRight className="h-4 w-4" />
+								<ChevronRight className="h-4 w-4 rtl:rotate-180" />
 							</Button>
 						</Tooltip>
 						{config.folder === "inbox" && (

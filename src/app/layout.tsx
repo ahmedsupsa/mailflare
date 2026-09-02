@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="en">
+		<html lang="ar" dir="rtl">
 			<head>
 				<link rel="icon" href="/api/branding/icon"></link>
 			</head>

@@ -40,7 +40,7 @@ export function NavItem({ link }: { link: NavLink }) {
   if (!Icon) return null;
   const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
   const classes = cn(
-    "flex h-9 items-center gap-3 rounded-r-full text-sm font-medium text-neutral-700 transition-colors hover:bg-blue-50",
+    "flex h-9 items-center gap-3 rounded-e-full text-sm font-medium text-neutral-700 transition-colors hover:bg-blue-50",
     minimal && "relative mx-auto w-10 justify-center rounded-full px-0",
     active && "bg-blue-100 text-blue-900",
     dragOver && "bg-blue-50 text-blue-900 ring-1 ring-blue-200",
@@ -81,12 +81,12 @@ export function NavItem({ link }: { link: NavLink }) {
         />
         {!minimal && <span className="flex-1">{link.label}</span>}
         {!minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="ml-auto mr-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700">
+          <span className="ml-auto me-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
         {minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="absolute -right-1 -top-1 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[10px] font-semibold leading-4 text-white">
+          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[10px] font-semibold leading-4 text-white">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
@@ -141,7 +141,7 @@ export function NavItem({ link }: { link: NavLink }) {
         href={link.href}
         onClick={navigate}
         title={minimal ? link.label : undefined}
-        className={cn(!minimal && "-ml-3 pl-6", classes)}
+        className={cn(!minimal && "-ms-3 ps-6", classes)}
         {...dropProps}
       >
         <Icon
@@ -151,12 +151,12 @@ export function NavItem({ link }: { link: NavLink }) {
         />
         {!minimal && <span className="flex-1">{link.label}</span>}
         {!minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="ml-auto mr-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700">
+          <span className="ml-auto me-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
         {minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="absolute -right-1 -top-1 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[10px] font-semibold leading-4 text-white">
+          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[10px] font-semibold leading-4 text-white">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}

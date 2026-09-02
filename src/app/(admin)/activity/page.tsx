@@ -27,7 +27,7 @@ export default function ActivityPage() {
       </div>
 
       <section className="overflow-x-auto rounded-3xl bg-white">
-        <table className="w-full min-w-[760px] table-fixed text-left">
+        <table className="w-full min-w-[760px] table-fixed text-start">
           <thead className="border-b border-neutral-100 bg-neutral-50 text-xs font-semibold uppercase tracking-wide text-neutral-500">
             <tr>
               <th className="w-32 px-5 py-3">النشاط</th>
