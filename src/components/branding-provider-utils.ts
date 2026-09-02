@@ -4,6 +4,7 @@ export const DEFAULT_BRANDING: Branding = {
 	appName: "Mailflare",
 	hasCustomIcon: false,
 	canCustomizeBranding: false,
+	emailFooter: "",
 };
 
 export async function fetchBranding(): Promise<Branding> {

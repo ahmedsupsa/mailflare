@@ -9,7 +9,24 @@ import { getAuthorizedSenderAddress } from "@/lib/email/sender";
 import { createAuditLog } from "@/lib/mailboxes/audit";
 import { storeMessageAttachments, validateAttachments } from "@/lib/email/attachments";
 import { sendEmailWithBrevo } from "@/lib/email/brevo";
+import { getBranding } from "@/lib/branding/service";
 import type { AttachmentContent } from "@/lib/email/attachment-types";
+
+function escapeHtml(value: string): string {
+	return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function appendHtmlFooter(html: string | undefined, footer: string): string | undefined {
+	if (!footer.trim()) return html;
+	const block = `<div dir="auto" style="margin-top:24px;padding-top:16px;border-top:1px solid #e5e5e5;color:#8a8a8a;font-size:12px;line-height:1.6;font-family:Arial,Helvetica,sans-serif;">${escapeHtml(footer).split("\n").join("<br>")}</div>`;
+	return html ? `${html}${block}` : block;
+}
+
+function appendTextFooter(text: string | undefined, footer: string): string | undefined {
+	if (!footer.trim()) return text;
+	const block = `\n\n---\n${footer}`;
+	return text ? `${text}${block}` : footer;
+}
 
 export type SendEmailInput = {
 	userId: string;
@@ -34,7 +51,10 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 		source: "outbound",
 	});
 	const messageId = newId("msg");
-	const snippet = buildSnippet(input.text ?? null, input.html ?? null);
+	const branding = await getBranding(env);
+	const footeredText = appendTextFooter(input.text, branding.emailFooter);
+	const footeredHtml = appendHtmlFooter(input.html, branding.emailFooter);
+	const snippet = buildSnippet(footeredText ?? null, footeredHtml ?? null);
 
 	await db.insert(messages).values({
 		id: messageId,
@@ -45,8 +65,8 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 		toAddr: input.to,
 		subject: input.subject,
 		snippet,
-		textBody: input.text ?? null,
-		htmlBody: input.html ?? null,
+		textBody: footeredText ?? null,
+		htmlBody: footeredHtml ?? null,
 		status: "queued",
 	});
 	try {
@@ -77,8 +97,8 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 					to: input.to,
 					subject: input.subject,
 					headers: input.headers,
-					html: input.html,
-					text: input.text,
+					html: footeredHtml,
+					text: footeredText,
 					attachments,
 				})
 			: await env.EMAIL.send({
@@ -86,8 +106,8 @@ export async function sendEmail(env: CloudflareEnv, input: SendEmailInput): Prom
 					to: input.to,
 					subject: input.subject,
 					headers: input.headers,
-					html: input.html,
-					text: input.text,
+					html: footeredHtml,
+					text: footeredText,
 					attachments: attachments.map((attachment) =>
 						attachment.disposition === "inline" && attachment.contentId
 							? {

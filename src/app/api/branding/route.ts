@@ -21,9 +21,13 @@ export async function PUT(request: Request) {
 
 	const form = await request.formData();
 	const appName = String(form.get("appName") ?? "").trim();
+	const emailFooter = String(form.get("emailFooter") ?? "").trim();
 	const iconValue = form.get("icon");
 	if (!appName || appName.length > 60) {
 		return NextResponse.json({ error: "يجب أن يكون اسم التطبيق بين حرف واحد و60 حرفًا" }, { status: 400 });
+	}
+	if (emailFooter.length > 2000) {
+		return NextResponse.json({ error: "يجب ألا يتجاوز تذييل البريد 2000 حرف" }, { status: 400 });
 	}
 	const icon = isBrandingIcon(iconValue) && iconValue.size > 0 ? iconValue : null;
 	if (icon && !BRANDING_ICON_TYPES.includes(icon.type)) {
@@ -34,7 +38,7 @@ export async function PUT(request: Request) {
 	}
 
 	try {
-		return NextResponse.json(await updateBranding(env, { appName, icon }));
+		return NextResponse.json(await updateBranding(env, { appName, icon, emailFooter }));
 	} catch (error) {
 		const message = error instanceof Error ? error.message : "تعذر تحديث الهوية البصرية";
 		const status = /يلزم ترخيص/.test(message) ? 403 : 500;

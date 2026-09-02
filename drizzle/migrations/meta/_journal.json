@@ -169,6 +169,13 @@
       "when": 1788604800000,
       "tag": "0023_add_password_reset_tokens",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "6",
+      "when": 1788691200000,
+      "tag": "0024_add_email_footer",
+      "breakpoints": true
     }
   ]
 }

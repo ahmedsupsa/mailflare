@@ -18,15 +18,16 @@ export async function getBranding(env: CloudflareEnv): Promise<Branding> {
 			appName: settings?.appName || DEFAULT_APP_NAME,
 			hasCustomIcon: !!settings?.iconKey,
 			canCustomizeBranding: true,
+			emailFooter: settings?.emailFooter ?? "",
 		};
 	} catch {
-		return { appName: DEFAULT_APP_NAME, hasCustomIcon: false, canCustomizeBranding: true };
+		return { appName: DEFAULT_APP_NAME, hasCustomIcon: false, canCustomizeBranding: true, emailFooter: "" };
 	}
 }
 
 export async function updateBranding(
 	env: CloudflareEnv,
-	input: { appName: string; icon?: File | null },
+	input: { appName: string; icon?: File | null; emailFooter?: string },
 ): Promise<Branding> {
 	let iconKey: string | undefined;
 	if (input.icon) {
@@ -42,12 +43,14 @@ export async function updateBranding(
 			id: APP_SETTINGS_ID,
 			appName: input.appName,
 			iconKey: iconKey ?? null,
+			emailFooter: input.emailFooter ?? null,
 		})
 		.onConflictDoUpdate({
 			target: appSettings.id,
 			set: {
 				appName: input.appName,
 				...(iconKey ? { iconKey } : {}),
+				emailFooter: input.emailFooter ?? null,
 				updatedAt: new Date(),
 			},
 		});
