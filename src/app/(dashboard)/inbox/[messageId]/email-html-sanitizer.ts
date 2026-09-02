@@ -125,7 +125,7 @@ const ALLOWED_STYLE_PROPERTIES = new Set([
 	"word-break",
 	"word-wrap",
 ]);
-const APP_FONT_FALLBACK = "var(--font-geist-sans), system-ui, sans-serif";
+const APP_FONT_FALLBACK = "var(--font-sans-arabic), system-ui, sans-serif";
 
 function isSafeLinkUrl(value: string): boolean {
 	try {
