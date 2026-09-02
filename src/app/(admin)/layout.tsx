@@ -10,6 +10,7 @@ import { MailboxSelector } from "@/components/mailbox-selector";
 import { LicenseIndicator } from "@/components/license-indicator";
 import { AdminNav } from "@/components/admin-nav";
 import { SidebarProvider } from "@/components/sidebar-state";
+import { MobileMenuButton, MobileSidebarBackdrop, ResponsiveAside } from "@/components/mobile-sidebar";
 
 export default function DashboardLayout({
   children,
@@ -21,11 +22,13 @@ export default function DashboardLayout({
       <SidebarProvider expandedWidth={256}>
       <MailboxProvider>
         <ComposeProvider>
-          <div className="grid h-dvh grid-cols-[var(--sidebar-width)_minmax(0,1fr)] overflow-hidden bg-[#f6f8fc] transition-[grid-template-columns] duration-200">
-            <aside className="min-h-0 overflow-y-auto overscroll-contain px-3 py-4 scrollbar-gutter-stable">
+          <div className="grid h-dvh grid-cols-1 overflow-hidden bg-[#f6f8fc] transition-[grid-template-columns] duration-200 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]">
+            <MobileSidebarBackdrop />
+            <ResponsiveAside className="min-h-0">
               <AdminNav />
-            </aside>
+            </ResponsiveAside>
             <div className="flex min-h-0 min-w-0 flex-col">
+              <MobileMenuButton className="fixed top-6 start-6 z-20 bg-white shadow-sm" />
               <span className="fixed top-6 end-6 flex items-center gap-2">
                 <LicenseIndicator />
                 <MailboxSelector />
