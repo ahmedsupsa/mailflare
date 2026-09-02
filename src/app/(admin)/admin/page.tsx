@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BadgeDollarSign, Globe2, KeyRound, Mail, Palette, Settings, Users, Webhook } from "lucide-react";
+import { Globe2, KeyRound, Mail, Palette, Settings, Users, Webhook } from "lucide-react";
 import { AdminUpdateCard } from "@/components/admin-update-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -23,15 +23,9 @@ const sections = [
 		icon: Palette,
 	},
 	{
-		href: "/licenses",
-		title: "التراخيص",
-		description: "قارن بين ترخيصي Pro وTeam الدائمين.",
-		icon: BadgeDollarSign,
-	},
-	{
 		href: "/accounts",
-		title: "الحسابات",
-		description: "إضافة حسابات المستخدمين وإدارتها بترخيص الفريق.",
+		title: "الفريق",
+		description: "إضافة أعضاء الفريق وإدارة صناديق بريدهم.",
 		icon: Users,
 	},
 	// {

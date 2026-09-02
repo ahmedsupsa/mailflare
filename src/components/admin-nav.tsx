@@ -7,7 +7,6 @@ import {
   Mail,
   Settings,
   Palette,
-  BadgeDollarSign,
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -32,7 +31,7 @@ const sections = [
   {
     label: "الإدارة",
     links: [
-      { href: "/accounts", label: "الحسابات", icon: Users },
+      { href: "/accounts", label: "الفريق", icon: Users },
       { href: "/activity", label: "النشاط", icon: Activity },
       { href: "/backups", label: "النسخ الاحتياطية", icon: DatabaseBackup },
     ],
@@ -41,7 +40,6 @@ const sections = [
     label: "المنتج",
     links: [
       { href: "/branding", label: "العلامة التجارية", icon: Palette },
-      { href: "/licenses", label: "التراخيص", icon: BadgeDollarSign },
       // { href: "/api-keys", label: "API Keys", icon: KeyRound },
       // { href: "/webhooks", label: "Webhooks", icon: Webhook }
     ],

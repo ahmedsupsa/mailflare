@@ -58,7 +58,7 @@ export default function AccountDetailsPage() {
 		<div className="space-y-6">
 			<div>
 				<h1 className="text-3xl font-medium text-neutral-900">التفاصيل</h1>
-				<p className="mt-2 text-sm text-neutral-500">تحديث الملف الشخصي لهذا الحساب وحالته.</p>
+				<p className="mt-2 text-sm text-neutral-500">تحديث الملف الشخصي لهذا العضو وحالته.</p>
 			</div>
 			<section className="space-y-5 rounded-3xl bg-white p-6">
 				<div className="flex items-center gap-4">
@@ -99,7 +99,7 @@ export default function AccountDetailsPage() {
 				</div>}
 				<label className="flex items-center gap-3 text-sm">
 					<Checkbox checked={!account.disabled} onChange={(event) => setAccount({ ...account, disabled: !event.target.checked })} />
-					الحساب مفعّل
+					العضو مفعّل
 				</label>
 				<Button onClick={() => void saveDetails()} disabled={saving || !account.name.trim()}>
 					{saving ? "جارٍ الحفظ..." : "حفظ التفاصيل"}

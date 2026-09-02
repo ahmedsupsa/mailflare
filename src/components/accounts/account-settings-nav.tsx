@@ -17,7 +17,7 @@ export function AccountSettingsNav() {
 		<aside className="w-full shrink-0 lg:w-48">
 			<div className="sticky top-6 space-y-3">
 				<h2 className="px-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">
-					إعدادات الحساب
+					إعدادات العضو
 				</h2>
 				<nav className="space-y-1">
 					{accountSettingsNavItems.map((item) => {

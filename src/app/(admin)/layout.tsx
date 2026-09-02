@@ -7,7 +7,6 @@ import { ComposeProvider } from "@/components/compose/compose-context";
 import { FloatingComposer } from "@/components/compose/floating-composer";
 import { MailboxProvider } from "@/components/mailbox-provider";
 import { MailboxSelector } from "@/components/mailbox-selector";
-import { LicenseIndicator } from "@/components/license-indicator";
 import { AdminNav } from "@/components/admin-nav";
 import { SidebarProvider } from "@/components/sidebar-state";
 import { MobileMenuButton, MobileSidebarBackdrop, ResponsiveAside } from "@/components/mobile-sidebar";
@@ -30,7 +29,6 @@ export default function DashboardLayout({
             <div className="flex min-h-0 min-w-0 flex-col">
               <MobileMenuButton className="fixed top-6 start-6 z-20 bg-white shadow-sm" />
               <span className="fixed top-6 end-6 flex items-center gap-2">
-                <LicenseIndicator />
                 <MailboxSelector />
               </span>
               <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-ss-3xl px-6 py-10 scrollbar-gutter-stable lg:px-12">
