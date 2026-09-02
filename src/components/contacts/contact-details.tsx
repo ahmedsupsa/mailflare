@@ -86,7 +86,7 @@ export function ContactDetailsTrigger({
 			<button
 				type="button"
 				onClick={() => setOpen(true)}
-				className={`${className ?? ""} rounded-sm text-start hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200`}
+				className={`${className ?? ""} rounded-sm text-start hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200`}
 			>
 				{shownName}
 			</button>
@@ -98,7 +98,7 @@ export function ContactDetailsTrigger({
 					</DialogHeader>
 					<div className="space-y-5">
 						<div className="flex items-center gap-4">
-							<div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-100 text-lg font-semibold text-blue-700">
+							<div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-lg font-semibold text-neutral-800">
 								{getContactInitial(shownName, address)}
 							</div>
 							<div className="min-w-0">

@@ -85,9 +85,9 @@ export default function ApiKeysPage() {
 				</Dialog>
 			</div>
 			{newKey && (
-				<Card className="border-blue-600/10 bg-blue-400/10">
+				<Card className="border-neutral-900/10 bg-neutral-400/10">
 					<CardContent className="pt-6">
-						<p className="text-sm font-medium text-blue-600">انسخ مفتاحك الآن:</p>
+						<p className="text-sm font-medium text-neutral-900">انسخ مفتاحك الآن:</p>
 						<code className="block mt-2 text-xs break-all font-bold">{newKey}</code>
 					</CardContent>
 				</Card>

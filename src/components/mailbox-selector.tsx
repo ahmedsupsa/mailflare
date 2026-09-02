@@ -60,7 +60,7 @@ function AccountAvatar({
 
 	return (
 		<div
-			className={`${sizeClass} flex shrink-0 items-center justify-center rounded-full bg-blue-600 font-semibold text-white`}
+			className={`${sizeClass} flex shrink-0 items-center justify-center rounded-full bg-neutral-900 font-semibold text-white`}
 			aria-hidden="true"
 		>
 			{getAccountInitial(name)}
@@ -87,7 +87,7 @@ function MailboxAccountRow({ mailbox, unread, avatarUrl, onSelect }: MailboxAcco
 					<p className="truncate text-sm font-semibold text-neutral-900">{name}</p>
 					{mailbox.type === "shared" && (
 						<Tooltip label="صندوق مشترك">
-							<span title="صندوق مشترك" aria-label="صندوق مشترك" className="shrink-0 text-blue-600">
+							<span title="صندوق مشترك" aria-label="صندوق مشترك" className="shrink-0 text-neutral-900">
 								<UsersRound className="h-3.5 w-3.5" />
 							</span>
 						</Tooltip>
@@ -96,7 +96,7 @@ function MailboxAccountRow({ mailbox, unread, avatarUrl, onSelect }: MailboxAcco
 				<p className="truncate text-xs text-neutral-500">{getMailboxAddress(mailbox)}</p>
 			</div>
 			{unread > 0 && (
-				<span className="rounded-full bg-blue-100 px-2 py-0.5 text-[11px] font-semibold text-blue-700">
+				<span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] font-semibold text-neutral-800">
 					{unread > 99 ? "99+" : unread}
 				</span>
 			)}
@@ -206,7 +206,7 @@ export function MailboxSelector() {
 			</button>
 
 			{open && (
-				<div className="absolute end-0 top-14 z-50 w-[360px] overflow-hidden rounded-[28px] border border-neutral-200 bg-[#eef3fb] p-3 shadow-2xl shadow-neutral-900/20">
+				<div className="absolute end-0 top-14 z-50 w-[360px] overflow-hidden rounded-[28px] border border-neutral-200 bg-[#f5f5f5] p-3 shadow-2xl shadow-neutral-900/20">
 					<div className="rounded-[22px] bg-white px-5 py-5">
 						<div className="flex items-center gap-4">
 							<AccountAvatar
@@ -223,7 +223,7 @@ export function MailboxSelector() {
 									<p className="truncate text-lg font-semibold text-neutral-900">{selectedName}</p>
 									{selectedMailbox?.type === "shared" && (
 										<Tooltip label="صندوق مشترك">
-											<span title="صندوق مشترك" aria-label="صندوق مشترك" className="shrink-0 text-blue-600">
+											<span title="صندوق مشترك" aria-label="صندوق مشترك" className="shrink-0 text-neutral-900">
 												<UsersRound className="h-4 w-4" />
 											</span>
 										</Tooltip>
@@ -233,12 +233,12 @@ export function MailboxSelector() {
 									{selectedEmail}
 								</p>
 							</div>
-							<Check className="h-5 w-5 shrink-0 text-blue-600" />
+							<Check className="h-5 w-5 shrink-0 text-neutral-900" />
 						</div>
 						<Link
 							href="/calendar"
 							onClick={() => setOpen(false)}
-							className="mt-4 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-[#f2f6fc]"
+							className="mt-4 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-[#e5e5e5]"
 						>
 							<CalendarDays className="h-5 w-5 text-neutral-600" />
 							التقويم
@@ -246,7 +246,7 @@ export function MailboxSelector() {
 						<Link
 							href="/settings"
 							onClick={() => setOpen(false)}
-							className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-[#f2f6fc]"
+							className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-[#e5e5e5]"
 						>
 							<Settings className="h-5 w-5 text-neutral-600" />
 							الإعدادات
@@ -281,17 +281,17 @@ export function MailboxSelector() {
 							<Link
 								href="/admin"
 								onClick={() => setOpen(false)}
-								className={`flex items-center gap-3 border-t border-neutral-100 px-5 py-4 text-sm font-medium text-neutral-800 hover:bg-[#f2f6fc] ${adminActive ? "bg-blue-50" : ""}`}
+								className={`flex items-center gap-3 border-t border-neutral-100 px-5 py-4 text-sm font-medium text-neutral-800 hover:bg-[#e5e5e5] ${adminActive ? "bg-neutral-50" : ""}`}
 							>
 								<ShieldCheck className="h-5 w-5 text-neutral-600" />
 								الإدارة
-								{adminActive && <Check className="ml-auto h-4 w-4 text-blue-600" />}
+								{adminActive && <Check className="ml-auto h-4 w-4 text-neutral-900" />}
 							</Link>
 						)}
 						<button
 							type="button"
 							onClick={logout}
-							className="flex w-full items-center gap-3 border-t border-neutral-100 px-5 py-4 text-start text-sm font-medium text-neutral-800 hover:bg-[#f2f6fc]"
+							className="flex w-full items-center gap-3 border-t border-neutral-100 px-5 py-4 text-start text-sm font-medium text-neutral-800 hover:bg-[#e5e5e5]"
 						>
 							<LogOut className="h-5 w-5 text-neutral-600" />
 							تسجيل الخروج

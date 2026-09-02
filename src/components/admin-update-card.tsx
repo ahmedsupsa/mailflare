@@ -53,7 +53,7 @@ export function AdminUpdateCard() {
 	return (
 		<Card className="rounded-3xl border-0 bg-white p-6">
 			<CardHeader className="flex-row items-center gap-4 space-y-0 py-0">
-				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-800">
 					<RefreshCw className="h-5 w-5" />
 				</div>
 				<div>

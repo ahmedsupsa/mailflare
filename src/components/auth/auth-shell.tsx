@@ -22,13 +22,13 @@ export function AuthShell({
   }, [branding.iconUrl]);
 
   return (
-    <div className="min-h-dvh bg-[#f1f4fa] px-4 py-6 text-neutral-900 sm:px-6 lg:flex lg:items-center lg:px-10 lg:py-10">
+    <div className="min-h-dvh bg-[#f5f5f5] px-4 py-6 text-neutral-900 sm:px-6 lg:flex lg:items-center lg:px-10 lg:py-10">
       <main className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-4xl bg-white lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
         <section className="flex flex-col p-7 sm:p-10 lg:p-14">
           <div className="flex items-center gap-2">
             <span className="flex items-center justify-center overflow-hidden">
               {iconFailed ? (
-                <Icon className="h-8 w-8 text-blue-600" />
+                <Icon className="h-8 w-8 text-neutral-900" />
               ) : (
                 <img
                   src={iconUrl}
@@ -65,7 +65,7 @@ export function AuthShell({
                 <span key={step.label} className="flex items-center gap-2">
                   <span
                     className={
-                      step.active ? "text-blue-700" : "text-neutral-400"
+                      step.active ? "text-neutral-800" : "text-neutral-400"
                     }
                   >
                     {index + 1} {step.label}
@@ -79,7 +79,7 @@ export function AuthShell({
           )}
           <div className="w-full">{children}</div>
           {footer && (
-            <div className="mt-8 text-sm font-medium text-blue-700">
+            <div className="mt-8 text-sm font-medium text-neutral-800">
               {footer}
             </div>
           )}

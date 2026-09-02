@@ -19,7 +19,7 @@ export function MessageAttachmentCard({
 		<button
 			type="button"
 			onClick={() => onPreview(attachment)}
-			className="group flex w-full items-center gap-3 rounded-lg border border-neutral-200 p-2.5 text-start transition-colors hover:border-blue-200 hover:bg-blue-50/40"
+			className="group flex w-full items-center gap-3 rounded-lg border border-neutral-200 p-2.5 text-start transition-colors hover:border-neutral-200 hover:bg-neutral-50/40"
 		>
 			{visual.thumbnail === "image" && (
 				<img
@@ -56,7 +56,7 @@ export function MessageAttachmentCard({
 					{visual.label} · {formatAttachmentSize(attachment.size)}
 				</span>
 			</span>
-			<ArrowDownToLine className="h-4 w-4 shrink-0 text-neutral-400 transition-colors group-hover:text-blue-600" />
+			<ArrowDownToLine className="h-4 w-4 shrink-0 text-neutral-400 transition-colors group-hover:text-neutral-900" />
 		</button>
 	);
 }

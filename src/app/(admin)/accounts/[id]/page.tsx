@@ -62,7 +62,7 @@ export default function AccountDetailsPage() {
 			</div>
 			<section className="space-y-5 rounded-3xl bg-white p-6">
 				<div className="flex items-center gap-4">
-					<span className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-xl font-semibold text-blue-700">
+					<span className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-neutral-100 text-xl font-semibold text-neutral-800">
 						{account.name.charAt(0).toUpperCase()}
 						{account.hasAvatar && (
 							<img src={`/api/accounts/${id}/avatar?v=${avatarVersion}`} alt="" className="absolute inset-0 h-full w-full object-cover" />

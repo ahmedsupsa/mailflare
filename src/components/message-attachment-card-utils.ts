@@ -23,7 +23,7 @@ export function getAttachmentVisual(
 	if (previewKind === "image") {
 		return {
 			icon: Image,
-			iconClassName: "bg-blue-50 text-blue-700",
+			iconClassName: "bg-fuchsia-50 text-fuchsia-700",
 			label: "صورة",
 			thumbnail: "image",
 		};
@@ -99,7 +99,7 @@ export function getAttachmentVisual(
 	) {
 		return {
 			icon: FileCode,
-			iconClassName: "bg-cyan-50 text-cyan-700",
+			iconClassName: "bg-teal-50 text-teal-700",
 			label: "شيفرة",
 			thumbnail: null,
 		};
@@ -107,7 +107,7 @@ export function getAttachmentVisual(
 	if (previewKind === "text" || type.includes("word") || /\.(doc|docx|odt|rtf|txt)$/.test(filename)) {
 		return {
 			icon: FileType,
-			iconClassName: "bg-sky-50 text-sky-700",
+			iconClassName: "bg-lime-50 text-lime-700",
 			label: "مستند",
 			thumbnail: null,
 		};

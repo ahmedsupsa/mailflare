@@ -39,7 +39,7 @@ export function ResponsiveAside({ children, className }: { children: ReactNode; 
 	return (
 		<aside
 			className={cn(
-				"fixed inset-y-0 start-0 z-40 w-72 overflow-y-auto overscroll-contain bg-[#f6f8fc] px-3 py-4 shadow-xl transition-transform duration-200 scrollbar-gutter-stable",
+				"fixed inset-y-0 start-0 z-40 w-72 overflow-y-auto overscroll-contain bg-[#f5f5f5] px-3 py-4 shadow-xl transition-transform duration-200 scrollbar-gutter-stable",
 				mobileOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full",
 				"lg:static lg:z-auto lg:w-auto lg:translate-x-0 lg:shadow-none lg:rtl:translate-x-0",
 				className,

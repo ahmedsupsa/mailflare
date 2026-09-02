@@ -70,7 +70,7 @@ export default function MailboxAvatarForm({
 				type="button"
 				onClick={() => inputRef.current?.click()}
 				disabled={busy}
-				className="group relative h-24 w-24 overflow-hidden rounded-full border border-neutral-200 bg-blue-600 text-white shadow-sm outline-none ring-blue-500 transition focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-wait"
+				className="group relative h-24 w-24 overflow-hidden rounded-full border border-neutral-200 bg-neutral-900 text-white shadow-sm outline-none ring-neutral-500 transition focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-wait"
 				aria-label={hasAvatar ? `تغيير الصورة الشخصية لـ ${name}` : `رفع صورة شخصية لـ ${name}`}
 			>
 				{hasAvatar ? (

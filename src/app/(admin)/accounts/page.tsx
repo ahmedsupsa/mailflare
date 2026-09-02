@@ -126,7 +126,7 @@ export default function AccountsPage() {
 
 			{!loading && accounts.length === 0 && (
 				<div className="flex flex-col items-center gap-3 rounded-3xl bg-white px-6 py-16 text-center">
-					<span className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+					<span className="flex h-14 w-14 items-center justify-center rounded-full bg-neutral-100 text-neutral-900">
 						<Users className="h-6 w-6" />
 					</span>
 					<div>
@@ -153,9 +153,9 @@ export default function AccountsPage() {
 					<Link
 						key={account.id}
 						href={`/accounts/${account.id}`}
-						className="flex items-center gap-4 rounded-3xl bg-white p-5 transition-colors hover:bg-blue-50/40"
+						className="flex items-center gap-4 rounded-3xl bg-white p-5 transition-colors hover:bg-neutral-50/40"
 					>
-						<span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-100 font-semibold text-blue-700">
+						<span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-100 font-semibold text-neutral-800">
 							{account.name.charAt(0).toUpperCase()}
 							{account.hasAvatar && (
 								<img
@@ -170,7 +170,7 @@ export default function AccountsPage() {
 								<span className="truncate font-semibold text-neutral-900">{account.name}</span>
 								<span
 									className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-										account.role === "admin" ? "bg-blue-100 text-blue-700" : "bg-neutral-100 text-neutral-600"
+										account.role === "admin" ? "bg-neutral-900 text-white" : "bg-neutral-100 text-neutral-600"
 									}`}
 								>
 									{account.role === "admin" ? "مسؤول" : "عضو"}

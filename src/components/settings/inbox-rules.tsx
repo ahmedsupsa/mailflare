@@ -153,9 +153,9 @@ export function InboxRules() {
             tabIndex={0}
             onClick={() => openEditDialog(rule)}
             onKeyDown={(event) => onRuleKeyDown(event, rule)}
-            className="group -mx-3 flex cursor-pointer items-center gap-3 rounded-lg px-3 py-3 outline-none transition-colors hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:ring-2 focus-visible:ring-blue-200"
+            className="group -mx-3 flex cursor-pointer items-center gap-3 rounded-lg px-3 py-3 outline-none transition-colors hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:ring-2 focus-visible:ring-neutral-200"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-50 text-neutral-800">
               {rule.action === "spam" ? (
                 <ShieldAlert className="h-4 w-4" />
               ) : rule.action === "trash" ? (

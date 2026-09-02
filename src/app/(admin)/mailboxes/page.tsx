@@ -140,7 +140,7 @@ export default function MailboxesPage() {
 										id="mailbox-type"
 										value={mailboxType}
 										onChange={(event) => setMailboxType(event.target.value as "personal" | "shared")}
-										className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm shadow-sm shadow-neutral-200/50 focus-visible:border-blue-600 focus-visible:outline-none"
+										className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm shadow-sm shadow-neutral-200/50 focus-visible:border-neutral-900 focus-visible:outline-none"
 									>
 										<option value="personal">صندوق وارد شخصي</option>
 										<option value="shared">صندوق وارد مشترك</option>
@@ -158,7 +158,7 @@ export default function MailboxesPage() {
 										setOwnerUserId(event.target.value);
 										if (owner) setDisplayName(owner.name);
 									}}
-									className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm shadow-sm shadow-neutral-200/50 focus-visible:border-blue-600 focus-visible:outline-none"
+									className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm shadow-sm shadow-neutral-200/50 focus-visible:border-neutral-900 focus-visible:outline-none"
 								>
 									{mailboxOwners.map((owner) => (
 										<option key={owner.id} value={owner.id}>
@@ -168,7 +168,7 @@ export default function MailboxesPage() {
 								</Select>
 							</div>
 							) : (
-								<p className="rounded-2xl bg-blue-50 px-4 py-3 text-sm text-blue-800">
+								<p className="rounded-2xl bg-neutral-50 px-4 py-3 text-sm text-neutral-900">
 									بعد إنشاء صندوق الوارد المشترك، اختر حسابات الفريق التي يمكنها الوصول إليه.
 								</p>
 							)}
@@ -183,7 +183,7 @@ export default function MailboxesPage() {
 							</div>
 							<div className="space-y-2">
 								<Label htmlFor="mailbox-username">عنوان البريد الإلكتروني</Label>
-								<div className="flex h-10 overflow-hidden rounded-md border border-neutral-200 bg-white shadow-sm shadow-neutral-200/50 focus-within:border-blue-600">
+								<div className="flex h-10 overflow-hidden rounded-md border border-neutral-200 bg-white shadow-sm shadow-neutral-200/50 focus-within:border-neutral-900">
 									<Input
 										id="mailbox-username"
 										value={localPart}
@@ -245,9 +245,9 @@ export default function MailboxesPage() {
 							<Link
 								key={mailbox.id}
 								href={`/mailboxes/${mailbox.id}`}
-								className="group flex items-start gap-4 rounded-3xl bg-white p-5 transition-colors hover:bg-blue-50/10"
+								className="group flex items-start gap-4 rounded-3xl bg-white p-5 transition-colors hover:bg-neutral-50/10"
 							>
-								<span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-sm font-semibold text-blue-700">
+								<span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-100 text-sm font-semibold text-neutral-800">
 									{getMailboxName(mailboxWithHostname).trim().charAt(0).toUpperCase() || "?"}
 									{mailbox.hasAvatar && (
 										<img
@@ -264,7 +264,7 @@ export default function MailboxesPage() {
 											{getMailboxName(mailboxWithHostname)}
 										</span>
 										{mailbox.type === "shared" && (
-											<span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
+											<span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-neutral-50 px-2 py-0.5 text-xs font-medium text-neutral-800">
 												<UsersRound className="h-3 w-3" />
 												مشترك
 											</span>

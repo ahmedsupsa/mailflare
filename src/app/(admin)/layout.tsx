@@ -21,7 +21,7 @@ export default function DashboardLayout({
       <SidebarProvider expandedWidth={256}>
       <MailboxProvider>
         <ComposeProvider>
-          <div className="grid h-dvh grid-cols-1 overflow-hidden bg-[#f6f8fc] transition-[grid-template-columns] duration-200 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]">
+          <div className="grid h-dvh grid-cols-1 overflow-hidden bg-[#f5f5f5] transition-[grid-template-columns] duration-200 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]">
             <MobileSidebarBackdrop />
             <ResponsiveAside className="min-h-0">
               <AdminNav />

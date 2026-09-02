@@ -115,7 +115,7 @@ export default function CalendarPage() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="flex items-center gap-3 text-2xl font-semibold text-neutral-900">
-            <CalendarDays className="h-7 w-7 text-blue-600" />
+            <CalendarDays className="h-7 w-7 text-neutral-900" />
             التقويم
           </h1>
           <p className="mt-1 text-sm text-neutral-500">

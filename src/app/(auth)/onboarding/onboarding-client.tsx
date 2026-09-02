@@ -80,9 +80,9 @@ export function OnboardingClient() {
 			<div className="space-y-5">
 				{step === 1 && (
 					<>
-						<p className="rounded-2xl bg-[#eaf1fb] px-4 py-3 text-sm leading-6 text-neutral-700">
+						<p className="rounded-2xl bg-[#e5e5e5] px-4 py-3 text-sm leading-6 text-neutral-700">
 							يجب أن يستخدم نطاقك خوادم Cloudflare DNS على نفس الحساب الذي يحمل{" "}
-							<code className="no-font-mono text-xs font-semibold text-blue-800">CF_TOKEN</code>.
+							<code className="no-font-mono text-xs font-semibold text-neutral-900">CF_TOKEN</code>.
 						</p>
 						<div className="space-y-2">
 							<Label htmlFor="domain">النطاق</Label>

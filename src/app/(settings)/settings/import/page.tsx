@@ -183,7 +183,7 @@ export default function SettingsImportPage() {
             value={activeTab}
             onChange={(event) => setActiveTab(event.target.value as ImportTab)}
             className="text-sm w-full py-2"
-            // className="h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm text-neutral-900 shadow-sm shadow-neutral-200/50 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            // className="h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm text-neutral-900 shadow-sm shadow-neutral-200/50 outline-none focus:border-neutral-500 focus:ring-2 focus:ring-neutral-100"
           >
             <option value="file">ملف نسخة احتياطية</option>
             <option value="imap">IMAP</option>
@@ -273,7 +273,7 @@ export default function SettingsImportPage() {
 						{fileProgress && (
 							<div className="space-y-1 text-xs text-neutral-500" aria-live="polite">
 								<div className="flex justify-between"><span>{fileProgress.label}</span><span>{fileProgress.completed}%</span></div>
-								<div className="h-1.5 overflow-hidden rounded-full bg-neutral-100"><div className="h-full bg-blue-600 transition-[width]" style={{ width: `${fileProgress.completed}%` }} /></div>
+								<div className="h-1.5 overflow-hidden rounded-full bg-neutral-100"><div className="h-full bg-neutral-900 transition-[width]" style={{ width: `${fileProgress.completed}%` }} /></div>
 							</div>
 						)}
                 {fileResult && (
@@ -399,7 +399,7 @@ export default function SettingsImportPage() {
 						{imapProgress && (
 							<div className="space-y-1 text-xs text-neutral-500" aria-live="polite">
 								<div className="flex justify-between"><span>{imapProgress.label}</span><span>{imapProgress.completed}/{imapProgress.total}</span></div>
-								<div className="h-1.5 overflow-hidden rounded-full bg-neutral-100"><div className="h-full bg-blue-600 transition-[width]" style={{ width: `${Math.round((imapProgress.completed / imapProgress.total) * 100)}%` }} /></div>
+								<div className="h-1.5 overflow-hidden rounded-full bg-neutral-100"><div className="h-full bg-neutral-900 transition-[width]" style={{ width: `${Math.round((imapProgress.completed / imapProgress.total) * 100)}%` }} /></div>
 							</div>
 						)}
                 {imapResult && (

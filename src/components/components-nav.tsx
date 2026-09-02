@@ -40,12 +40,12 @@ export function NavItem({ link }: { link: NavLink }) {
   if (!Icon) return null;
   const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
   const classes = cn(
-    "flex h-9 items-center gap-3 rounded-e-full text-sm font-medium text-neutral-700 transition-colors hover:bg-blue-50",
+    "flex h-9 items-center gap-3 rounded-e-full text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50",
     minimal && "relative mx-auto w-10 justify-center rounded-full px-0",
-    active && "bg-blue-100 text-blue-900",
-    dragOver && "bg-blue-50 text-blue-900 ring-1 ring-blue-200",
+    active && "bg-neutral-100 text-neutral-900",
+    dragOver && "bg-neutral-50 text-neutral-900 ring-1 ring-neutral-200",
     link.primary &&
-      "mb-3 h-12 w-fit rounded-2xl bg-blue-100 px-5 text-blue-950 shadow-sm hover:bg-blue-200",
+      "mb-3 h-12 w-fit rounded-2xl bg-neutral-100 px-5 text-neutral-950 shadow-sm hover:bg-neutral-200",
     link.primary && minimal && "h-11 w-11 rounded-2xl px-0",
   );
   const dropProps = link.onMessageDrop
@@ -86,7 +86,7 @@ export function NavItem({ link }: { link: NavLink }) {
           </span>
         )}
         {minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[10px] font-semibold leading-4 text-white">
+          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-neutral-900 px-1 text-center text-[10px] font-semibold leading-4 text-white">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
@@ -130,9 +130,9 @@ export function NavItem({ link }: { link: NavLink }) {
   return (
     <>
       {navigationProgress !== null && (
-        <div className="fixed inset-x-0 top-0 z-[120] h-1 bg-blue-100">
+        <div className="fixed inset-x-0 top-0 z-[120] h-1 bg-neutral-100">
           <div
-            className="h-full bg-blue-600 transition-[width] duration-100 ease-out"
+            className="h-full bg-neutral-900 transition-[width] duration-100 ease-out"
             style={{ width: `${navigationProgress}%` }}
           />
         </div>
@@ -156,7 +156,7 @@ export function NavItem({ link }: { link: NavLink }) {
           </span>
         )}
         {minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[10px] font-semibold leading-4 text-white">
+          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-neutral-900 px-1 text-center text-[10px] font-semibold leading-4 text-white">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}

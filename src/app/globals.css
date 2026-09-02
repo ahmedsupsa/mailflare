@@ -3,12 +3,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-	--background: #f6f8fc;
+	--background: #f5f5f5;
 	--foreground: #202124;
 	--card: #ffffff;
-	--muted: #eef3fb;
+	--muted: #f5f5f5;
 	--border: #dadce0;
-	--primary: #0b57d0;
+	--primary: #171717;
 	--primary-foreground: #ffffff;
 }
 

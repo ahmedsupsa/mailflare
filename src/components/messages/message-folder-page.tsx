@@ -75,7 +75,7 @@ function MessageListRow({
 			<div
 				className={`group grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-s-2 px-4 py-3 transition-colors ${
 					active
-						? "border-s-blue-600 bg-blue-50"
+						? "border-s-neutral-900 bg-neutral-50"
 						: selected
 							? "border-s-transparent bg-neutral-50"
 							: "border-s-transparent hover:bg-neutral-50"
@@ -118,8 +118,8 @@ function MessageListRow({
 	}
 
 	const className =
-		`group relative grid min-h-12 w-full grid-cols-[24px_32px_minmax(160px,240px)_1fr_auto] items-center gap-3 px-6 text-start text-sm hover:z-10 hover:bg-[#f2f6fc] hover:shadow-sm ${
-			active || selected ? "bg-blue-50" : ""
+		`group relative grid min-h-12 w-full grid-cols-[24px_32px_minmax(160px,240px)_1fr_auto] items-center gap-3 px-6 text-start text-sm hover:z-10 hover:bg-[#e5e5e5] hover:shadow-sm ${
+			active || selected ? "bg-neutral-50" : ""
 		} ${draggable ? "cursor-grab active:cursor-grabbing" : ""}`;
 	const content = (
 		<>
@@ -414,7 +414,7 @@ export function MessageFolderPage({
 									aria-label="عرض الرسائل غير المقروءة فقط"
 									aria-pressed={unreadOnly}
 									onClick={() => setUnreadOnly((current) => !current)}
-									className={unreadOnly ? "bg-blue-100 text-blue-700 hover:bg-blue-100" : undefined}
+									className={unreadOnly ? "bg-neutral-100 text-neutral-800 hover:bg-neutral-100" : undefined}
 								>
 									<ListFilter className="h-4 w-4" />
 								</Button>

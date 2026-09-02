@@ -10,9 +10,9 @@ export function NewMessagePopup({
 	onDismiss,
 }: NewMessagePopupProps) {
 	return (
-		<div className="fixed end-5 top-5 z-[100] w-[min(380px,calc(100vw-40px))] rounded-xl border border-blue-200 bg-white p-4 shadow-xl">
+		<div className="fixed end-5 top-5 z-[100] w-[min(380px,calc(100vw-40px))] rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
 			<div className="flex items-start gap-3">
-				<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+				<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-800">
 					<Mail className="h-5 w-5" />
 				</div>
 				<Link

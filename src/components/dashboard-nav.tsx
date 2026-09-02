@@ -185,7 +185,7 @@ export function DashboardNav({ className }: { className?: string }) {
               <DialogTrigger asChild>
                 <button
                   type="button"
-                  className="flex h-7 w-7 items-center justify-center rounded-lg text-neutral-500 hover:bg-blue-50 hover:text-blue-700"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg text-neutral-500 hover:bg-neutral-50 hover:text-neutral-800"
                   aria-label="إنشاء مجلد"
                 >
                   <Plus className="h-4 w-4" />

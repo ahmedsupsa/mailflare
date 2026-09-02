@@ -79,7 +79,7 @@ export default function DomainItemCard({ item, dns, remove, loadDns }: any) {
           )}
           <button
             onClick={() => loadDns(item.id)}
-            className="flex items-center gap-0.5 text-blue-600 hover:text-blue-800"
+            className="flex items-center gap-0.5 text-neutral-900 hover:text-neutral-900"
           >
             <ArrowRight className="h-3 w-3 rtl:rotate-180" />
             التفاصيل

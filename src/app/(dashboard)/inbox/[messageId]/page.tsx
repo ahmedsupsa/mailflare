@@ -195,9 +195,9 @@ export default function MessageDetailPage() {
                   href={attachment.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-3 rounded-lg border border-neutral-200 p-3 text-start hover:border-blue-200 hover:bg-blue-50/40"
+                  className="flex items-center gap-3 rounded-lg border border-neutral-200 p-3 text-start hover:border-neutral-200 hover:bg-neutral-50/40"
                 >
-                  <Cloud className="h-5 w-5 shrink-0 text-blue-600" />
+                  <Cloud className="h-5 w-5 shrink-0 text-neutral-900" />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium text-neutral-900">
                       {attachment.filename}
