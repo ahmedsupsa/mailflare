@@ -43,13 +43,13 @@ export function MessageAttachmentViewer({
 
 		authFetch(previewUrl)
 			.then(async (response) => {
-				if (!response.ok) throw new Error("Could not load this attachment");
+				if (!response.ok) throw new Error("تعذّر تحميل هذا المرفق");
 				const content = await response.text();
 				if (!cancelled) setTextContent(content);
 			})
 			.catch((error) => {
 				if (!cancelled) {
-					setTextError(error instanceof Error ? error.message : "Could not load this attachment");
+					setTextError(error instanceof Error ? error.message : "تعذّر تحميل هذا المرفق");
 				}
 			});
 
@@ -106,7 +106,7 @@ export function MessageAttachmentViewer({
 						<div className="flex flex-col items-center gap-3 px-6 text-center">
 							<FileWarning className="h-10 w-10 text-neutral-400" />
 							<p className="text-sm text-neutral-600">
-								This file type cannot be previewed safely in the browser.
+								لا يمكن معاينة هذا النوع من الملفات بأمان في المتصفح.
 							</p>
 						</div>
 					)}
@@ -116,7 +116,7 @@ export function MessageAttachmentViewer({
 					<Button asChild>
 						<a href={downloadUrl} download={attachment.filename}>
 							<ArrowDownToLine className="h-4 w-4" />
-							Download
+							تنزيل
 						</a>
 					</Button>
 				</div>

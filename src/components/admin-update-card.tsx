@@ -24,7 +24,7 @@ export function AdminUpdateCard() {
 			})
 			.catch((statusError) => {
 				if (isActive) {
-					setError(statusError instanceof Error ? statusError.message : "Could not check for updates");
+					setError(statusError instanceof Error ? statusError.message : "تعذّر التحقق من وجود تحديثات");
 				}
 			})
 			.finally(() => {
@@ -44,7 +44,7 @@ export function AdminUpdateCard() {
 		try {
 			setResult(await triggerApplicationUpdate());
 		} catch (updateError) {
-			setError(updateError instanceof Error ? updateError.message : "Could not start the update");
+			setError(updateError instanceof Error ? updateError.message : "تعذّر بدء التحديث");
 		} finally {
 			setIsPending(false);
 		}
@@ -57,32 +57,32 @@ export function AdminUpdateCard() {
 					<RefreshCw className="h-5 w-5" />
 				</div>
 				<div>
-					<CardTitle className="text-base">Application update</CardTitle>
+					<CardTitle className="text-base">تحديث التطبيق</CardTitle>
 					<p className="mt-1 text-sm text-neutral-500">
-						Sync the latest Mailflare release, apply D1 migrations, and deploy the Worker.
+						مزامنة أحدث إصدار من Mailflare، وتطبيق ترحيلات D1، ونشر الـ Worker.
 					</p>
 				</div>
 			</CardHeader>
 			<CardContent className="flex items-center gap-4 pt-5">
 				<Button type="button" onClick={handleUpdate} disabled={isChecking || isPending || !status?.available}>
 					<RefreshCw className={isPending ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
-					{isPending ? "Starting update..." : "Update Mailflare"}
+					{isPending ? "جارٍ بدء التحديث..." : "تحديث Mailflare"}
 				</Button>
 				{isChecking && <Skeleton className="h-4 w-44" />}
 				{!isChecking && status?.available && (
 					<p className="text-sm text-amber-700">
-						Update available: v{status.currentVersion} → v{status.targetVersion}
+						يتوفر تحديث: v{status.currentVersion} → v{status.targetVersion}
 					</p>
 				)}
 				{!isChecking && status && !status.available && (
-					<p className="text-sm text-green-700">Mailflare v{status.currentVersion} is up to date.</p>
+					<p className="text-sm text-green-700">Mailflare v{status.currentVersion} محدَّث بالفعل.</p>
 				)}
 				{result?.ok && (
 					<p className="text-sm text-green-700">
-						Update started for {result.repository}@{result.ref}.{" "}
+						تم بدء التحديث لـ {result.repository}@{result.ref}.{" "}
 						{result.runUrl && (
 							<a className="font-medium underline" href={result.runUrl} target="_blank" rel="noreferrer">
-								View workflow
+								عرض سير العمل
 							</a>
 						)}
 					</p>

@@ -80,7 +80,7 @@ export function LoadingTransition({ children, ready }: LoadingTransitionProps) {
 					</div>
 				)}
 				<div
-					aria-label="Loading"
+					aria-label="جارٍ التحميل"
 					aria-live="polite"
 					className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#f6f8fc] transition-opacity duration-300 ${
 						loaderVisible ? "opacity-100" : "pointer-events-none opacity-0"
@@ -90,7 +90,7 @@ export function LoadingTransition({ children, ready }: LoadingTransitionProps) {
 						<img
 							src={iconUrl}
 							onError={() => setIconUrl("/icon-96.png")}
-							alt={`${branding.appName} icon`}
+							alt={`أيقونة ${branding.appName}`}
 							className="h-20 w-20 rounded-2xl object-contain"
 						/>
 						<div className="w-full">

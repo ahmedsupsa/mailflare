@@ -13,7 +13,7 @@ async function moveMessages(payload: { messageIds: string[]; action: BulkMessage
 		body: JSON.stringify(payload),
 	});
 
-	if (!response.ok) throw new Error("Unable to move messages");
+	if (!response.ok) throw new Error("تعذّر نقل الرسائل");
 	window.dispatchEvent(new Event("mailflare:messages-changed"));
 }
 

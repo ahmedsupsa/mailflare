@@ -48,20 +48,20 @@ import { SidebarHeader } from "./sidebar-header";
 import { useSidebar } from "./sidebar-state";
 
 const links = [
-  { href: "/compose", label: "Compose", icon: MailPlus, primary: true },
-  { href: "/inbox", label: "Inbox", icon: Inbox, preloadMessages: true },
-  { href: "/starred", label: "Starred", icon: Star, preloadMessages: true },
-  { href: "/snoozed", label: "Snoozed", icon: Clock, preloadMessages: true },
-  { href: "/sent", label: "Sent", icon: Send, preloadMessages: true },
-  { href: "/drafts", label: "Drafts", icon: FileText, preloadMessages: true },
+  { href: "/compose", label: "إنشاء رسالة", icon: MailPlus, primary: true },
+  { href: "/inbox", label: "البريد الوارد", icon: Inbox, preloadMessages: true },
+  { href: "/starred", label: "المميزة بنجمة", icon: Star, preloadMessages: true },
+  { href: "/snoozed", label: "المؤجّلة", icon: Clock, preloadMessages: true },
+  { href: "/sent", label: "المرسل", icon: Send, preloadMessages: true },
+  { href: "/drafts", label: "المسودات", icon: FileText, preloadMessages: true },
   {
     href: "/archived",
-    label: "Archived",
+    label: "الأرشيف",
     icon: Archive,
     preloadMessages: true,
   },
-  { href: "/spam", label: "Spam", icon: ShieldAlert, preloadMessages: true },
-  { href: "/trash", label: "Trash", icon: Trash2, preloadMessages: true },
+  { href: "/spam", label: "البريد العشوائي", icon: ShieldAlert, preloadMessages: true },
+  { href: "/trash", label: "المهملات", icon: Trash2, preloadMessages: true },
 ];
 
 export function DashboardNav({ className }: { className?: string }) {
@@ -178,7 +178,7 @@ export function DashboardNav({ className }: { className?: string }) {
       {!minimal && (
         <div className="mt-2 flex h-8 items-center justify-between px-3">
           <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">
-            Folders
+            المجلدات
           </span>
           {selectedMailbox && (
             <Dialog open={folderDialogOpen} onOpenChange={setFolderDialogOpen}>
@@ -186,35 +186,35 @@ export function DashboardNav({ className }: { className?: string }) {
                 <button
                   type="button"
                   className="flex h-7 w-7 items-center justify-center rounded-lg text-neutral-500 hover:bg-blue-50 hover:text-blue-700"
-                  aria-label="Create folder"
+                  aria-label="إنشاء مجلد"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Create folder</DialogTitle>
+                  <DialogTitle>إنشاء مجلد</DialogTitle>
                   <DialogDescription>
-                    Add a folder to the selected mailbox.
+                    أضِف مجلدًا إلى صندوق البريد المحدد.
                   </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={createFolder} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="folderName">Folder name</Label>
+                    <Label htmlFor="folderName">اسم المجلد</Label>
                     <Input
                       id="folderName"
                       value={newFolderName}
                       onChange={(event) => setNewFolderName(event.target.value)}
-                      placeholder="Receipts"
+                      placeholder="الإيصالات"
                       autoFocus
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Color</Label>
+                    <Label>اللون</Label>
                     <div
                       className="flex flex-wrap gap-2"
                       role="radiogroup"
-                      aria-label="Folder color"
+                      aria-label="لون المجلد"
                     >
                       {FOLDER_COLOR_OPTIONS.map((option) => (
                         <button
@@ -239,7 +239,7 @@ export function DashboardNav({ className }: { className?: string }) {
                     type="submit"
                     disabled={addingFolder || !newFolderName.trim()}
                   >
-                    {addingFolder ? "Creating..." : "Create folder"}
+                    {addingFolder ? "جارٍ الإنشاء..." : "إنشاء مجلد"}
                   </Button>
                 </form>
               </DialogContent>
@@ -249,7 +249,7 @@ export function DashboardNav({ className }: { className?: string }) {
       )}
       {!minimal && folders.length === 0 && (
         <div className="mx-3 rounded-lg border border-dashed border-neutral-200 px-3 py-3 text-xs text-neutral-400">
-          No folders yet
+          لا توجد مجلدات بعد
         </div>
       )}
       {folders.map((folder) => (

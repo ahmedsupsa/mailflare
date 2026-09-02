@@ -37,7 +37,7 @@ export default function HomePage() {
         <Link
           href="/"
           className="flex items-center gap-3"
-          aria-label="Email Platform home"
+          aria-label="الصفحة الرئيسية لمنصة البريد الإلكتروني"
         >
           <img src={branding.iconUrl} height={32} width={32} alt="" />
           <span className="text-base font-semibold tracking-tight">
@@ -67,19 +67,19 @@ export default function HomePage() {
           <div className="flex max-w-2xl flex-col justify-center">
             <div className="mb-6 flex w-fit items-center gap-2 text-sm font-medium text-blue-800">
               <ShieldCheck className="h-4 w-4" />
-              Cloudflare-native email operations
+              عمليات بريد إلكتروني أصلية على Cloudflare
             </div>
             <h1 className="max-w-[12ch] text-5xl font-semibold leading-[0.96] tracking-tight text-neutral-950 sm:text-6xl lg:text-7xl">
-              Mailboxes that feel like your inbox.
+              صناديق بريد تشعرك وكأنها بريدك الوارد.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-600">
-              Add domains, route inbound mail, send through API keys, and manage
-              your mailboxes from one quiet workspace built around the message list.
+              أضِف النطاقات، ووجّه البريد الوارد، وأرسِل عبر مفاتيح API، وأدِر
+              صناديق بريدك من مساحة عمل هادئة واحدة مبنية حول قائمة الرسائل.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" asChild className="rounded-full px-6">
                 <Link href={actions.at(-1)?.href ?? "/setup"}>
-                  {hasUser ? "Open dashboard" : "Create account"}
+                  {hasUser ? "فتح لوحة التحكم" : "إنشاء حساب"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -90,7 +90,7 @@ export default function HomePage() {
                 className="rounded-full border-neutral-200 bg-white px-6"
               >
                 <Link href={hasUser ? "/inbox" : "/login"}>
-                  {hasUser ? "View inbox" : "Log in"}
+                  {hasUser ? "عرض البريد الوارد" : "تسجيل الدخول"}
                 </Link>
               </Button>
             </div>
@@ -101,11 +101,11 @@ export default function HomePage() {
               <aside className="hidden flex-col gap-2 bg-[#f6f8fc] px-3 py-5 sm:flex">
                 <div className="mb-4 flex items-center gap-3 px-3 text-neutral-700">
                   <Inbox className="h-5 w-5" />
-                  <span className="font-semibold">Mail</span>
+                  <span className="font-semibold">البريد</span>
                 </div>
                 <div className="mb-3 flex h-12 w-fit items-center gap-2 rounded-2xl bg-blue-100 px-5 text-sm font-semibold text-blue-950 shadow-sm">
                   <Mail className="h-4 w-4" />
-                  Compose
+                  إنشاء رسالة
                 </div>
                 {sidebarItems.map((item) => {
                   const Icon = item.icon;
@@ -136,7 +136,7 @@ export default function HomePage() {
                 <div className="flex h-16 items-center gap-3 bg-[#f6f8fc] px-4">
                   <div className="flex h-12 flex-1 items-center gap-3 rounded-full bg-[#eaf1fb] px-4 text-neutral-600">
                     <Search className="h-5 w-5" />
-                    <span className="text-[15px]">Search mail</span>
+                    <span className="text-[15px]">البحث في البريد</span>
                   </div>
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
                     <Mail className="h-4 w-4" />
@@ -147,14 +147,14 @@ export default function HomePage() {
                   <div className="flex h-14 items-center justify-between border-b border-neutral-200 px-6">
                     <div className="flex items-center gap-3">
                       <h2 className="text-xl font-medium text-neutral-800">
-                        Priority inbox
+                        البريد الوارد ذو الأولوية
                       </h2>
                       <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600">
                         18
                       </span>
                     </div>
                     <span className="hidden text-sm font-medium text-neutral-500 md:inline">
-                      Updated 2 min ago
+                      آخر تحديث منذ دقيقتين
                     </span>
                   </div>
                   <div className="divide-y divide-neutral-100">

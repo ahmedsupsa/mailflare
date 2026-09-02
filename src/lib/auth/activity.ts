@@ -37,7 +37,7 @@ function getRequestIpAddress(request: Request): string {
 	const cfIp = getHeaderValue(request, "cf-connecting-ip");
 	if (cfIp) return cfIp;
 	const forwardedFor = getHeaderValue(request, "x-forwarded-for");
-	return forwardedFor?.split(",")[0]?.trim() || "Unknown";
+	return forwardedFor?.split(",")[0]?.trim() || "غير معروف";
 }
 
 function getHeaderValue(request: Request, name: string): string | null {
@@ -46,9 +46,9 @@ function getHeaderValue(request: Request, name: string): string | null {
 }
 
 function getDevice(userAgent: string): string {
-	if (/ipad|tablet/i.test(userAgent)) return "Tablet";
-	if (/mobi|iphone|android/i.test(userAgent)) return "Mobile";
-	return "Desktop";
+	if (/ipad|tablet/i.test(userAgent)) return "جهاز لوحي";
+	if (/mobi|iphone|android/i.test(userAgent)) return "جهاز محمول";
+	return "سطح المكتب";
 }
 
 function getPlatform(userAgent: string): string {
@@ -57,5 +57,5 @@ function getPlatform(userAgent: string): string {
 	if (/android/i.test(userAgent)) return "Android";
 	if (/mac os|macintosh/i.test(userAgent)) return "macOS";
 	if (/linux/i.test(userAgent)) return "Linux";
-	return "Unknown";
+	return "غير معروف";
 }

@@ -8,41 +8,41 @@ export const landingNavItems: LandingNavItem[] = [
 ];
 
 export const sidebarItems: SidebarItem[] = [
-	{ label: "Inbox", icon: Inbox, active: true, count: "18" },
-	{ label: "Sent", icon: Send },
-	{ label: "Drafts", icon: FileText, count: "4" },
-	{ label: "Spam", icon: ShieldAlert },
-	{ label: "Trash", icon: Trash2 },
+	{ label: "البريد الوارد", icon: Inbox, active: true, count: "18" },
+	{ label: "المرسل", icon: Send },
+	{ label: "المسودات", icon: FileText, count: "4" },
+	{ label: "البريد العشوائي", icon: ShieldAlert },
+	{ label: "المهملات", icon: Trash2 },
 ];
 
 export const heroMessages: MailPreview[] = [
 	{
 		icon: MailCheck,
 		sender: "postmaster@northline.dev",
-		subject: "Route matched",
-		preview: "Inbound mail was delivered to support after DNS validation.",
-		badge: "Inbound",
+		subject: "تمت مطابقة المسار",
+		preview: "تم تسليم البريد الوارد إلى الدعم بعد التحقق من DNS.",
+		badge: "وارد",
 	},
 	{
 		icon: MailCheck,
 		sender: "ops@halcyon.tools",
-		subject: "API send accepted",
-		preview: "Message queued through the production API key.",
-		badge: "Sent",
+		subject: "تم قبول الإرسال عبر API",
+		preview: "تم وضع الرسالة في قائمة الانتظار عبر مفتاح API الخاص بالإنتاج.",
+		badge: "مرسل",
 	},
 	{
 		icon: MailCheck,
 		sender: "alerts@marketmesh.io",
-		subject: "Webhook delivered",
-		preview: "Event payload reached your billing workspace endpoint.",
-		badge: "Hook",
+		subject: "تم تسليم Webhook",
+		preview: "وصلت حمولة الحدث إلى نقطة نهاية مساحة عمل الفوترة الخاصة بك.",
+		badge: "تنبيه",
 	},
 	{
 		icon: MailCheck,
 		sender: "admin@mailflare.dev",
-		subject: "Mailbox provisioned",
-		preview: "New routing mailbox is ready for customer replies.",
-		badge: "Admin",
+		subject: "تم تجهيز صندوق البريد",
+		preview: "صندوق بريد التوجيه الجديد جاهز لردود العملاء.",
+		badge: "مسؤول",
 	},
 ];
 
@@ -60,11 +60,11 @@ export const deliverySignals = [
 
 export function getHomeActions(isLoggedIn: boolean): HomeAction[] {
 	if (isLoggedIn) {
-		return [{ href: "/inbox", label: "Dashboard", variant: "default" }];
+		return [{ href: "/inbox", label: "لوحة التحكم", variant: "default" }];
 	}
 
 	return [
-		{ href: "/login", label: "Log in", variant: "outline" },
-		{ href: "/setup", label: "Create account", variant: "default" },
+		{ href: "/login", label: "تسجيل الدخول", variant: "outline" },
+		{ href: "/setup", label: "إنشاء حساب", variant: "default" },
 	];
 }

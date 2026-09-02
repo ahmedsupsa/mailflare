@@ -20,28 +20,28 @@ import { useSidebar } from "./sidebar-state";
 const sections = [
   {
     // label: "Overview",
-    links: [{ href: "/admin", label: "Overview", icon: Settings }],
+    links: [{ href: "/admin", label: "نظرة عامة", icon: Settings }],
   },
   {
-    label: "Email",
+    label: "البريد الإلكتروني",
     links: [
-      { href: "/mailboxes", label: "Mailboxes", icon: Mail },
-      { href: "/domains", label: "Domains", icon: Globe2 },
+      { href: "/mailboxes", label: "صناديق البريد", icon: Mail },
+      { href: "/domains", label: "النطاقات", icon: Globe2 },
     ],
   },
   {
-    label: "Administration",
+    label: "الإدارة",
     links: [
-      { href: "/accounts", label: "Accounts", icon: Users },
-      { href: "/activity", label: "Activity", icon: Activity },
-      { href: "/backups", label: "Backups", icon: DatabaseBackup },
+      { href: "/accounts", label: "الحسابات", icon: Users },
+      { href: "/activity", label: "النشاط", icon: Activity },
+      { href: "/backups", label: "النسخ الاحتياطية", icon: DatabaseBackup },
     ],
   },
   {
-    label: "Product",
+    label: "المنتج",
     links: [
-      { href: "/branding", label: "Branding", icon: Palette },
-      { href: "/licenses", label: "Licenses", icon: BadgeDollarSign },
+      { href: "/branding", label: "العلامة التجارية", icon: Palette },
+      { href: "/licenses", label: "التراخيص", icon: BadgeDollarSign },
       // { href: "/api-keys", label: "API Keys", icon: KeyRound },
       // { href: "/webhooks", label: "Webhooks", icon: Webhook }
     ],
@@ -54,7 +54,7 @@ export function AdminNav({ className }: { className?: string }) {
 
   return (
     <nav className={cn("flex min-h-full flex-col gap-1", className)}>
-      <SidebarHeader href="/inbox" label="Admin" />
+      <SidebarHeader href="/inbox" label="الإدارة" />
       <div className={cn("space-y-4", minimal && "space-y-2")}>
         {sections.map((section) => {
           const links = section.links.filter(

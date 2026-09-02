@@ -21,13 +21,13 @@ export function NewMessagePopup({
 					className="min-w-0 flex-1"
 				>
 					<p className="text-sm font-semibold text-neutral-900">
-						New email
+						بريد إلكتروني جديد
 					</p>
 					<p className="mt-0.5 truncate text-sm text-neutral-800">
-						{notification.subject || "(no subject)"}
+						{notification.subject || "(بدون موضوع)"}
 					</p>
 					<p className="mt-1 truncate text-xs text-neutral-500">
-						From {notification.fromName ?? getEmailDisplayName(notification.from)}
+						من {notification.fromName ?? getEmailDisplayName(notification.from)}
 					</p>
 				</Link>
 				<button
@@ -36,7 +36,7 @@ export function NewMessagePopup({
 					className="rounded-full p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
 				>
 					<X className="h-4 w-4" />
-					<span className="sr-only">Dismiss notification</span>
+					<span className="sr-only">تجاهل الإشعار</span>
 				</button>
 			</div>
 		</div>
