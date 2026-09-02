@@ -63,8 +63,5 @@ export function getHomeActions(isLoggedIn: boolean): HomeAction[] {
 		return [{ href: "/inbox", label: "لوحة التحكم", variant: "default" }];
 	}
 
-	return [
-		{ href: "/login", label: "تسجيل الدخول", variant: "outline" },
-		{ href: "/setup", label: "إنشاء حساب", variant: "default" },
-	];
+	return [{ href: "/login", label: "تسجيل الدخول", variant: "default" }];
 }

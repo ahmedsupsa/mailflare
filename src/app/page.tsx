@@ -67,32 +67,31 @@ export default function HomePage() {
           <div className="flex max-w-2xl flex-col justify-center">
             <div className="mb-6 flex w-fit items-center gap-2 text-sm font-medium text-neutral-900">
               <ShieldCheck className="h-4 w-4" />
-              عمليات بريد إلكتروني أصلية على Cloudflare
+              مساحة العمل الداخلية لفريق {branding.appName}
             </div>
-            <h1 className="max-w-[12ch] text-5xl font-semibold leading-[0.96] tracking-tight text-neutral-950 sm:text-6xl lg:text-7xl">
-              صناديق بريد تشعرك وكأنها بريدك الوارد.
+            <h1 className="max-w-[14ch] text-5xl font-semibold leading-[0.96] tracking-tight text-neutral-950 sm:text-6xl lg:text-7xl">
+              بريدك الإلكتروني في مكان واحد.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-600">
-              أضِف النطاقات، ووجّه البريد الوارد، وأرسِل عبر مفاتيح API، وأدِر
-              صناديق بريدك من مساحة عمل هادئة واحدة مبنية حول قائمة الرسائل.
+              سجّل دخولك للوصول إلى بريدك الإلكتروني ومتابعة رسائل فريقك من مساحة عمل واحدة هادئة.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" asChild className="rounded-full px-6">
-                <Link href={actions.at(-1)?.href ?? "/setup"}>
-                  {hasUser ? "فتح لوحة التحكم" : "إنشاء حساب"}
+                <Link href={hasUser ? "/inbox" : "/login"}>
+                  {hasUser ? "فتح لوحة التحكم" : "تسجيل الدخول"}
                   <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                 </Link>
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-                className="rounded-full border-neutral-200 bg-white px-6"
-              >
-                <Link href={hasUser ? "/inbox" : "/login"}>
-                  {hasUser ? "عرض البريد الوارد" : "تسجيل الدخول"}
-                </Link>
-              </Button>
+              {hasUser && (
+                <Button
+                  size="lg"
+                  variant="outline"
+                  asChild
+                  className="rounded-full border-neutral-200 bg-white px-6"
+                >
+                  <Link href="/inbox">عرض البريد الوارد</Link>
+                </Button>
+              )}
             </div>
           </div>
 
