@@ -206,7 +206,7 @@ export function MailboxSelector() {
 			</button>
 
 			{open && (
-				<div className="absolute end-0 top-14 z-50 w-[360px] overflow-hidden rounded-[28px] border border-neutral-200 bg-[#f5f5f5] p-3 shadow-2xl shadow-neutral-900/20">
+				<div className="absolute end-0 top-14 z-50 max-h-[calc(100dvh-5rem)] w-[360px] overflow-y-auto rounded-[28px] border border-neutral-200 bg-[#f5f5f5] p-3 shadow-2xl shadow-neutral-900/20">
 					<div className="rounded-[22px] bg-white px-5 py-5">
 						<div className="flex items-center gap-4">
 							<AccountAvatar
