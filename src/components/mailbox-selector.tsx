@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { CalendarDays, Check, LogOut, Settings, ShieldCheck, UserRound, UsersRound } from "lucide-react";
+import { BookOpen, CalendarDays, Check, LogOut, Settings, ShieldCheck, UserRound, UsersRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelectedMailbox } from "@/components/mailbox-provider";
 import { useMessageCounts } from "@/hooks/use-message-counts";
@@ -250,6 +250,14 @@ export function MailboxSelector() {
 						>
 							<Settings className="h-5 w-5 text-neutral-600" />
 							الإعدادات
+						</Link>
+						<Link
+							href="/guide"
+							onClick={() => setOpen(false)}
+							className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-[#e5e5e5]"
+						>
+							<BookOpen className="h-5 w-5 text-neutral-600" />
+							دليل الاستخدام
 						</Link>
 					</div>
 

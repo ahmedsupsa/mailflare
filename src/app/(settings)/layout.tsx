@@ -34,7 +34,8 @@ export default function DashboardLayout({
                   <MobileMenuButton />
                   <MailSearchInput />
                   <Link
-                    href="/settings"
+                    href="/guide"
+                    title="دليل الاستخدام"
                     className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-600 hover:bg-neutral-200"
                   >
                     <HelpCircle className="h-5 w-5" />
