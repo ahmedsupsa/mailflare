@@ -289,7 +289,7 @@ export function ComposeForm({
 						value={to}
 						onChange={(event) => setTo(event.target.value)}
 						type="text"
-						placeholder='المستلمون، أو "مايا تشين" <maya@example.com>'
+						placeholder="المستلمون، مفصولون بفواصل"
 						required
 						disabled={loadingDraft}
 						className="h-8 border-0 px-0 py-1 shadow-none focus-visible:ring-0"

@@ -151,7 +151,7 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-8">
+    <div className="mx-auto max-w-5xl p-4 sm:p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="flex items-center gap-3 text-2xl font-semibold text-neutral-900">
@@ -177,18 +177,22 @@ export default function CalendarPage() {
                 onChange={(event) => setTitle(event.target.value)}
                 placeholder="عنوان الحدث"
               />
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Input
                   type="datetime-local"
+                  dir="ltr"
                   value={startsAt}
                   onChange={(event) => setStartsAt(event.target.value)}
                   aria-label="تاريخ ووقت البدء"
+                  className="text-end"
                 />
                 <Input
                   type="datetime-local"
+                  dir="ltr"
                   value={endsAt}
                   onChange={(event) => setEndsAt(event.target.value)}
                   aria-label="تاريخ ووقت الانتهاء"
+                  className="text-end"
                 />
               </div>
               <div>
@@ -240,9 +244,9 @@ export default function CalendarPage() {
           events.map((event) => (
             <div
               key={event.id}
-              className="flex items-center gap-5 border-b border-neutral-100 px-5 py-4 last:border-b-0"
+              className="flex items-center gap-3 border-b border-neutral-100 px-4 py-4 last:border-b-0 sm:gap-5 sm:px-5"
             >
-              <div className="w-36">
+              <div className="w-auto shrink-0 text-sm sm:w-36">
                 <span>{new Date(event.startsAt).toLocaleDateString()}</span>
                 <time className="text-xs text-neutral-500 flex flex-col">
                   <span>{new Date(event.startsAt).toLocaleTimeString()}</span>

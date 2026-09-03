@@ -69,7 +69,7 @@ export default function ContactsPage() {
   }, [contacts, search]);
 
   return (
-    <div className="mx-auto max-w-5xl p-8">
+    <div className="mx-auto max-w-5xl p-4 sm:p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="flex items-center gap-3 text-2xl font-semibold text-neutral-900">
@@ -109,7 +109,7 @@ export default function ContactsPage() {
             return (
               <div
                 key={contact.id}
-                className="flex items-center gap-4 border-b border-neutral-100 px-5 py-4 last:border-b-0"
+                className="flex items-center gap-3 border-b border-neutral-100 px-4 py-4 last:border-b-0 sm:gap-4 sm:px-5"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-sm font-semibold text-neutral-800">
                   {name.charAt(0).toUpperCase()}
@@ -120,7 +120,7 @@ export default function ContactsPage() {
                       mailboxId={selectedMailbox?.id ?? null}
                       address={contact.email}
                       name={name}
-                      className="font-medium text-neutral-900"
+                      className="block max-w-full truncate font-medium text-neutral-900"
                     />
                     {contact.blocked && (
                       <Badge variant="outline" className="gap-1 text-red-600">
@@ -129,10 +129,17 @@ export default function ContactsPage() {
                     )}
                   </div>
                   <p className="truncate text-sm text-neutral-500">{contact.email}</p>
+                  {contact.lastSeenAt && (
+                    <p className="text-xs text-neutral-400 sm:hidden">
+                      {dayjs(contact.lastSeenAt).format("D MMM YYYY")}
+                    </p>
+                  )}
                 </div>
-                <span className="shrink-0 text-xs text-neutral-400">
-                  {contact.lastSeenAt ? dayjs(contact.lastSeenAt).format("D MMM YYYY") : ""}
-                </span>
+                {contact.lastSeenAt && (
+                  <span className="hidden shrink-0 text-xs text-neutral-400 sm:inline">
+                    {dayjs(contact.lastSeenAt).format("D MMM YYYY")}
+                  </span>
+                )}
                 <Button
                   variant="ghost"
                   size="sm"
@@ -141,11 +148,11 @@ export default function ContactsPage() {
                 >
                   {contact.blocked ? (
                     <>
-                      <ShieldCheck className="h-4 w-4" /> إلغاء الحظر
+                      <ShieldCheck className="h-4 w-4" /> <span className="hidden sm:inline">إلغاء الحظر</span>
                     </>
                   ) : (
                     <>
-                      <Ban className="h-4 w-4" /> حظر
+                      <Ban className="h-4 w-4" /> <span className="hidden sm:inline">حظر</span>
                     </>
                   )}
                 </Button>
