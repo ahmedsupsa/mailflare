@@ -271,13 +271,27 @@ export const calendarEvents = sqliteTable(
 		title: text("title").notNull(),
 		description: text("description").notNull().default(""),
 		location: text("location").notNull().default(""),
-		attendees: text("attendees").notNull().default("[]"),
 		startsAt: integer("starts_at", { mode: "timestamp" }).notNull(),
 		endsAt: integer("ends_at", { mode: "timestamp" }).notNull(),
 		createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
 		updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
 	},
 	(t) => [index("calendar_events_user_starts_idx").on(t.userId, t.startsAt)],
+);
+
+export const calendarEventAttendees = sqliteTable(
+	"calendar_event_attendees",
+	{
+		id: text("id").primaryKey(),
+		eventId: text("event_id").notNull().references(() => calendarEvents.id, { onDelete: "cascade" }),
+		userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+		status: text("status", { enum: ["pending", "accepted", "declined"] }).notNull().default("pending"),
+		createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+	},
+	(t) => [
+		index("calendar_event_attendees_event_idx").on(t.eventId),
+		index("calendar_event_attendees_user_idx").on(t.userId),
+	],
 );
 
 export const routingRules = sqliteTable("routing_rules", {
@@ -459,6 +473,7 @@ export const schema = {
 	outboundJobs,
 	emailTemplates,
 	calendarEvents,
+	calendarEventAttendees,
 	routingRules,
 	webhooks,
 	webhookDeliveries,
