@@ -37,6 +37,14 @@
 			],
 		},
 	],
+	"workflows": [
+		{
+			"name": "mershhah-database-backup",
+			"binding": "DATABASE_BACKUP_WORKFLOW",
+			"class_name": "DatabaseBackupWorkflow",
+			"schedules": ["0 2 * * *"],
+		},
+	],
 	"ratelimits": [
 		{
 			"name": "LOGIN_RATE_LIMIT",
