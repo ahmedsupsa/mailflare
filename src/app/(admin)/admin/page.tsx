@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Globe2, KeyRound, Mail, Palette, Settings, Users, Webhook } from "lucide-react";
-import { AdminUpdateCard } from "@/components/admin-update-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const sections = [
@@ -77,9 +76,6 @@ export default function AdminSettingsPage() {
 						</Link>
 					);
 				})}
-			</div>
-			<div className="mt-8">
-				<AdminUpdateCard />
 			</div>
 		</div>
 	);

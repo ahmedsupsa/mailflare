@@ -79,26 +79,7 @@ Backups require:
 
 ## Updating the app
 
-The **Update** button in the admin dashboard dispatches `.github/workflows/update.yml` in the installation repository. The workflow merges the latest upstream source, applies pending D1 migrations, and pushes the updated source. A connected Cloudflare Git integration can then build and deploy the change.
-
-Configure these Worker values:
-
-- `GITHUB_UPDATE_TOKEN` — a fine-grained GitHub token for the installation repository with Actions write permission.
-- `GITHUB_UPDATE_REPO` — the installation repository in `owner/repository` format.
-- `GITHUB_UPDATE_REF` — an optional update branch. The repository's default branch is used when omitted.
-
-Configure these GitHub Actions repository secrets:
-
-- `CLOUDFLARE_API_TOKEN` — a Cloudflare token allowed to read and migrate D1.
-- `CLOUDFLARE_ACCOUNT_ID` — the Cloudflare account ID.
-- `MAILFLARE_UPSTREAM_TOKEN` — required only when the upstream repository is private.
-
-Optional repository variables:
-
-- `MAILFLARE_UPSTREAM_REPOSITORY` — the upstream repository. Defaults to `hieunc229/mailflare`.
-- `MAILFLARE_UPSTREAM_BRANCH` — the upstream branch. Defaults to `main`.
-
-If an older installation contains a failing updater, copy the latest `.github/workflows/update.yml` into that installation once. An updater that cannot read upstream cannot update its own workflow.
+This installation is a customized fork, so the admin-dashboard auto-update feature (which merged in changes from the original upstream template) has been removed — it would have overwritten local customizations. Deploy changes the normal way: push to `main` and let the connected Cloudflare Git integration build and deploy, or run `npm run deploy` locally.
 
 ## Branding
 

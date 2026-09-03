@@ -47,15 +47,6 @@
       "BREVO_API_KEY": {
         "description": "Optional Brevo API key used to send outbound email through Brevo instead of Cloudflare Email Sending. Store this as a secret."
       },
-      "GITHUB_UPDATE_TOKEN": {
-        "description": "Fine-grained GitHub token for the installation repository with Actions: write permission, Contents: write read permission. Used only by the admin update endpoint to dispatch update.yml."
-      },
-      "GITHUB_UPDATE_REF": {
-        "description": "Optional branch used to dispatch updates. Leave blank to use the repository default branch."
-      },
-      "GITHUB_UPDATE_REPO": {
-        "description": "Your github repository that connect to cloudflare worker"
-      },
       "CF_EMAIL": {
         "description": "Legacy Global API Key auth only. Use this with `CF_API_KEY` instead of `CF_TOKEN`."
       },
