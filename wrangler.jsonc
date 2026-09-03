@@ -42,7 +42,11 @@
 			"name": "mershhah-database-backup",
 			"binding": "DATABASE_BACKUP_WORKFLOW",
 			"class_name": "DatabaseBackupWorkflow",
-			"schedules": ["0 2 * * *"],
+			// Cloudflare's cron-based Workflow schedule requires a paid Workers
+			// plan (error: workflows.api.error.workflow.cron_requires_paid_plan).
+			// Manual "Backup now" still works without it — this instance is on
+			// the free plan, so no "schedules" entry here. Add one back
+			// (e.g. "schedules": ["0 2 * * *"]) if the account is ever upgraded.
 		},
 	],
 	"ratelimits": [

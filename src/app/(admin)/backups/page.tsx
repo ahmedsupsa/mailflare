@@ -183,7 +183,8 @@ export default function BackupsPage() {
           <CardTitle>النسخ الاحتياطي التلقائي</CardTitle>
           <CardDescription>
             يعمل الجدول في الساعة 02:00 بالتوقيت العالمي المنسق (UTC). تقتصر الجداول
-            الشهرية على الأيام من 1 إلى 28.
+            الشهرية على الأيام من 1 إلى 28. ملاحظة: الجدولة التلقائية تتطلب خطة Cloudflare
+            Workers المدفوعة — على الخطة المجانية استخدم زر "نسخ احتياطي الآن" يدويًا بدلًا من ذلك.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5 pt-5">
