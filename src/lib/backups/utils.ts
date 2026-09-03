@@ -36,7 +36,7 @@ export function getUtcDayBounds(now: Date): { start: number; end: number } {
 }
 
 export function createBackupFilename(now: Date): string {
-	return `mailflare-${now.toISOString().replace(/[:.]/g, "-")}.json`;
+	return `mershhah-${now.toISOString().replace(/[:.]/g, "-")}.json`;
 }
 
 /** Moves records from the pre-0019 body table into their message records. */

@@ -188,7 +188,7 @@ export function ComposeForm({
 
 		if (draftId) {
 			void authFetch(`/api/drafts/${draftId}`, { method: "DELETE" }).finally(() => {
-				window.dispatchEvent(new Event("mailflare:messages-changed"));
+				window.dispatchEvent(new Event("mershhah:messages-changed"));
 			});
 		}
 		setDraftId(null);
@@ -197,7 +197,7 @@ export function ComposeForm({
 		setHtml(applyMailboxSignatureHtml("", selectedMailbox?.signature));
 		setAttachments([]);
 		setToast({ type: "success", message: "تم إرسال الرسالة" });
-		window.dispatchEvent(new Event("mailflare:messages-changed"));
+		window.dispatchEvent(new Event("mershhah:messages-changed"));
 	}
 
 	function addAttachments(files: FileList | null) {

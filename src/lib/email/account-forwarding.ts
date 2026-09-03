@@ -4,7 +4,7 @@ import { users } from "@/db/schema";
 import { getEmailAddress } from "@/lib/email/address";
 import { resolveInboundAddress } from "@/lib/email/routing";
 
-export const MAILFLARE_FORWARDED_HEADER = "X-Mailflare-Forwarded";
+export const MAILFLARE_FORWARDED_HEADER = "X-Mershhah-Forwarded";
 
 export async function getAccountForwardingDestination(
 	env: CloudflareEnv,

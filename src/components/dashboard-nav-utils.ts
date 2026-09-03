@@ -14,7 +14,7 @@ async function moveMessages(payload: { messageIds: string[]; action: BulkMessage
 	});
 
 	if (!response.ok) throw new Error("تعذّر نقل الرسائل");
-	window.dispatchEvent(new Event("mailflare:messages-changed"));
+	window.dispatchEvent(new Event("mershhah:messages-changed"));
 }
 
 export function moveMessagesToSystemFolder(messageIds: string[], action: "archive" | "spam" | "trash") {

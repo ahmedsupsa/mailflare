@@ -29,7 +29,7 @@ export function useMessagePolling(): MessageRealtimeState {
 		let stopped = false;
 
 		function dispatchMessagesChanged() {
-			window.dispatchEvent(new Event("mailflare:messages-changed"));
+			window.dispatchEvent(new Event("mershhah:messages-changed"));
 		}
 
 		function clearConnectionTimers() {

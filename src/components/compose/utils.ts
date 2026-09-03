@@ -40,8 +40,8 @@ export function formatAttachmentSize(size: number): string {
 	return `${(size / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-const SIGNATURE_ATTR = 'data-mailflare-signature="true"';
-const SIGNATURE_BLOCK_RE = /<div[^>]*data-mailflare-signature="true"[^>]*>[\s\S]*?<\/div>/;
+const SIGNATURE_ATTR = 'data-mershhah-signature="true"';
+const SIGNATURE_BLOCK_RE = /<div[^>]*data-mershhah-signature="true"[^>]*>[\s\S]*?<\/div>/;
 
 function escapeHtml(value: string): string {
 	return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

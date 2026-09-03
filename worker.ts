@@ -32,7 +32,7 @@ export default {
 			}
 
 			const hub = env.REALTIME.getByName(user.id);
-			return hub.fetch(new Request("https://mailflare-realtime/connect", request));
+			return hub.fetch(new Request("https://mershhah-realtime/connect", request));
 		}
 
 		return nextHandler.fetch(request, env, ctx);

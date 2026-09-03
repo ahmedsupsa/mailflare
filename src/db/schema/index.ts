@@ -392,7 +392,7 @@ export const backupSettings = sqliteTable("backup_settings", {
 
 export const appSettings = sqliteTable("app_settings", {
 	id: text("id").primaryKey(),
-	appName: text("app_name").notNull().default("Mailflare"),
+	appName: text("app_name").notNull().default("Mail"),
 	iconKey: text("icon_key"),
 	emailFooter: text("email_footer"),
 	websiteUrl: text("website_url"),

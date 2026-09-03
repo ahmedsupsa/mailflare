@@ -2,11 +2,9 @@
 
 This guide covers Cloudflare deployment, runtime configuration, database backups, and application updates.
 
-## One-click deployment
+## Deployment
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/hieunc229/mailflare)
-
-The deployment flow reads `wrangler.jsonc`, provisions the required Worker bindings, builds the OpenNext Worker, applies D1 migrations, and deploys the app.
+Deployment reads `wrangler.jsonc`, provisions the required Worker bindings, builds the OpenNext Worker, applies D1 migrations, and deploys the app — either via `npm run deploy` locally, or automatically through the connected Cloudflare Git integration on push to `main`.
 
 Cloudflare automatically detects `npm run build` as the build command and `npm run deploy` as the deploy command from `package.json`.
 
@@ -14,10 +12,10 @@ Keep `wrangler.jsonc` committed. Do not commit `.dev.vars`; enter secrets during
 
 ## Required configuration
 
-Mailflare needs these runtime values:
+The app needs these runtime values:
 
 - `CF_TOKEN` — a scoped Cloudflare API token with Zone Read, Email Routing Edit, Email Sending Edit, and Email Routing Rules Write access for the domains you will connect. This is separate from the token Cloudflare uses to deploy the app.
-- `CF_EMAIL_WORKER_NAME` — the deployed Worker name. It must match the Worker name exactly so Mailflare can create Email Routing rules.
+- `CF_EMAIL_WORKER_NAME` — the deployed Worker name. It must match the Worker name exactly so it can create Email Routing rules.
 - `CF_AID` — the Cloudflare account ID. This is optional for normal mail use but required for database backups.
 
 You can use a legacy Global API Key instead of `CF_TOKEN` by setting both `CF_API_KEY` and `CF_EMAIL`.
@@ -32,7 +30,7 @@ Paste only the token value into `CF_TOKEN`; do not include `Bearer` and do not u
 
 ## First-run setup
 
-Open `/setup` after deployment. Mailflare checks the required runtime configuration and initializes an empty D1 database. It never applies later migrations to an existing database from the setup page.
+Open `/setup` after deployment. This app checks the required runtime configuration and initializes an empty D1 database. It never applies later migrations to an existing database from the setup page.
 
 Use the normal migration command when updating an existing installation:
 
@@ -79,9 +77,9 @@ Backups require:
 - `D1_DATABASE_ID`
 - `D1_BACKUP_TOKEN`, or a `CF_TOKEN` that is also allowed to export the D1 database
 
-## Updating Mailflare
+## Updating the app
 
-The **Update Mailflare** button in the admin dashboard dispatches `.github/workflows/update.yml` in the installation repository. The workflow merges the latest upstream source, applies pending D1 migrations, and pushes the updated source. A connected Cloudflare Git integration can then build and deploy the change.
+The **Update** button in the admin dashboard dispatches `.github/workflows/update.yml` in the installation repository. The workflow merges the latest upstream source, applies pending D1 migrations, and pushes the updated source. A connected Cloudflare Git integration can then build and deploy the change.
 
 Configure these Worker values:
 
@@ -102,6 +100,6 @@ Optional repository variables:
 
 If an older installation contains a failing updater, copy the latest `.github/workflows/update.yml` into that installation once. An updater that cannot read upstream cannot update its own workflow.
 
-## Branding license
+## Branding
 
-Activate a purchased Pro or Team key from **Admin → Licenses**. Mailflare sends the key to Paymug and stores only a one-way hash and the activation state. Apply all D1 migrations before activating a license.
+Customize the app name, icon, and email footer from **Admin → الهوية**. No license or activation step is required — every feature is unlocked for all accounts on this installation.

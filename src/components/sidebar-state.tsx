@@ -24,7 +24,7 @@ export function SidebarProvider({ children, expandedWidth = 240 }: SidebarProvid
 			.then((response) => response.json() as Promise<{ user?: { id?: string } }>)
 			.then((data) => {
 				if (!data.user?.id) return;
-				const key = `mailflare-sidebar-minimal:${data.user.id}`;
+				const key = `mershhah-sidebar-minimal:${data.user.id}`;
 				setStorageKey(key);
 				setMinimal(localStorage.getItem(key) === "true");
 			});

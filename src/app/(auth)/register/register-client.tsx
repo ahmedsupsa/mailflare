@@ -161,7 +161,7 @@ export function RegisterClient() {
       {step === 1 ? (
         <div className="space-y-5">
           <p className="text-sm leading-6 text-neutral-600">
-            يتحقق Mailflare من إعدادات Cloudflare المطلوبة ويهيئ قاعدة بيانات D1 نظيفة قبل متابعة الإعداد.
+            يتحقق النظام من إعدادات Cloudflare المطلوبة ويهيئ قاعدة بيانات D1 نظيفة قبل متابعة الإعداد.
           </p>
           <div className="space-y-2">
             {loading && checks.length === 0 && (

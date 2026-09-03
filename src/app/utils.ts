@@ -39,7 +39,7 @@ export const heroMessages: MailPreview[] = [
 	},
 	{
 		icon: MailCheck,
-		sender: "admin@mailflare.dev",
+		sender: "admin@statuscheck.dev",
 		subject: "تم تجهيز صندوق البريد",
 		preview: "صندوق بريد التوجيه الجديد جاهز لردود العملاء.",
 		badge: "مسؤول",

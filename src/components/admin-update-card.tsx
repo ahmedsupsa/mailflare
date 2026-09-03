@@ -59,14 +59,14 @@ export function AdminUpdateCard() {
 				<div>
 					<CardTitle className="text-base">تحديث التطبيق</CardTitle>
 					<p className="mt-1 text-sm text-neutral-500">
-						مزامنة أحدث إصدار من Mailflare، وتطبيق ترحيلات D1، ونشر الـ Worker.
+						مزامنة أحدث إصدار من النظام، وتطبيق ترحيلات D1، ونشر الـ Worker.
 					</p>
 				</div>
 			</CardHeader>
 			<CardContent className="flex items-center gap-4 pt-5">
 				<Button type="button" onClick={handleUpdate} disabled={isChecking || isPending || !status?.available}>
 					<RefreshCw className={isPending ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
-					{isPending ? "جارٍ بدء التحديث..." : "تحديث Mailflare"}
+					{isPending ? "جارٍ بدء التحديث..." : "تحديث النظام"}
 				</Button>
 				{isChecking && <Skeleton className="h-4 w-44" />}
 				{!isChecking && status?.available && (
@@ -75,7 +75,7 @@ export function AdminUpdateCard() {
 					</p>
 				)}
 				{!isChecking && status && !status.available && (
-					<p className="text-sm text-green-700">Mailflare v{status.currentVersion} محدَّث بالفعل.</p>
+					<p className="text-sm text-green-700">النظام v{status.currentVersion} محدَّث بالفعل.</p>
 				)}
 				{result?.ok && (
 					<p className="text-sm text-green-700">

@@ -39,13 +39,13 @@ export async function exportMailboxToMbox(env: CloudflareEnv, mailboxId: string)
 		const contentType = message.htmlBody ? "text/html" : "text/plain";
 		return [
 			getMboxFromLine(date),
-			`Message-ID: ${escapeHeader(message.providerMessageId || `<${message.id}@mailflare.local>`)}`,
+			`Message-ID: ${escapeHeader(message.providerMessageId || `<${message.id}@mershhah.local>`)}`,
 			`Date: ${date.toUTCString()}`,
 			`From: ${escapeHeader(message.fromAddr)}`,
 			`To: ${escapeHeader(message.toAddr)}`,
 			`Subject: ${escapeHeader(message.subject)}`,
-			`X-Mailflare-Direction: ${escapeHeader(message.direction)}`,
-			`X-Mailflare-Status: ${escapeHeader(message.status)}`,
+			`X-Mershhah-Direction: ${escapeHeader(message.direction)}`,
+			`X-Mershhah-Status: ${escapeHeader(message.status)}`,
 			"MIME-Version: 1.0",
 			`Content-Type: ${contentType}; charset=utf-8`,
 			"Content-Transfer-Encoding: 8bit",

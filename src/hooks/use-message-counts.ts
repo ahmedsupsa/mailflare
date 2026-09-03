@@ -58,16 +58,16 @@ export function useMessageCounts(mailboxId?: string | null, enabled = true) {
 				},
 			}));
 		}
-		window.addEventListener("mailflare:messages-changed", onMessagesChanged);
-		window.addEventListener("mailflare:message-counts-changed", onMessagesChanged);
-		window.addEventListener("mailflare:message-counts-delta", onMessageCountsDelta);
+		window.addEventListener("mershhah:messages-changed", onMessagesChanged);
+		window.addEventListener("mershhah:message-counts-changed", onMessagesChanged);
+		window.addEventListener("mershhah:message-counts-delta", onMessageCountsDelta);
 		const refreshInterval = window.setInterval(() => void loadCounts(true), 15_000);
 
 		return () => {
 			cancelled = true;
-			window.removeEventListener("mailflare:messages-changed", onMessagesChanged);
-			window.removeEventListener("mailflare:message-counts-changed", onMessagesChanged);
-			window.removeEventListener("mailflare:message-counts-delta", onMessageCountsDelta);
+			window.removeEventListener("mershhah:messages-changed", onMessagesChanged);
+			window.removeEventListener("mershhah:message-counts-changed", onMessagesChanged);
+			window.removeEventListener("mershhah:message-counts-delta", onMessageCountsDelta);
 			window.clearInterval(refreshInterval);
 		};
 	}, [enabled, mailboxId]);

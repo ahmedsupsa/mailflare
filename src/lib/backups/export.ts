@@ -69,8 +69,8 @@ export async function restoreDatabaseRecords(db: D1Database, content: ArrayBuffe
 
 function parseDatabaseBackup(content: ArrayBuffer): DatabaseBackupDocument {
 	let value: unknown;
-	try { value = JSON.parse(new TextDecoder().decode(content)); } catch { throw new Error("الملف المحدد ليس نسخة احتياطية صالحة من Mailflare"); }
-	if (!isDatabaseBackupDocument(value)) throw new Error("الملف المحدد ليس نسخة احتياطية صالحة من Mailflare");
+	try { value = JSON.parse(new TextDecoder().decode(content)); } catch { throw new Error("الملف المحدد ليس نسخة احتياطية صالحة"); }
+	if (!isDatabaseBackupDocument(value)) throw new Error("الملف المحدد ليس نسخة احتياطية صالحة");
 	return value;
 }
 

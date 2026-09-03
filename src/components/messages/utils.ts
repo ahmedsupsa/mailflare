@@ -70,5 +70,5 @@ export async function runBulkMessageAction(messageIds: string[], action: string,
 	});
 
 	if (!response.ok) throw new Error("تعذر تحديث الرسائل المحددة");
-	if (notify) window.dispatchEvent(new Event("mailflare:messages-changed"));
+	if (notify) window.dispatchEvent(new Event("mershhah:messages-changed"));
 }

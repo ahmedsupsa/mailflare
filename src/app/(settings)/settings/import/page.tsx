@@ -106,7 +106,7 @@ export default function SettingsImportPage() {
 			(percentage) => setFileProgress({ completed: percentage, total: 100, label: percentage < 70 ? "جارٍ رفع الملفات" : "جارٍ استيراد الرسائل" }),
       );
       setFileResult(result);
-      window.dispatchEvent(new Event("mailflare:messages-changed"));
+      window.dispatchEvent(new Event("mershhah:messages-changed"));
     } catch (error) {
       setFileError(
         error instanceof Error ? error.message : "فشل استيراد الملف",
@@ -155,7 +155,7 @@ export default function SettingsImportPage() {
       }
       setImapResult(total);
       setImapForm((current) => ({ ...current, password: "" }));
-      window.dispatchEvent(new Event("mailflare:messages-changed"));
+      window.dispatchEvent(new Event("mershhah:messages-changed"));
     } catch (error) {
       setImapError(
         error instanceof Error ? error.message : "فشل الاستيراد عبر IMAP",
@@ -225,7 +225,7 @@ export default function SettingsImportPage() {
           </div>
           {/* <p className="text-xs leading-5 text-neutral-500">
             Select Folders to import every source IMAP folder into matching
-            Mailflare folders.
+            the system's folders.
           </p> */}
         </div>
         {/* </CardContent>
@@ -379,7 +379,7 @@ export default function SettingsImportPage() {
                 </div>
                 <p className="rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-xs leading-5 text-neutral-500">
                   يستورد IMAP أقسام المصدر المحددة تلقائيًا. يتم اكتشاف
-                  المجلدات من حساب المصدر واستيرادها إلى مجلدات Mailflare
+                  المجلدات من حساب المصدر واستيرادها إلى مجلدات النظام
                   الجديدة أو الحالية المطابقة.
                 </p>
                 <Button

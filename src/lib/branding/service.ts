@@ -4,7 +4,7 @@ import { appSettings } from "@/db/schema";
 import type { Branding } from "./types";
 
 export const APP_SETTINGS_ID = "default";
-export const DEFAULT_APP_NAME = "Mailflare";
+export const DEFAULT_APP_NAME = "Mail";
 export const BRANDING_ICON_KEY = "branding/app-icon";
 
 const EMPTY_BRANDING_EXTRAS = {
