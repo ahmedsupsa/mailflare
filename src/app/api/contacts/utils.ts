@@ -1,9 +1,23 @@
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq, like, or } from "drizzle-orm";
 import type { getDb } from "@/db";
 import { contacts } from "@/db/schema";
 import { getContactId } from "@/lib/contacts/utils";
 
 type Db = ReturnType<typeof getDb>;
+
+export async function listContactsForUser(db: Db, userId: string, search?: string) {
+	const term = search?.trim();
+	return db
+		.select()
+		.from(contacts)
+		.where(
+			and(
+				eq(contacts.userId, userId),
+				term ? or(like(contacts.email, `%${term}%`), like(contacts.displayName, `%${term}%`)) : undefined,
+			),
+		)
+		.orderBy(desc(contacts.lastSeenAt), desc(contacts.createdAt));
+}
 
 export async function getContactByEmail(db: Db, userId: string, email: string) {
 	const [contact] = await db

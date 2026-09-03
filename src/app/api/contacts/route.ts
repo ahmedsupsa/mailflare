@@ -5,22 +5,32 @@ import { getEnv } from "@/lib/cloudflare";
 import { normalizeEmailAddress } from "@/lib/email/address";
 import { getMailboxAccessLevel } from "@/lib/mailboxes/access";
 import type { ContactRequestInput } from "./types";
-import { getContactByEmail, saveManualContactName } from "./utils";
+import { getContactByEmail, listContactsForUser, saveManualContactName } from "./utils";
 
 export async function GET(request: Request) {
 	const env = getEnv();
 	const user = await requireUser(env, request);
 	const url = new URL(request.url);
 	const mailboxId = url.searchParams.get("mailboxId");
-	const email = normalizeEmailAddress(url.searchParams.get("address") ?? "");
-	if (!mailboxId || !email) {
-		return NextResponse.json({ error: "صندوق البريد وجهة الاتصال مطلوبان" }, { status: 400 });
+	const rawAddress = url.searchParams.get("address");
+	if (!mailboxId) {
+		return NextResponse.json({ error: "صندوق البريد مطلوب" }, { status: 400 });
 	}
 
 	const db = getDb(env);
 	const access = await getMailboxAccessLevel(db, user, mailboxId);
 	if (!access?.canRead) {
 		return NextResponse.json({ error: "صندوق البريد غير موجود" }, { status: 404 });
+	}
+
+	if (rawAddress === null) {
+		const contacts = await listContactsForUser(db, access.mailbox.userId, url.searchParams.get("q") ?? undefined);
+		return NextResponse.json({ contacts });
+	}
+
+	const email = normalizeEmailAddress(rawAddress);
+	if (!email) {
+		return NextResponse.json({ error: "جهة الاتصال مطلوبة" }, { status: 400 });
 	}
 	const contact = await getContactByEmail(db, access.mailbox.userId, email);
 	return NextResponse.json({

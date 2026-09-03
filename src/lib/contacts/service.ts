@@ -134,6 +134,31 @@ export async function blockContact(env: CloudflareEnv, input: BlockContactInput)
 	return { email, blocked: true };
 }
 
+export async function unblockContact(env: CloudflareEnv, input: BlockContactInput) {
+	const email = normalizeEmailAddress(input.address);
+	if (!email) throw new Error("بريد جهة الاتصال مطلوب");
+
+	const db = getDb(env);
+	await db
+		.update(contacts)
+		.set({ blocked: false })
+		.where(and(eq(contacts.userId, input.userId), eq(contacts.email, email)));
+
+	await db
+		.delete(routingRules)
+		.where(
+			and(
+				eq(routingRules.mailboxId, input.mailboxId),
+				eq(routingRules.matchField, "email"),
+				eq(routingRules.matchOperator, "exact"),
+				eq(routingRules.matchValue, email),
+				eq(routingRules.action, "trash"),
+			),
+		);
+
+	return { email, blocked: false };
+}
+
 function getNextDisplayName(existingName: string | null, source: string, nextName: string | null): string | null {
 	if (source === "manual") return existingName;
 	if (nextName) return nextName;
