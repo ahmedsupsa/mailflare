@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Cloud, ExternalLink } from "lucide-react";
 import dayjs from "dayjs";
@@ -29,6 +29,7 @@ import { sanitizeEmailHtml } from "./email-html-sanitizer";
 
 export default function MessageDetailPage() {
   const params = useParams<{ messageId: string }>();
+  const router = useRouter();
   const { selectedMailbox } = useSelectedMailbox();
   const messageId = params.messageId;
   const [data, setData] = useState<MessageDetailResponse | null>(null);
@@ -108,15 +109,21 @@ export default function MessageDetailPage() {
         <MarkAsRead messageId={message.id} />
       )}
       <div className="flex pt-3 pb-2.75 items-center justify-between px-2 border-b border-neutral-200 sticky top-0 bg-white">
-        <div className="flex-1" />
-        {/* <div className="flex items-center flex-row gap-6">
-					<Link
-						href={getMessageBackHref(message.direction, message.status)}
-						className="rounded-full p-2 text-neutral-600 hover:bg-neutral-100"
-					>
-						<ArrowLeft className="h-5 w-5" />
-					</Link>
-				</div> */}
+        <Link
+          href={getMessageBackHref(message.direction, message.status)}
+          onClick={(event) => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            if (typeof window !== "undefined" && window.history.length > 1) {
+              event.preventDefault();
+              router.back();
+            }
+          }}
+          aria-label="رجوع إلى قائمة الرسائل"
+          title="رجوع"
+          className="rounded-full p-2 text-neutral-600 hover:bg-neutral-100"
+        >
+          <ArrowLeft className="h-5 w-5 rtl:rotate-180" />
+        </Link>
         <MessageActions
           messageId={message.id}
           mailboxId={message.mailboxId}
