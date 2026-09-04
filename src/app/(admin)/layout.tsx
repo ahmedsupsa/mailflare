@@ -31,7 +31,7 @@ export default function DashboardLayout({
               <span className="fixed top-6 end-6 flex items-center gap-2">
                 <MailboxSelector />
               </span>
-              <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-ss-3xl px-6 py-10 scrollbar-gutter-stable lg:px-12">
+              <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-ss-3xl px-6 pb-10 pt-20 scrollbar-gutter-stable lg:px-12 lg:pt-10">
                 <div className="w-full max-w-3xl">{children}</div>
               </main>
             </div>

@@ -26,7 +26,51 @@ export default function ActivityPage() {
         </p>
       </div>
 
-      <section className="overflow-x-auto rounded-3xl bg-white">
+      {/* Mobile: stacked cards */}
+      <section className="space-y-2 rounded-3xl bg-white p-2 md:hidden">
+        {activity.isLoading &&
+          Array.from({ length: 5 }, (_, index) => (
+            <div key={index} className="space-y-2 rounded-2xl px-3 py-3">
+              <Skeleton className="h-6 w-20" />
+              <Skeleton className="h-4 w-48" />
+              <Skeleton className="h-3 w-32" />
+            </div>
+          ))}
+        {!activity.isLoading && (activity.data ?? []).length === 0 && (
+          <p className="px-3 py-4 text-sm text-neutral-500">
+            لا يوجد نشاط تسجيل دخول أو خروج بعد
+          </p>
+        )}
+        {(activity.data ?? []).map((log) => {
+          const metadata = getActivityMetadata(log);
+          const Icon = log.action === "auth.logout" ? LogOut : LogIn;
+          return (
+            <div key={log.id} className="rounded-2xl border border-neutral-100 px-3 py-3">
+              <div className="flex items-center justify-between gap-2">
+                <Badge variant="outline" className="gap-1">
+                  <Icon className="h-3 w-3" />
+                  {getActivityLabel(log.action)}
+                </Badge>
+                <span className="text-xs text-neutral-500">
+                  {formatActivityDate(log.createdAt)}
+                </span>
+              </div>
+              <p className="mt-2 truncate text-sm font-medium text-neutral-900 no-font-mono">
+                {log.actorEmail ?? "(بريد إلكتروني غير معروف)"}
+              </p>
+              <p className="truncate text-xs text-neutral-500">
+                {metadata.city || "(مدينة غير معروفة)"} • {metadata.country || "(دولة غير معروفة)"}
+              </p>
+              <p className="truncate text-xs text-neutral-500 no-font-mono">
+                {metadata.device ?? "(جهاز غير معروف)"} — {metadata.platform || "(منصة غير معروفة)"}
+              </p>
+            </div>
+          );
+        })}
+      </section>
+
+      {/* Desktop: table */}
+      <section className="hidden overflow-x-auto rounded-3xl bg-white md:block">
         <table className="w-full min-w-[760px] table-fixed text-start">
           <thead className="border-b border-neutral-100 bg-neutral-50 text-xs font-semibold uppercase tracking-wide text-neutral-500">
             <tr>

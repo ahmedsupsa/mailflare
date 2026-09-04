@@ -94,7 +94,7 @@ export default function BackupsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-medium text-neutral-900">
             نسخ قاعدة البيانات الاحتياطية
@@ -103,7 +103,7 @@ export default function BackupsPage() {
             تصدير سجلات قاعدة البيانات عبر ربط D1 وتخزينها في حزمة R2 المُعدّة.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Input
             ref={restoreInput}
             type="file"
@@ -332,7 +332,8 @@ export default function BackupsPage() {
           <DatabaseBackup className="h-5 w-5 text-neutral-500" />
           <h2 className="font-semibold text-neutral-900">سجل النسخ الاحتياطية</h2>
         </div>
-        <div className="grid grid-cols-[1fr_110px_110px_170px_120px] gap-4 border-b border-neutral-100 bg-neutral-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        <div className="overflow-x-auto">
+        <div className="grid min-w-[720px] grid-cols-[1fr_110px_110px_170px_120px] gap-4 border-b border-neutral-100 bg-neutral-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">
           <span>الملف</span>
           <span>الحالة</span>
           <span>الحجم</span>
@@ -346,7 +347,7 @@ export default function BackupsPage() {
         {(backups.data?.backups ?? []).map((backup: BackupItem) => (
           <div
             key={backup.id}
-            className="grid grid-cols-[1fr_110px_110px_170px_120px] items-center gap-4 border-b border-neutral-100 px-4 py-3 last:border-b-0"
+            className="grid min-w-[720px] grid-cols-[1fr_110px_110px_170px_120px] items-center gap-4 border-b border-neutral-100 px-4 py-3 last:border-b-0"
           >
             <div className="min-w-0">
               <p className="truncate text-sm font-medium text-neutral-900">
@@ -392,6 +393,7 @@ export default function BackupsPage() {
             </div>
           </div>
         ))}
+        </div>
       </section>
     </div>
   );
