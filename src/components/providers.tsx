@@ -39,6 +39,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
 		return () => window.removeEventListener(AUTH_SESSION_CHANGED_EVENT, resetUserScopedState);
 	}, [client]);
 
+	useEffect(() => {
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker.register("/sw.js").catch(() => {
+				// Installability degrades gracefully without a service worker.
+			});
+		}
+	}, []);
+
 	return (
 		<QueryClientProvider client={client}>
 			<BrandingProvider>

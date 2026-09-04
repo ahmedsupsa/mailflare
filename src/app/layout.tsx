@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans_Arabic, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
@@ -17,7 +17,19 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: "Mail",
 	description: "بريد إلكتروني متعدد المستأجرين على Cloudflare",
-	icons: { icon: "/api/branding/icon" },
+	manifest: "/manifest.webmanifest",
+	icons: { icon: "/api/branding/icon", apple: "/apple-touch-icon.png" },
+	appleWebApp: {
+		capable: true,
+		title: "Mail",
+		statusBarStyle: "black-translucent",
+	},
+};
+
+export const viewport: Viewport = {
+	themeColor: "#171717",
+	width: "device-width",
+	initialScale: 1,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -25,6 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 		<html lang="ar" dir="rtl">
 			<head>
 				<link rel="icon" href="/api/branding/icon"></link>
+				<meta name="apple-mobile-web-app-capable" content="yes" />
 			</head>
 			<body className={`${plexSansArabic.variable} ${geistMono.variable} antialiased light`}>
 				<Providers>{children}</Providers>
