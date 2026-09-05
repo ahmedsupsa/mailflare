@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BookOpen, CalendarDays, Check, Contact, LogOut, Settings, ShieldCheck, UserRound, UsersRound } from "lucide-react";
+import { BookOpen, Briefcase, CalendarDays, Check, Contact, LogOut, Settings, ShieldCheck, UserRound, UsersRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelectedMailbox } from "@/components/mailbox-provider";
 import { useMessageCounts } from "@/hooks/use-message-counts";
@@ -250,6 +250,14 @@ export function MailboxSelector() {
 						>
 							<Contact className="h-5 w-5 text-neutral-600" />
 							جهات الاتصال
+						</Link>
+						<Link
+							href="/crm"
+							onClick={() => setOpen(false)}
+							className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-[#e5e5e5]"
+						>
+							<Briefcase className="h-5 w-5 text-neutral-600" />
+							علاقات العملاء والمهام
 						</Link>
 						<Link
 							href="/settings"

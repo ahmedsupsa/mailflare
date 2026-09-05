@@ -459,6 +459,50 @@ export const backups = sqliteTable(
 	],
 );
 
+export const leads = sqliteTable(
+	"leads",
+	{
+		id: text("id").primaryKey(),
+		businessName: text("business_name").notNull().default(""),
+		contactName: text("contact_name").notNull(),
+		phone: text("phone").notNull().default(""),
+		email: text("email").notNull().default(""),
+		status: text("status", { enum: ["new", "contacted", "interested", "won", "lost"] })
+			.notNull()
+			.default("new"),
+		notes: text("notes").notNull().default(""),
+		createdByUserId: text("created_by_user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
+		createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+		updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+	},
+	(t) => [index("leads_created_at_idx").on(t.createdAt), index("leads_status_idx").on(t.status)],
+);
+
+export const tasks = sqliteTable(
+	"tasks",
+	{
+		id: text("id").primaryKey(),
+		title: text("title").notNull(),
+		description: text("description").notNull().default(""),
+		dueAt: integer("due_at", { mode: "timestamp" }),
+		status: text("status", { enum: ["pending", "done"] }).notNull().default("pending"),
+		assigneeUserId: text("assignee_user_id").references(() => users.id, { onDelete: "set null" }),
+		leadId: text("lead_id").references(() => leads.id, { onDelete: "set null" }),
+		createdByUserId: text("created_by_user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
+		createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+		updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+	},
+	(t) => [
+		index("tasks_status_idx").on(t.status),
+		index("tasks_assignee_idx").on(t.assigneeUserId),
+		index("tasks_lead_idx").on(t.leadId),
+	],
+);
+
 export const schema = {
 	users,
 	domains,
@@ -483,4 +527,6 @@ export const schema = {
 	backups,
 	appSettings,
 	licenseSettings,
+	leads,
+	tasks,
 };
