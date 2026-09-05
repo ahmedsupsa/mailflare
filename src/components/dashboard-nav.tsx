@@ -175,8 +175,7 @@ export function DashboardNav({ className }: { className?: string }) {
       {linksWithCounts.map((link, i) => (
         <NavItem link={link} key={`nav-${link.href || i}`} />
       ))}
-      {!minimal && (
-        <div className="mt-2 flex h-8 items-center justify-between px-3">
+      <div className={cn("mt-2 flex h-8 items-center justify-between px-3", minimal && "lg:hidden")}>
           <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">
             المجلدات
           </span>
@@ -246,9 +245,13 @@ export function DashboardNav({ className }: { className?: string }) {
             </Dialog>
           )}
         </div>
-      )}
-      {!minimal && folders.length === 0 && (
-        <div className="mx-3 rounded-lg border border-dashed border-neutral-200 px-3 py-3 text-xs text-neutral-400">
+      {folders.length === 0 && (
+        <div
+          className={cn(
+            "mx-3 rounded-lg border border-dashed border-neutral-200 px-3 py-3 text-xs text-neutral-400",
+            minimal && "lg:hidden",
+          )}
+        >
           لا توجد مجلدات بعد
         </div>
       )}

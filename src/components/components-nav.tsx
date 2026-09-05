@@ -39,14 +39,17 @@ export function NavItem({ link }: { link: NavLink }) {
   const Icon = link.icon;
   if (!Icon) return null;
   const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+  // `minimal` collapses the persistent desktop sidebar rail to icons-only; it must never
+  // collapse the mobile slide-in drawer, which always has room to show full labels — so
+  // every minimal-only style is gated behind `lg:`.
   const classes = cn(
     "flex h-9 items-center gap-3 rounded-e-full text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50",
-    minimal && "relative mx-auto w-10 justify-center rounded-full px-0",
+    minimal && "lg:relative lg:mx-auto lg:w-10 lg:justify-center lg:rounded-full lg:px-0",
     active && "bg-neutral-100 text-neutral-900",
     dragOver && "bg-neutral-50 text-neutral-900 ring-1 ring-neutral-200",
     link.primary &&
       "mb-3 h-12 w-fit rounded-2xl bg-neutral-100 px-5 text-neutral-950 shadow-sm hover:bg-neutral-200",
-    link.primary && minimal && "h-11 w-11 rounded-2xl px-0",
+    link.primary && minimal && "lg:h-11 lg:w-11 lg:rounded-2xl lg:px-0",
   );
   const dropProps = link.onMessageDrop
     ? {
@@ -79,14 +82,19 @@ export function NavItem({ link }: { link: NavLink }) {
         size={21}
           style={{ color: link.iconColor }}
         />
-        {!minimal && <span className="flex-1">{link.label}</span>}
-        {!minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="ml-auto me-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700">
+        <span className={cn("flex-1", minimal && "lg:hidden")}>{link.label}</span>
+        {typeof link.count === "number" && link.count > 0 && (
+          <span
+            className={cn(
+              "ml-auto me-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700",
+              minimal && "lg:hidden",
+            )}
+          >
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
         {minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-neutral-900 px-1 text-center text-[10px] font-semibold leading-4 text-white">
+          <span className="absolute -end-1 -top-1 hidden min-w-4 rounded-full bg-neutral-900 px-1 text-center text-[10px] font-semibold leading-4 text-white lg:block">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
@@ -141,7 +149,7 @@ export function NavItem({ link }: { link: NavLink }) {
         href={link.href}
         onClick={navigate}
         title={minimal ? link.label : undefined}
-        className={cn(!minimal && "-ms-3 ps-6", classes)}
+        className={cn("-ms-3 ps-6", minimal && "lg:ms-0 lg:ps-0", classes)}
         {...dropProps}
       >
         <Icon
@@ -149,14 +157,19 @@ export function NavItem({ link }: { link: NavLink }) {
           style={{ color: link.iconColor }}
           size={18}
         />
-        {!minimal && <span className="flex-1">{link.label}</span>}
-        {!minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="ml-auto me-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700">
+        <span className={cn("flex-1", minimal && "lg:hidden")}>{link.label}</span>
+        {typeof link.count === "number" && link.count > 0 && (
+          <span
+            className={cn(
+              "ml-auto me-3 rounded-full px-2 py-0.5 text-sm font-semibold text-neutral-700",
+              minimal && "lg:hidden",
+            )}
+          >
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}
         {minimal && typeof link.count === "number" && link.count > 0 && (
-          <span className="absolute -end-1 -top-1 min-w-4 rounded-full bg-neutral-900 px-1 text-center text-[10px] font-semibold leading-4 text-white">
+          <span className="absolute -end-1 -top-1 hidden min-w-4 rounded-full bg-neutral-900 px-1 text-center text-[10px] font-semibold leading-4 text-white lg:block">
             {link.count > 99 ? "99+" : link.count}
           </span>
         )}

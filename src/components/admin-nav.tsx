@@ -53,7 +53,7 @@ export function AdminNav({ className }: { className?: string }) {
   return (
     <nav className={cn("flex min-h-full flex-col gap-1", className)}>
       <SidebarHeader href="/inbox" label="الإدارة" />
-      <div className={cn("space-y-4", minimal && "space-y-2")}>
+      <div className={cn("space-y-4", minimal && "lg:space-y-2")}>
         {sections.map((section) => {
           const links = section.links.filter(
             (link) =>
@@ -63,8 +63,13 @@ export function AdminNav({ className }: { className?: string }) {
 
           return (
             <section key={section.label}>
-              {!minimal && section.label && (
-                <p className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
+              {section.label && (
+                <p
+                  className={cn(
+                    "mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-neutral-400",
+                    minimal && "lg:hidden",
+                  )}
+                >
                   {section.label}
                 </p>
               )}
