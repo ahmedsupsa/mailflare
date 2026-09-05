@@ -6,6 +6,7 @@ import { requireUser } from "@/lib/auth/cookies";
 import { getEnv } from "@/lib/cloudflare";
 import { newId } from "@/lib/ids";
 import type { LeadInput, LeadStatus } from "./types";
+import { parsePhones, sanitizePhones, serializePhones } from "./utils";
 
 const STATUSES: LeadStatus[] = ["new", "contacted", "interested", "won", "lost"];
 
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
 
 	const items = rows.map((row) => ({
 		...row,
+		phones: parsePhones(row.phones),
 		createdByName: nameById.get(row.createdByUserId) ?? "",
 	}));
 	return NextResponse.json({ leads: items });
@@ -36,17 +38,18 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: "اسم جهة الاتصال مطلوب" }, { status: 400 });
 	}
 	const status = input.status && STATUSES.includes(input.status) ? input.status : "new";
+	const phones = sanitizePhones(input.phones);
 
 	const lead = {
 		id: newId("lead"),
 		businessName: input.businessName?.trim() ?? "",
 		contactName: input.contactName.trim(),
-		phone: input.phone?.trim() ?? "",
+		phones: serializePhones(phones),
 		email: input.email?.trim() ?? "",
 		status,
 		notes: input.notes?.trim() ?? "",
 		createdByUserId: user.id,
 	};
 	await getDb(env).insert(leads).values(lead);
-	return NextResponse.json({ lead: { ...lead, createdByName: user.name } });
+	return NextResponse.json({ lead: { ...lead, phones, createdByName: user.name } });
 }

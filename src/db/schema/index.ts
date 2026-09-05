@@ -465,7 +465,7 @@ export const leads = sqliteTable(
 		id: text("id").primaryKey(),
 		businessName: text("business_name").notNull().default(""),
 		contactName: text("contact_name").notNull(),
-		phone: text("phone").notNull().default(""),
+		phones: text("phones").notNull().default("[]"),
 		email: text("email").notNull().default(""),
 		status: text("status", { enum: ["new", "contacted", "interested", "won", "lost"] })
 			.notNull()
@@ -503,6 +503,27 @@ export const tasks = sqliteTable(
 	],
 );
 
+export const crmAttachments = sqliteTable(
+	"crm_attachments",
+	{
+		id: text("id").primaryKey(),
+		leadId: text("lead_id").references(() => leads.id, { onDelete: "cascade" }),
+		taskId: text("task_id").references(() => tasks.id, { onDelete: "cascade" }),
+		kind: text("kind", { enum: ["image", "link"] }).notNull(),
+		url: text("url").notNull(),
+		r2Key: text("r2_key"),
+		label: text("label").notNull().default(""),
+		createdByUserId: text("created_by_user_id")
+			.notNull()
+			.references(() => users.id, { onDelete: "cascade" }),
+		createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
+	},
+	(t) => [
+		index("crm_attachments_lead_idx").on(t.leadId),
+		index("crm_attachments_task_idx").on(t.taskId),
+	],
+);
+
 export const schema = {
 	users,
 	domains,
@@ -529,4 +550,5 @@ export const schema = {
 	licenseSettings,
 	leads,
 	tasks,
+	crmAttachments,
 };

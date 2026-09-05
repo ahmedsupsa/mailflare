@@ -5,6 +5,7 @@ import { leads } from "@/db/schema";
 import { requireUser } from "@/lib/auth/cookies";
 import { getEnv } from "@/lib/cloudflare";
 import type { LeadInput, LeadStatus } from "../types";
+import { sanitizePhones, serializePhones } from "../utils";
 import type { LeadRouteParams } from "./types";
 
 const STATUSES: LeadStatus[] = ["new", "contacted", "interested", "won", "lost"];
@@ -28,7 +29,7 @@ export async function PATCH(request: Request, { params }: LeadRouteParams) {
 		.set({
 			businessName: input.businessName?.trim() ?? "",
 			contactName: input.contactName.trim(),
-			phone: input.phone?.trim() ?? "",
+			phones: serializePhones(sanitizePhones(input.phones)),
 			email: input.email?.trim() ?? "",
 			status,
 			notes: input.notes?.trim() ?? "",

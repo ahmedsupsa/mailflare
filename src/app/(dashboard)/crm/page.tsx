@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Briefcase, ListTodo, Plus, Search, Trash2, Users } from "lucide-react";
+import { Briefcase, ListTodo, Plus, Search, Trash2, Users, X } from "lucide-react";
+import { AttachmentsSection } from "@/components/crm/attachments-section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -25,7 +26,7 @@ type Lead = {
   id: string;
   businessName: string;
   contactName: string;
-  phone: string;
+  phones: string[];
   email: string;
   status: LeadStatus;
   notes: string;
@@ -64,7 +65,7 @@ const LEAD_STATUS_BADGE: Record<LeadStatus, "default" | "secondary" | "outline" 
   lost: "outline",
 };
 
-const emptyLeadForm = { businessName: "", contactName: "", phone: "", email: "", status: "new" as LeadStatus, notes: "" };
+const emptyLeadForm = { businessName: "", contactName: "", phones: [] as string[], email: "", status: "new" as LeadStatus, notes: "" };
 const emptyTaskForm = { title: "", description: "", dueAt: "", assigneeUserId: "", leadId: "" };
 
 export default function CrmPage() {
@@ -123,13 +124,25 @@ export default function CrmPage() {
     setLeadForm({
       businessName: lead.businessName,
       contactName: lead.contactName,
-      phone: lead.phone,
+      phones: lead.phones,
       email: lead.email,
       status: lead.status,
       notes: lead.notes,
     });
     setLeadError(null);
     setLeadDialogOpen(true);
+  }
+
+  function addPhoneField() {
+    setLeadForm((form) => ({ ...form, phones: [...form.phones, ""] }));
+  }
+
+  function updatePhoneField(index: number, value: string) {
+    setLeadForm((form) => ({ ...form, phones: form.phones.map((phone, i) => (i === index ? value : phone)) }));
+  }
+
+  function removePhoneField(index: number) {
+    setLeadForm((form) => ({ ...form, phones: form.phones.filter((_, i) => i !== index) }));
   }
 
   async function saveLead() {
@@ -260,7 +273,7 @@ export default function CrmPage() {
       (lead) =>
         lead.contactName.toLowerCase().includes(query) ||
         lead.businessName.toLowerCase().includes(query) ||
-        lead.phone.toLowerCase().includes(query) ||
+        lead.phones.some((phone) => phone.toLowerCase().includes(query)) ||
         lead.email.toLowerCase().includes(query),
     );
   }, [leads, search]);
@@ -354,7 +367,7 @@ export default function CrmPage() {
                       <p className="truncate text-sm text-neutral-600">{lead.contactName}</p>
                     )}
                     <p className="truncate text-sm text-neutral-500">
-                      {[lead.phone, lead.email].filter(Boolean).join(" · ") || "لا توجد بيانات تواصل"}
+                      {[...lead.phones, lead.email].filter(Boolean).join(" · ") || "لا توجد بيانات تواصل"}
                     </p>
                     {lead.notes && <p className="mt-1 truncate text-xs text-neutral-400">{lead.notes}</p>}
                     <p className="mt-1 text-xs text-neutral-400">أضافه {lead.createdByName}</p>
@@ -457,27 +470,43 @@ export default function CrmPage() {
                 required
               />
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="space-y-1.5">
-                <Label htmlFor="lead-phone">الجوال</Label>
-                <Input
-                  id="lead-phone"
-                  dir="ltr"
-                  className="text-end"
-                  value={leadForm.phone}
-                  onChange={(event) => setLeadForm((form) => ({ ...form, phone: event.target.value }))}
-                />
+            <div className="space-y-1.5">
+              <Label>أرقام التواصل</Label>
+              <div className="space-y-2">
+                {leadForm.phones.map((phone, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <Input
+                      dir="ltr"
+                      className="text-end"
+                      value={phone}
+                      onChange={(event) => updatePhoneField(index, event.target.value)}
+                      placeholder="05xxxxxxxx"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      aria-label="إزالة الرقم"
+                      onClick={() => removePhoneField(index)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button type="button" variant="outline" size="sm" onClick={addPhoneField}>
+                  <Plus className="h-3.5 w-3.5" /> {leadForm.phones.length === 0 ? "إضافة رقم" : "إضافة رقم آخر"}
+                </Button>
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="lead-email">البريد الإلكتروني</Label>
-                <Input
-                  id="lead-email"
-                  dir="ltr"
-                  className="text-end"
-                  value={leadForm.email}
-                  onChange={(event) => setLeadForm((form) => ({ ...form, email: event.target.value }))}
-                />
-              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="lead-email">البريد الإلكتروني</Label>
+              <Input
+                id="lead-email"
+                dir="ltr"
+                className="text-end"
+                value={leadForm.email}
+                onChange={(event) => setLeadForm((form) => ({ ...form, email: event.target.value }))}
+              />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="lead-status">الحالة</Label>
@@ -510,6 +539,11 @@ export default function CrmPage() {
             >
               {leadSaving ? "جارٍ الحفظ..." : editingLead ? "حفظ التغييرات" : "إضافة العميل المحتمل"}
             </Button>
+            {editingLead && (
+              <div className="border-t border-neutral-100 pt-3">
+                <AttachmentsSection leadId={editingLead.id} />
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
@@ -585,6 +619,11 @@ export default function CrmPage() {
             <Button className="w-full" onClick={() => void saveTask()} disabled={!taskForm.title.trim() || taskSaving}>
               {taskSaving ? "جارٍ الحفظ..." : editingTask ? "حفظ التغييرات" : "إضافة المهمة"}
             </Button>
+            {editingTask && (
+              <div className="border-t border-neutral-100 pt-3">
+                <AttachmentsSection taskId={editingTask.id} />
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
